@@ -1,0 +1,298 @@
+/*
+ * Política de Privacidade — Figma: Screen/Privacy-Policy/Desktop (1600) e
+ * Screen/Privacy-Policy/Mobile (390). Carregado só nessa página (template
+ * page-politica-de-privacidade.php, ver aw_slugs_de_css() em inc/assets.php).
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop. O Tablet não tem frame
+ * e está marcado como "adaptação" (ver docs/CONTATO-POLITICA.md).
+ */
+
+.pol {
+  --pol-pad: 24px;                         /* Figma Mobile: laterais 24 */
+  --pol-texto: color-mix(in srgb, var(--neutral-ink) 80%, transparent); /* Figma: alpha/neutral-ink/80 */
+}
+
+@media (min-width: 768px) {
+  .pol {
+    --pol-pad: var(--grid-margin);
+  }
+}
+
+@media (min-width: 1280px) {
+  .pol {
+    --pol-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+.pol h1,
+.pol h2,
+.pol p,
+.pol ol,
+.pol ul {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Topo (Figma: Hero — 1600 × 547 · padding 32/160/144 · gap 88;
+   Mobile 390 × 328 · padding 16/24/72 · gap 48)
+   ========================================================================== */
+.pol-hero {
+  padding: calc(16px + 64px + 48px) var(--pol-pad) 72px; /* Figma Mobile: 16 + Nav 64 + gap 48 */
+  background: linear-gradient(165deg, var(--brand-navy-500) 0%, var(--brand-sky-500) 50%, var(--brand-sky-300) 100%);
+  color: var(--color-text-inverse);
+}
+
+.pol-hero__copia {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;                               /* Figma: Hero Copy gap 16 */
+  max-width: 880px;
+}
+
+.pol-hero__titulo {
+  text-wrap: balance;
+}
+
+.pol-hero__data {
+  color: var(--alpha-neutral-white-80);    /* Figma: alpha/neutral-white/80 */
+}
+
+@media (min-width: 768px) {
+  .pol-hero {
+    padding-top: calc(24px + 76px + 40px);  /* adaptação Tablet (mesmo respiro das outras internas) */
+    padding-bottom: 96px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pol-hero {
+    padding-top: 252px;                    /* Figma: 32 + Header Interno 132 + gap 88 */
+    padding-bottom: 144px;                 /* Figma: bottom 144 */
+  }
+}
+
+/* ==========================================================================
+   Conteúdo (Figma: padding 64/160/128 · gap 80; Mobile 40/24/72 · gap 40)
+   ========================================================================== */
+.pol-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px var(--pol-pad) 72px;
+  background: var(--color-surface-default);
+}
+
+@media (min-width: 768px) {
+  .pol-conteudo {
+    padding-top: 64px;
+    padding-bottom: 96px;                  /* adaptação Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .pol-conteudo {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+    padding-bottom: 128px;
+  }
+}
+
+/* --- Sumário (Figma: 320 · radius 24 · borda 1 lavender-300 · padding
+   32/24 · gap 8 · surface/muted) ---------------------------------------- */
+.pol-sumario {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px 24px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-24);
+  background: var(--color-surface-muted);
+}
+
+@media (min-width: 1280px) {
+  .pol-sumario {
+    position: sticky;
+    top: 32px;                             /* adaptação: o Figma não mostra o comportamento na rolagem */
+    flex: 0 0 320px;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+.pol-sumario__rotulo {
+  margin-bottom: 8px;                      /* Figma: Spacer 8 abaixo de "SUMÁRIO" */
+  color: var(--color-text-accent);
+}
+
+.pol-sumario__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+
+/* Item (Figma: Item/<seção> — padding 8, gap 16, radius 12). Ativo: fundo
+   branco e título navy-900; inativo: título navy-900 a 75%. */
+.pol-sumario__link {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 8px;
+  border-radius: var(--radius-12);
+  color: color-mix(in srgb, var(--brand-navy-900) 75%, transparent); /* Figma: alpha/brand-navy-900/75 */
+  transition: background-color var(--motion-button), color var(--motion-button);
+}
+
+.pol-sumario__link:hover {
+  background: var(--alpha-neutral-white-60);  /* adaptação: hover não desenhado */
+  color: var(--brand-navy-900);
+}
+
+.pol-sumario__link.is-ativo {
+  background: var(--color-surface-default);
+  color: var(--brand-navy-900);
+}
+
+.pol-sumario__link:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 2px;
+}
+
+/* Label/Bold (14/140%, 700) — o utilitário não está no build do Tailwind. */
+.pol-sumario__num,
+.pol-secao__num {
+  flex: none;
+  font-size: var(--font-size-label-bold);
+  font-weight: 700;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.pol-sumario__num {
+  min-width: 18px;
+  color: var(--color-text-accent);         /* Figma: color/text/accent (sky-500) */
+}
+
+.pol-sumario__texto {
+  padding-top: 1px;                        /* alinha a linha do título com a do número */
+}
+
+/* --- Seções (Figma: Seções 880 · gap 48 com Divider lavender-300 entre
+   elas; Mobile gap 32) ---------------------------------------------------- */
+.pol-secoes {
+  display: flex;
+  flex: 1 1 880px;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pol-secao {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Seção gap 16 */
+  scroll-margin-top: 32px;
+}
+
+.pol-secao + .pol-secao {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--neutral-lavender-300); /* Figma: Divider 1px */
+}
+
+@media (min-width: 768px) {
+  .pol-secao + .pol-secao {
+    margin-top: 48px;
+    padding-top: 48px;
+  }
+}
+
+.pol-secao__titulo {
+  display: flex;
+  align-items: center;
+  gap: 16px;                               /* Figma: Título gap 16 */
+  color: var(--brand-navy-900);
+}
+
+/* Selo do número (Figma: Num — pill surface/subtle, padding 8/16). */
+.pol-secao__num {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-subtle);
+  color: var(--brand-navy-500);
+}
+
+/* Texto da seção (editor do ACF): parágrafos, listas e links. */
+.pol-secao__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: var(--pol-texto);
+}
+
+.pol-secao__texto ul,
+.pol-secao__texto ol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Lista gap 16 */
+  padding: 0;
+  list-style: none;
+}
+
+.pol-secao__texto li {
+  position: relative;
+  padding-left: 24px;                      /* Figma: marcador 8 + gap 16 */
+}
+
+/* Marcador (Figma: Dot 8 × 8 sky-500, centrado na primeira linha). */
+.pol-secao__texto ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(0.8em - 4px);                  /* meia linha (160%) − meio marcador */
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--brand-sky-500);
+}
+
+.pol-secao__texto ol {
+  counter-reset: pol-item;
+}
+
+.pol-secao__texto ol > li {
+  counter-increment: pol-item;
+}
+
+.pol-secao__texto ol > li::before {
+  content: counter(pol-item) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: var(--brand-sky-500);
+}
+
+.pol-secao__texto a {
+  color: var(--color-action-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.pol-secao__texto a:hover {
+  color: var(--color-action-primary-hover);
+}
+
+.pol-secao__texto strong {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pol-sumario__link {
+    transition: none;
+  }
+}

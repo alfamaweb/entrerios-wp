@@ -1,0 +1,409 @@
+/*
+ * Cabeçalho e menu — componente "Nav" do Hero Slider e overlay
+ * "Screen/Overlay/Menu-Open" do Figma Entre Rios.
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop (layout guides do Figma).
+ * Só tokens de style.css (seção 1). Medidas comentadas com "Figma" vêm dos
+ * frames; as marcadas "adaptação" não existem no Figma — ver README.
+ */
+
+/* ==========================================================================
+   Barra
+   ========================================================================== */
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 100%;
+  color: var(--color-text-inverse);
+  background: none;
+}
+
+.site-header__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;     /* Figma Mobile: padding-top do hero */
+  padding-inline: 24px;  /* Figma Mobile: "Top" com 24 nas laterais */
+}
+
+@media (min-width: 768px) {
+  .site-header__barra {
+    padding-top: 24px;   /* Figma Tablet */
+    padding-inline: var(--grid-margin);
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-header__barra {
+    min-height: 116px;   /* Figma Desktop: Nav 1280 × 116, top 28 */
+    padding-top: 28px;
+  }
+}
+
+/* ==========================================================================
+   Logo — selo redondo com borda branca
+   ========================================================================== */
+.site-logo {
+  display: block;
+  flex-shrink: 0;
+  width: 60px;                                   /* Figma Mobile */
+  height: 60px;
+  overflow: hidden;
+  border: 3px solid var(--neutral-white);
+  border-radius: var(--radius-full);
+  background: var(--brand-navy-500);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-logo__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-logo__texto {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font-size: var(--font-size-label-small);
+  font-weight: 800;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .site-logo {
+    width: 76px;                                 /* Figma Tablet */
+    height: 76px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-logo {
+    width: 116px;                                /* Figma Desktop */
+    height: 116px;
+    border-width: 4px;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* ==========================================================================
+   Menu desktop — pílula de vidro (Menu / Nav Link)
+   ========================================================================== */
+.site-nav {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .site-nav {
+    display: block;
+  }
+}
+
+.site-nav__lista {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--alpha-neutral-white-35);
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-16);
+  -webkit-backdrop-filter: blur(var(--blur-24));
+  backdrop-filter: blur(var(--blur-24));
+}
+
+.site-nav__lista a {
+  display: block;
+  padding: 16px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-label-caps);       /* Label/Caps */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color var(--motion-button), border-color var(--motion-button), color var(--motion-button);
+}
+
+.site-nav__lista a:hover {
+  border-color: var(--alpha-neutral-white-35);
+  background: var(--alpha-neutral-white-20);
+}
+
+.site-nav__lista .current-menu-item > a,
+.site-nav__lista .current_page_item > a {
+  border-color: var(--neutral-white);
+  background: var(--neutral-white);
+  color: var(--brand-navy-500);
+}
+
+/* ==========================================================================
+   Contato e botões de vidro
+   ========================================================================== */
+.site-header__acoes {
+  display: flex;
+  align-items: center;
+  gap: 16px;                                     /* Figma Mobile */
+}
+
+.site-contato {
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  color: var(--color-text-inverse);
+  text-align: right;
+}
+
+.site-contato__numero {
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .site-contato {
+    display: flex;
+  }
+}
+
+.botao-vidro {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;                                   /* Figma Mobile */
+  height: 48px;
+  padding: 0;
+  border: 1px solid var(--alpha-neutral-white-35);
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-16);
+  color: var(--color-text-inverse);
+  -webkit-backdrop-filter: blur(var(--blur-20));
+  backdrop-filter: blur(var(--blur-20));
+  cursor: pointer;
+  transition: background-color var(--motion-button);
+}
+
+.botao-vidro:hover {
+  background: var(--alpha-neutral-white-25);
+}
+
+@media (min-width: 768px) {
+  .botao-vidro {
+    width: 52px;                                 /* Figma Tablet */
+    height: 52px;
+  }
+
+  .site-header__tel {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-header__menu {
+    display: none;
+  }
+}
+
+.site-header a:focus-visible,
+.site-header button:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Overlay do menu (Tablet e Mobile)
+   ========================================================================== */
+body.aw-menu-aberto {
+  overflow: hidden;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 32px;
+  color: var(--color-text-inverse);
+  background: linear-gradient(135deg, var(--brand-navy-500), var(--brand-sky-500));
+  /* Figma: "Move in Right", ease-out, 400 ms. */
+  animation: menu-entra 400ms ease-out;
+}
+
+.menu-overlay[hidden] {
+  display: none !important;
+}
+
+@media (min-width: 1280px) {
+  .menu-overlay {
+    display: none !important;
+  }
+}
+
+@keyframes menu-entra {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+.menu-overlay__decor {
+  position: absolute;
+  right: -48px;
+  bottom: 96px;
+  z-index: 0;
+  width: 240px;
+  height: auto;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .menu-overlay__decor {
+    width: 360px;
+  }
+}
+
+.menu-overlay__topo,
+.menu-overlay__nav,
+.menu-overlay__contato {
+  position: relative;
+  z-index: 1;
+  padding-inline: 24px;
+}
+
+@media (min-width: 768px) {
+  .menu-overlay__topo,
+  .menu-overlay__nav,
+  .menu-overlay__contato {
+    padding-inline: var(--grid-margin);
+  }
+}
+
+.menu-overlay__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .menu-overlay__topo {
+    padding-top: 24px;
+  }
+}
+
+.botao-fechar {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 6px 6px 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--neutral-white);
+  color: var(--brand-navy-500);
+  cursor: pointer;
+}
+
+.botao-fechar__icone {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-action-primary);
+  color: var(--neutral-white);
+}
+
+.menu-overlay__nav {
+  margin-top: 48px;
+}
+
+.menu-overlay__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-overlay__item a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-block: 8px;
+  color: var(--color-text-inverse);
+}
+
+.menu-overlay__numero {
+  color: var(--brand-sky-300);
+}
+
+.menu-overlay__titulo {
+  position: relative;
+}
+
+.menu-overlay__item.is-atual .menu-overlay__titulo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--brand-sky-300);
+  transform: translateY(-50%);
+}
+
+.menu-overlay__item a:hover .menu-overlay__titulo {
+  color: var(--brand-sky-300);
+}
+
+.menu-overlay__contato {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 48px;
+}
+
+.menu-overlay__contato::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 16px;
+  background: var(--alpha-neutral-white-35);
+}
+
+.menu-overlay__rotulo {
+  margin: 0;
+  color: var(--alpha-neutral-white-80);
+}
+
+.menu-overlay__telefone,
+.menu-overlay__link {
+  color: var(--color-text-inverse);
+}
+
+.menu-overlay__link strong {
+  font-weight: 700;
+}
+
+.menu-overlay a:focus-visible,
+.menu-overlay button:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-overlay {
+    animation: none;
+  }
+}

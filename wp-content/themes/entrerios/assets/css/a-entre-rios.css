@@ -1,0 +1,963 @@
+/*
+ * Página A Entre Rios — Figma: Screen/About/Desktop (1600) e
+ * Screen/About/Mobile (390). Carregado só nessa página (slug a-entre-rios,
+ * ver aw_slugs_de_css() em inc/assets.php).
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop (layout guides do Figma).
+ * Medidas comentadas com "Figma" vêm dos frames Desktop/Mobile; o Tablet não
+ * tem frame da página e está marcado como "adaptação" (ver docs/A-ENTRE-RIOS.md).
+ * Só tokens de style.css; cores sem token estão anotadas.
+ *
+ * Componentes globais reaproveitados (assets/css/style.css): .botao-play
+ * (Play Button) e .seta-vitrine (Arrow Button).
+ */
+
+.ae {
+  --ae-pad: var(--grid-margin);
+}
+
+@media (min-width: 1280px) {
+  .ae {
+    /* Figma: conteúdo 1280 centralizado (160 de margem em 1600). */
+    --ae-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+.ae p,
+.ae h1,
+.ae h2,
+.ae h3,
+.ae figure,
+.ae blockquote {
+  margin: 0;
+}
+
+/* Quebras de linha como no Figma (o reset global equilibra os títulos). */
+.ae h1,
+.ae h2,
+.ae h3 {
+  text-wrap: wrap;
+}
+
+/* Blocos de texto empilhados: gap 24 do Figma (Texto). */
+.ae-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.ae-titulo {
+  color: var(--brand-navy-900);
+}
+
+/* Label/Caps em sky-500 (GALERIA) ou sky-300 com traço (topo). */
+.ae-rotulo {
+  color: var(--color-text-accent);
+}
+
+.ae-rotulo--traco {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;                               /* Figma: Eyebrow gap 16 */
+  color: var(--brand-sky-300);
+}
+
+.ae-rotulo--traco::before {
+  content: "";
+  flex: none;
+  width: 48px;                             /* Figma: Divider 48×2 sky-300 */
+  height: 2px;
+  background: currentColor;
+}
+
+/* Heading/H4 — não há utilitário no tailwind.css compilado. */
+.ae-h4,
+.ae-pessoas__frase {
+  font-size: var(--font-size-heading-h4);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   Topo (Figma: Hero 1600×820 · Mobile 390×520)
+   ========================================================================== */
+.ae-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 520px;                       /* Figma Mobile */
+  overflow: hidden;
+  /* Espaço do cabeçalho absoluto: topo 16 + logo 60 + respiro 32. */
+  padding: calc(16px + 60px + 32px) var(--ae-pad) 48px;
+  background: var(--brand-navy-900);
+  color: var(--color-text-inverse);
+}
+
+.ae-hero__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Degradês do Figma: navy-900/95 → navy-500/70 → navy-500/15 (da esquerda
+   para a direita) + navy-900/50 → 0 de cima para baixo (atrás do menu).
+   Tablet/Mobile (adaptação): o texto ocupa a largura toda, então o lado
+   direito não clareia tanto. */
+.ae-hero::before,
+.ae-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.ae-hero::before {
+  background: linear-gradient(90deg,
+    rgb(27 26 74 / 95%) 0%,
+    rgb(53 51 147 / 70%) 60%,
+    rgb(53 51 147 / 45%) 100%);
+}
+
+.ae-hero::after {
+  background: linear-gradient(180deg, rgb(27 26 74 / 50%) 0%, rgb(27 26 74 / 0%) 100%);
+}
+
+.ae-hero__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;                               /* Figma: Hero Copy gap 24 */
+  max-width: 900px;                        /* Figma: Hero Copy 900 */
+}
+
+.ae-hero__titulo {
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .ae-hero {
+    min-height: 680px;                     /* adaptação (entre 520 e 820) */
+    padding-top: calc(24px + 76px + 40px); /* topo 24 + logo 76 + respiro 40 */
+    padding-bottom: 80px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-hero {
+    min-height: 820px;                     /* Figma Desktop */
+    padding-top: 220px;                    /* Nav 116 + topo 28 + respiro */
+    padding-bottom: 112px;                 /* Figma: padding-bottom 112 */
+  }
+
+  .ae-hero::before {
+    background: linear-gradient(90deg,
+      rgb(27 26 74 / 95%) 0%,              /* alpha/brand-navy-900/95 */
+      rgb(53 51 147 / 70%) 50%,            /* alpha/brand-navy-500/70 */
+      rgb(53 51 147 / 15%) 100%);          /* alpha/brand-navy-500/15 */
+  }
+}
+
+/* ==========================================================================
+   Origem (Figma: Origem — padding 144/160/120 · gap 120 · Statement 531 + Texto 629)
+   ========================================================================== */
+.ae-origem {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma Mobile */
+  padding: 64px var(--ae-pad) 56px;        /* Figma Mobile: 64 / 24 / 56 */
+  background: var(--color-surface-default);
+}
+
+.ae-origem__statement {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.ae-origem__subtitulo {
+  color: var(--color-text-accent);
+}
+
+.ae-origem__texto {
+  gap: 32px;                               /* Figma: Texto gap 32 */
+  color: var(--color-text-primary);
+}
+
+/* Marcos: ponto + ano, ligados por uma linha 90×2 (sky-500 → navy-500). */
+.ae-marcos {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 40px 0 0;                       /* Figma: Marcos padding-top 40 */
+  list-style: none;
+}
+
+.ae-marcos__marco {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ae-marcos__ponto {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--brand-sky-500);
+  box-shadow: 0 0 0 6px rgb(112 207 246 / 40%);   /* alpha/brand-sky-300/40, Outer */
+}
+
+.ae-marcos__ano {
+  color: var(--brand-navy-500);
+}
+
+.ae-marcos__linha {
+  flex: none;
+  width: 90px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brand-sky-500), var(--brand-navy-500));
+}
+
+/* Frase com a barra 4 px (sky-300 → navy-500), gap 24. */
+.ae-origem__destaque {
+  display: flex;
+  gap: 24px;
+  color: var(--brand-navy-900);
+}
+
+.ae-origem__destaque::before {
+  content: "";
+  flex: none;
+  width: 4px;
+  border-radius: var(--radius-2);
+  background: linear-gradient(180deg, var(--brand-sky-300), var(--brand-navy-500));
+}
+
+@media (min-width: 768px) {
+  .ae-origem {
+    gap: 56px;                             /* adaptação */
+    padding-block: 96px 88px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-origem {
+    display: grid;
+    grid-template-columns: minmax(0, 531fr) minmax(0, 629fr);
+    gap: 120px;                            /* Figma */
+    padding-block: 144px 120px;            /* Figma */
+  }
+}
+
+/* ==========================================================================
+   Da água para novos caminhos (Figma: Novos Caminhos — padding 128/160 ·
+   gap 96 · Texto 630 · Colagem 600×640)
+   ========================================================================== */
+.ae-caminhos {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px var(--ae-pad);             /* Figma Mobile: 56 / 24 */
+  background: var(--color-surface-muted);
+}
+
+.ae-caminhos__texto {
+  color: var(--color-text-primary);
+}
+
+.ae-caminhos__subtitulo {
+  color: var(--brand-navy-500);
+}
+
+.ae-intertitulo {
+  color: var(--brand-navy-900);
+}
+
+/* Destaque: degradê navy-500 → sky-500, radius 20, padding 24/32. */
+.ae-caminhos__destaque {
+  align-self: stretch;
+  padding: 24px;                           /* Figma Mobile: 24 */
+  border-radius: var(--radius-20);
+  background: linear-gradient(90deg, var(--brand-navy-500), var(--brand-sky-500));
+  color: var(--color-text-inverse);
+}
+
+/* Colagem: posições do Figma em % da caixa 600×640. */
+.ae-colagem {
+  position: relative;
+  flex: none;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 600 / 640;
+  margin-inline: auto;
+}
+
+.ae-colagem__circulo,
+.ae-colagem__produto {
+  position: absolute;
+}
+
+.ae-colagem__circulo {
+  border-radius: var(--radius-full);
+}
+
+.ae-colagem__circulo--base {               /* 520 em (40, 60), opacidade 95 % */
+  left: 6.667%;
+  top: 9.375%;
+  width: 86.667%;
+  aspect-ratio: 1;
+  opacity: 0.95;
+  background: linear-gradient(180deg, var(--brand-sky-300), var(--brand-navy-500));
+}
+
+.ae-colagem__circulo--guarana {            /* 150 em (430, 20) */
+  left: 71.667%;
+  top: 3.125%;
+  width: 25%;
+  aspect-ratio: 1;
+  background: linear-gradient(180deg, var(--category-guarana-mais-400), var(--category-guarana-mais-700));
+}
+
+.ae-colagem__circulo--refri {              /* 110 em (10, 470) */
+  left: 1.667%;
+  top: 73.438%;
+  width: 18.333%;
+  aspect-ratio: 1;
+  background: linear-gradient(180deg, var(--category-refrigerantes-400), var(--category-refrigerantes-700));
+}
+
+.ae-colagem__circulo--energ {              /* 90 em (480, 500) */
+  left: 80%;
+  top: 78.125%;
+  width: 15%;
+  aspect-ratio: 1;
+  /* Figma: illustration/cyan-400 → category/energeticos/700. O cyan-400 não
+     está transcrito (tokens de ilustração); usado sky-500. */
+  background: linear-gradient(180deg, var(--brand-sky-500), var(--category-energeticos-700));
+}
+
+.ae-colagem__produto {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* Shadow/XL do Figma: 0 24 30 · 30 %. */
+  filter: drop-shadow(0 24px 30px rgb(0 0 0 / 30%));
+  will-change: translate;
+  animation: ae-flutua var(--ae-flutua-dur, 6s) ease-in-out var(--ae-flutua-atraso, 0s) infinite alternate;
+}
+
+.ae-colagem__produto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+/* Empilhamento do Figma: DUB e Q'tal atrás, garrafa, copo e lata na frente. */
+.ae-colagem__produto--esquerda {           /* DUB 2 L — 150×500 em (70, 94), 6° */
+  z-index: 1;
+  left: 11.667%;
+  top: 14.738%;
+  width: 25%;
+  height: 78.125%;
+  rotate: 6deg;
+  --ae-flutua-dur: 6.5s;
+  --ae-flutua-atraso: -1.2s;
+}
+
+.ae-colagem__produto--direita {            /* Q'tal 2 L — 150×500 em (328, 110), −6° */
+  z-index: 1;
+  left: 54.623%;
+  top: 17.188%;
+  width: 25%;
+  height: 78.125%;
+  rotate: -6deg;
+  --ae-flutua-dur: 7s;
+  --ae-flutua-atraso: -3.4s;
+}
+
+.ae-colagem__produto--centro {             /* Garrafa 1,5 L — 180×600 em (210, 30) */
+  z-index: 2;
+  left: 35%;
+  top: 4.688%;
+  width: 30%;
+  height: 93.75%;
+  --ae-flutua-dur: 6s;
+}
+
+.ae-colagem__produto--direita-frente {     /* Copo — 170×260 em (382, 380), −4° */
+  z-index: 3;
+  left: 63.643%;
+  top: 59.375%;
+  width: 28.333%;
+  height: 40.625%;
+  rotate: -4deg;
+  --ae-flutua-dur: 5.5s;
+  --ae-flutua-atraso: -2.1s;
+}
+
+.ae-colagem__produto--esquerda-frente {    /* Lata — 110×290 em (40, 350), 5° */
+  z-index: 4;
+  left: 6.667%;
+  top: 54.752%;
+  width: 18.333%;
+  height: 45.313%;
+  rotate: 5deg;
+  --ae-flutua-dur: 5s;
+  --ae-flutua-atraso: -0.6s;
+}
+
+/* Flutuação (protótipo): cada produto sobe ~1,5 % da caixa, no seu tempo. */
+@keyframes ae-flutua {
+  from {
+    translate: 0 0;
+  }
+
+  to {
+    translate: 0 -1.4%;
+  }
+}
+
+@media (min-width: 768px) {
+  .ae-caminhos {
+    gap: 56px;                             /* adaptação */
+    padding-block: 96px;
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Figma: Texto 630 + gap 96 + Colagem 600 = 1326 — a colagem avança 46 px
+     sobre a margem direita (em 1600 ela termina em 1486). */
+  .ae-caminhos {
+    display: grid;
+    grid-template-columns: minmax(0, 630fr) minmax(0, 600fr);
+    align-items: center;
+    gap: 96px;                             /* Figma */
+    padding-block: 128px;                  /* Figma */
+    padding-right: max(24px, calc(var(--ae-pad) - 46px));
+  }
+
+  .ae-caminhos__destaque {
+    align-self: flex-start;                /* Figma: Hug */
+    padding: 24px 32px;
+  }
+
+  .ae-colagem {
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   Uma fábrica em transformação (Figma: Fábrica — padding 128/160 · gap 80 ·
+   Vídeo 530×746 · Texto 670 · fundo navy-900 → navy-500)
+   ========================================================================== */
+.ae-fabrica {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px var(--ae-pad);             /* Figma Mobile */
+  background: linear-gradient(160deg, var(--brand-navy-900), var(--brand-navy-500));
+  color: var(--color-text-inverse);
+}
+
+.ae-fabrica .ae-titulo,
+.ae-fabrica .ae-intertitulo {
+  color: var(--color-text-inverse);
+}
+
+.ae-fabrica__subtitulo {
+  color: var(--brand-sky-300);
+}
+
+/* Card do vídeo — radius 36 (Mobile 24), borda 1 white/25, sombra 0 40 70 −10. */
+.ae-video {
+  position: relative;
+  flex: none;
+  width: 100%;
+  aspect-ratio: 530 / 746;
+  overflow: hidden;
+  border: 1px solid var(--alpha-neutral-white-25);
+  border-radius: var(--radius-24);
+  background: var(--brand-navy-900);
+  box-shadow: 0 40px 70px -10px rgb(13 13 64 / 45%);
+  isolation: isolate;
+}
+
+.ae-video__capa,
+.ae-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A prévia entra por cima da capa só quando já tem quadro para mostrar. */
+.ae-video__previa {
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.ae-video__previa.is-pronta {
+  opacity: 1;
+}
+
+/* Escurecimento leve na base (Figma: degradê 0 → 85 % sobre o vídeo; a cor
+   não aparece no modo leitura — usado navy-900). */
+.ae-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgb(27 26 74 / 0%) 55%, rgb(27 26 74 / 45%) 100%);
+  pointer-events: none;
+}
+
+.ae-video.is-tocando::after,
+.ae-video.is-tocando .botao-play {
+  display: none;
+}
+
+.ae-video.is-tocando video {
+  z-index: 3;
+}
+
+.ae-fabrica__texto {
+  min-width: 0;
+}
+
+/* Citação — vidro white/8, borda white/18, radius 24, padding 32, blur 20. */
+.ae-citacao {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: stretch;
+  padding: 32px 24px;                      /* Figma Mobile: 32 / 24 */
+  border: 1px solid rgb(255 255 255 / 18%);  /* alpha/neutral-white/18 */
+  border-radius: var(--radius-24);
+  background: var(--alpha-neutral-white-8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ae-citacao {
+    background: var(--alpha-neutral-white-10);
+  }
+}
+
+.ae-citacao__aspas {
+  margin-bottom: 4px;
+  color: var(--brand-sky-300);
+}
+
+.ae-citacao__frase {
+  color: var(--color-text-inverse);
+}
+
+.ae-citacao__texto {
+  color: var(--brand-sky-300);
+}
+
+@media (min-width: 768px) {
+  .ae-fabrica {
+    gap: 56px;                             /* adaptação */
+    padding-block: 96px;
+  }
+
+  .ae-video {
+    max-width: 460px;                      /* adaptação: card centralizado */
+    margin-inline: auto;
+    border-radius: var(--radius-36);
+  }
+
+  .ae-citacao {
+    padding: 32px;                         /* Figma: space/32 */
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-fabrica {
+    flex-direction: row;
+    align-items: center;
+    gap: 80px;                             /* Figma */
+    padding-block: 128px;                  /* Figma */
+  }
+
+  .ae-video {
+    flex: 0 1 530px;
+    max-width: 530px;
+    margin: 0;
+  }
+
+  .ae-fabrica__texto {
+    flex: 1 1 670px;
+  }
+}
+
+/* ==========================================================================
+   Galeria (Figma: Galeria — padding 120/112 · gap 40 · slide 1100×620 ·
+   Mobile 320×220)
+   ========================================================================== */
+.ae-galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-block: 56px 48px;                /* Figma Mobile */
+  overflow: hidden;
+  background: var(--color-surface-default);
+}
+
+.ae-galeria__topo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* adaptação (Figma Mobile: 0) */
+  padding-inline: var(--ae-pad);
+}
+
+.ae-galeria__titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Title gap 16 */
+}
+
+.ae-galeria__nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;                               /* Figma: Nav gap 16 */
+}
+
+.ae-galeria__nav[hidden],
+.ae-galeria__pontos[hidden] {
+  display: none;
+}
+
+.ae-galeria__contador {
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.ae-galeria__trilho {
+  position: relative;                      /* offsetParent dos slides (JS) */
+  display: flex;
+  gap: 16px;                               /* Figma Mobile */
+  margin: 0;
+  padding: 0 var(--ae-pad);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--ae-pad);
+  scrollbar-width: none;
+}
+
+.ae-galeria__trilho::-webkit-scrollbar {
+  display: none;
+}
+
+.ae-galeria__trilho:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 4px;
+}
+
+.ae-galeria__slide {
+  position: relative;
+  flex: none;
+  width: 82vw;                             /* Figma Mobile: 320 de 390 */
+  max-width: 1100px;
+  aspect-ratio: 320 / 220;
+  overflow: hidden;
+  border-radius: var(--radius-24);
+  background: var(--color-surface-muted);
+  scroll-snap-align: start;
+}
+
+.ae-galeria__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Degradê navy-900 0 → 45 % na base, para o índice. */
+.ae-galeria__slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(27 26 74 / 0%) 50%, rgb(27 26 74 / 45%) 100%);
+  pointer-events: none;
+}
+
+/* Índice — pílula white/20 com blur 16, padding 8/16. */
+.ae-galeria__indice {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-20);
+  color: var(--color-text-inverse);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Pontos — ativo 36×10 navy-500, demais 10×10 lavender-300. */
+.ae-galeria__pontos {
+  display: flex;
+  gap: 8px;
+  padding-inline: var(--ae-pad);
+}
+
+.ae-galeria__ponto {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: var(--neutral-lavender-300);
+  cursor: pointer;
+  transition: width 300ms ease, background-color 300ms ease;
+}
+
+.ae-galeria__ponto[aria-current="true"] {
+  width: 36px;
+  background: var(--color-action-primary);
+}
+
+.ae-galeria__ponto:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .ae-galeria {
+    padding-block: 96px 88px;              /* adaptação */
+  }
+
+  .ae-galeria__topo {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .ae-galeria__trilho {
+    gap: 24px;
+  }
+
+  .ae-galeria__slide {
+    width: min(80vw, 1100px);
+    aspect-ratio: 1100 / 620;
+    border-radius: var(--radius-32);
+  }
+
+  .ae-galeria__indice {
+    left: 28px;                            /* Figma: Index em (28, 560) */
+    bottom: 27px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-galeria {
+    padding-block: 120px 112px;            /* Figma */
+  }
+
+  .ae-galeria__slide {
+    width: 1100px;                         /* Figma */
+  }
+}
+
+/* ==========================================================================
+   Pessoas (Figma: Pessoas — padding 128/160 · gap 120 · Statement 600 + Texto 560)
+   ========================================================================== */
+.ae-pessoas {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px var(--ae-pad);             /* Figma Mobile */
+  background: var(--color-surface-subtle);
+}
+
+.ae-pessoas__statement {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;                               /* Figma: Statement gap 32 */
+}
+
+.ae-pessoas__subtitulo {
+  color: var(--brand-navy-500);
+}
+
+.ae-pessoas__texto {
+  padding-top: 16px;                       /* Figma: Texto padding-top 16 */
+  color: var(--color-text-primary);
+}
+
+/* Card branco — radius 24, padding 24/32, gap 24, sombra 0 16 40 · 12 %. */
+.ae-pessoas__destaque {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  align-self: stretch;
+  padding: 24px;                           /* Figma Mobile: 24 */
+  border-radius: var(--radius-24);
+  background: var(--color-surface-default);
+  box-shadow: 0 16px 40px 0 rgb(27 26 74 / 12%);
+  color: var(--brand-navy-900);
+}
+
+.ae-pessoas__icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--brand-navy-500), var(--brand-sky-500));
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .ae-pessoas {
+    gap: 56px;                             /* adaptação */
+    padding-block: 96px;
+  }
+
+  .ae-pessoas__destaque {
+    padding: 24px 32px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-pessoas {
+    display: grid;
+    grid-template-columns: minmax(0, 600fr) minmax(0, 560fr);
+    gap: 120px;                            /* Figma */
+    padding-block: 128px;                  /* Figma */
+  }
+}
+
+/* ==========================================================================
+   O futuro já começou (Figma: Futuro — padding 128/160/144 · gap 56 ·
+   colunas 580 + 580, gap 120 · degradê navy-500 → royal-500 → sky-500)
+   ========================================================================== */
+.ae-futuro {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;                               /* Figma */
+  padding: 56px var(--ae-pad) 64px;        /* Figma Mobile */
+  background: linear-gradient(135deg, var(--brand-navy-500), var(--brand-royal-500) 50%, var(--brand-sky-500));
+  color: var(--color-text-inverse);
+}
+
+.ae-futuro__titulo {
+  color: var(--color-text-inverse);
+}
+
+.ae-futuro__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma Mobile */
+}
+
+.ae-futuro__subtitulo {
+  color: var(--color-text-inverse);
+}
+
+.ae-futuro__manifesto {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                                /* Figma: Manifesto gap 8 */
+}
+
+.ae-futuro__frase.is-destaque {
+  color: var(--brand-sky-300);
+}
+
+@media (min-width: 768px) {
+  .ae-futuro {
+    padding-block: 96px 104px;             /* adaptação */
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-futuro {
+    padding-block: 128px 144px;            /* Figma */
+  }
+
+  .ae-futuro__conteudo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 120px;                            /* Figma */
+  }
+}
+
+/* ==========================================================================
+   Assinatura (Figma: Assinatura — padding 120/160/128 · gap 24)
+   ========================================================================== */
+.ae-assinatura {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 56px var(--grid-margin);        /* Figma Mobile: 56 */
+  overflow: hidden;
+  background: var(--color-surface-default);
+  text-align: center;
+}
+
+/* Display/XXL (220/112/56, 900, LH 85 %, −4 px) com degradê navy-500 →
+   sky-500 no texto. A palavra ocupa a largura: no Figma ela passa da área
+   útil de 1280 (1368 px); aqui encolhe para nunca sair da tela. */
+.ae-assinatura__palavra {
+  max-width: 100%;
+  font-size: min(var(--font-size-display-xxl), calc((100vw - 2 * var(--grid-margin)) / 6.4));
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.018em;                /* −4 px em 220 */
+  white-space: nowrap;
+  background: linear-gradient(90deg, var(--brand-navy-500), var(--brand-sky-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* Respiro para o recorte do degradê não comer a perna do "R" e do "S". */
+  padding-block: 0.04em;
+}
+
+.ae-assinatura__frase {
+  color: var(--brand-navy-900);
+}
+
+@media (min-width: 768px) {
+  .ae-assinatura {
+    padding-block: 96px 104px;             /* adaptação */
+  }
+}
+
+@media (min-width: 1280px) {
+  .ae-assinatura {
+    padding-block: 120px 128px;            /* Figma */
+  }
+}
+
+/* ==========================================================================
+   Movimento reduzido
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .ae-colagem__produto {
+    animation: none;
+  }
+
+  .ae-galeria__ponto,
+  .ae-video__previa {
+    transition: none;
+  }
+}

@@ -1,0 +1,211 @@
+{
+    "key": "group_er_politica",
+    "title": "Política de Privacidade — Página",
+    "fields": [
+        {
+            "key": "field_er_tab_pol_hero",
+            "label": "Topo",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_pol_hero_titulo",
+            "label": "Título (H1)",
+            "name": "pol_hero_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Política de Privacidade. Vazio esconde o topo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_pol_hero_data_rotulo",
+            "label": "Rótulo da data",
+            "name": "pol_hero_data_rotulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Última atualização:",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_pol_hero_data",
+            "label": "Data da última atualização",
+            "name": "pol_hero_data",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "Atualize sempre que mudar o texto. Vazio esconde a linha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "Ymd",
+            "first_day": 0,
+            "default_to_current_date": 0
+        },
+        {
+            "key": "field_er_tab_pol_conteudo",
+            "label": "Conteúdo",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_pol_sumario_rotulo",
+            "label": "Título do sumário",
+            "name": "pol_sumario_rotulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Sumário. O sumário é montado sozinho com os títulos das seções e só aparece com 2 seções ou mais.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_pol_secoes",
+            "label": "Seções",
+            "name": "pol_secoes",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Uma linha por seção, na ordem. A numeração (01, 02…) e a âncora do sumário são automáticas. Seção sem título não aparece.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_er_pol_secao_titulo",
+            "button_label": "Adicionar seção",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_er_pol_secao_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Ex.: Seus direitos.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "maxlength": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_er_pol_secoes"
+                },
+                {
+                    "key": "field_er_pol_secao_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "Parágrafos, listas com marcador e links. Negrito e itálico também funcionam.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "tabs": "visual",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "parent_repeater": "field_er_pol_secoes"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-politica-de-privacidade.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Topo, sumário e seções da Política de Privacidade.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793299977
+}

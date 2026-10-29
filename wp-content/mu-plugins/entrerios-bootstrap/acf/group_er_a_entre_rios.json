@@ -1,0 +1,984 @@
+[
+    {
+        "key": "group_er_a_entre_rios",
+        "title": "A Entre Rios — Página",
+        "fields": [
+            {
+                "key": "field_er_tab_ae_hero",
+                "label": "Topo",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_hero_imagem",
+                "label": "Foto de fundo",
+                "name": "ae_hero_imagem",
+                "type": "image",
+                "instructions": "Foto aérea da fábrica, 2400×1350 (16:9). Recebe o degradê azul por cima.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_ae_hero_rotulo",
+                "label": "Sobretítulo",
+                "name": "ae_hero_rotulo",
+                "type": "text",
+                "instructions": "Ao lado do traço azul. Ex.: ENTRE RIOS.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_hero_titulo",
+                "label": "Título",
+                "name": "ae_hero_titulo",
+                "type": "textarea",
+                "instructions": "Título principal da página (H1). Vazio esconde o topo.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 2,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_tab_ae_origem",
+                "label": "Origem",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_origem_titulo",
+                "label": "Título",
+                "name": "ae_origem_titulo",
+                "type": "text",
+                "instructions": "Vazio esconde a seção.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_origem_subtitulo",
+                "label": "Subtítulo",
+                "name": "ae_origem_subtitulo",
+                "type": "text",
+                "instructions": "Em azul, abaixo do título.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_origem_marcos",
+                "label": "Marcos (anos)",
+                "name": "ae_origem_marcos",
+                "type": "repeater",
+                "instructions": "Ligados por uma linha. Até 4.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "table",
+                "min": 0,
+                "max": 4,
+                "button_label": "Adicionar ano",
+                "collapsed": "",
+                "sub_fields": [
+                    {
+                        "key": "field_er_ae_origem_marco_ano",
+                        "label": "Ano",
+                        "name": "ano",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_er_ae_origem_marcos"
+                    }
+                ]
+            },
+            {
+                "key": "field_er_ae_origem_texto",
+                "label": "Texto",
+                "name": "ae_origem_texto",
+                "type": "textarea",
+                "instructions": "Separe parágrafos com uma linha em branco.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 4,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_ae_origem_destaque",
+                "label": "Frase em destaque",
+                "name": "ae_origem_destaque",
+                "type": "text",
+                "instructions": "Com a barra azul ao lado.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_origem_texto_final",
+                "label": "Texto final",
+                "name": "ae_origem_texto_final",
+                "type": "textarea",
+                "instructions": "Abaixo da frase em destaque.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 4,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_tab_ae_caminhos",
+                "label": "Novos caminhos",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_caminhos_titulo",
+                "label": "Título",
+                "name": "ae_caminhos_titulo",
+                "type": "text",
+                "instructions": "Vazio esconde a seção.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_caminhos_subtitulo",
+                "label": "Subtítulo",
+                "name": "ae_caminhos_subtitulo",
+                "type": "text",
+                "instructions": "Em azul, abaixo do título.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_caminhos_blocos",
+                "label": "Texto",
+                "name": "ae_caminhos_blocos",
+                "type": "repeater",
+                "instructions": "Parágrafos e intertítulos, na ordem em que aparecem.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "table",
+                "min": 0,
+                "max": 12,
+                "button_label": "Adicionar trecho",
+                "collapsed": "",
+                "sub_fields": [
+                    {
+                        "key": "field_er_ae_caminhos_bloco_tipo",
+                        "label": "Tipo",
+                        "name": "tipo",
+                        "type": "select",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "paragrafo": "Parágrafo",
+                            "intertitulo": "Intertítulo"
+                        },
+                        "default_value": "paragrafo",
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "ui": 0,
+                        "return_format": "value",
+                        "ajax": 0,
+                        "placeholder": "",
+                        "parent_repeater": "field_er_ae_caminhos_blocos"
+                    },
+                    {
+                        "key": "field_er_ae_caminhos_bloco_texto",
+                        "label": "Texto",
+                        "name": "texto",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "75",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 3,
+                        "new_lines": "",
+                        "placeholder": "",
+                        "parent_repeater": "field_er_ae_caminhos_blocos"
+                    }
+                ]
+            },
+            {
+                "key": "field_er_ae_caminhos_destaque",
+                "label": "Frase final",
+                "name": "ae_caminhos_destaque",
+                "type": "text",
+                "instructions": "No bloco em degradê azul.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_colagem_centro",
+                "label": "Colagem — centro (atrás)",
+                "name": "ae_colagem_centro",
+                "type": "image",
+                "instructions": "Produto recortado (PNG/WebP transparente). Garrafa alta, ~360×1200.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "33",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_ae_colagem_esquerda",
+                "label": "Colagem — esquerda",
+                "name": "ae_colagem_esquerda",
+                "type": "image",
+                "instructions": "Inclinado para a direita. ~300×1000.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "33",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_ae_colagem_direita",
+                "label": "Colagem — direita",
+                "name": "ae_colagem_direita",
+                "type": "image",
+                "instructions": "Inclinado para a esquerda. ~300×1000.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "34",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_ae_colagem_esquerda_frente",
+                "label": "Colagem — esquerda, na frente",
+                "name": "ae_colagem_esquerda_frente",
+                "type": "image",
+                "instructions": "Produto baixo (lata). ~230×600.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_ae_colagem_direita_frente",
+                "label": "Colagem — direita, na frente",
+                "name": "ae_colagem_direita_frente",
+                "type": "image",
+                "instructions": "Produto baixo (copo). ~360×560.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_tab_ae_fabrica",
+                "label": "Fábrica",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_fabrica_video",
+                "label": "Vídeo completo",
+                "name": "ae_fabrica_video",
+                "type": "file",
+                "instructions": "MP4 (H.264) com som. Só é baixado no clique em Play.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "33",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "mime_types": "mp4,webm"
+            },
+            {
+                "key": "field_er_ae_fabrica_previa",
+                "label": "Prévia em loop",
+                "name": "ae_fabrica_previa",
+                "type": "file",
+                "instructions": "MP4 curto, sem som, até ~1 MB. Toca sozinho quando o card aparece na tela.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "33",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "mime_types": "mp4,webm"
+            },
+            {
+                "key": "field_er_ae_fabrica_capa",
+                "label": "Capa do vídeo",
+                "name": "ae_fabrica_capa",
+                "type": "image",
+                "instructions": "Proporção 530×746 (9:12,7).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "34",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "library": "all",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_ae_fabrica_titulo",
+                "label": "Título",
+                "name": "ae_fabrica_titulo",
+                "type": "text",
+                "instructions": "Vazio esconde a seção.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_fabrica_subtitulo",
+                "label": "Subtítulo",
+                "name": "ae_fabrica_subtitulo",
+                "type": "text",
+                "instructions": "Em azul-claro, abaixo do título.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_fabrica_blocos",
+                "label": "Texto",
+                "name": "ae_fabrica_blocos",
+                "type": "repeater",
+                "instructions": "Parágrafos e intertítulos, na ordem em que aparecem.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "table",
+                "min": 0,
+                "max": 12,
+                "button_label": "Adicionar trecho",
+                "collapsed": "",
+                "sub_fields": [
+                    {
+                        "key": "field_er_ae_fabrica_bloco_tipo",
+                        "label": "Tipo",
+                        "name": "tipo",
+                        "type": "select",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "paragrafo": "Parágrafo",
+                            "intertitulo": "Intertítulo"
+                        },
+                        "default_value": "paragrafo",
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "ui": 0,
+                        "return_format": "value",
+                        "ajax": 0,
+                        "placeholder": "",
+                        "parent_repeater": "field_er_ae_fabrica_blocos"
+                    },
+                    {
+                        "key": "field_er_ae_fabrica_bloco_texto",
+                        "label": "Texto",
+                        "name": "texto",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "75",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "rows": 3,
+                        "new_lines": "",
+                        "placeholder": "",
+                        "parent_repeater": "field_er_ae_fabrica_blocos"
+                    }
+                ]
+            },
+            {
+                "key": "field_er_ae_fabrica_citacao",
+                "label": "Citação",
+                "name": "ae_fabrica_citacao",
+                "type": "text",
+                "instructions": "No card de vidro, com aspas.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_fabrica_citacao_texto",
+                "label": "Complemento da citação",
+                "name": "ae_fabrica_citacao_texto",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 2,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_tab_ae_galeria",
+                "label": "Galeria",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_galeria_rotulo",
+                "label": "Sobretítulo",
+                "name": "ae_galeria_rotulo",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_galeria_titulo",
+                "label": "Título",
+                "name": "ae_galeria_titulo",
+                "type": "text",
+                "instructions": "Vazio esconde a seção.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_galeria_imagens",
+                "label": "Fotos",
+                "name": "ae_galeria_imagens",
+                "type": "gallery",
+                "instructions": "Na ordem do carrossel. 2200×1240 (16:9).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "id",
+                "preview_size": "medium",
+                "insert": "append",
+                "library": "all",
+                "min": "",
+                "max": "",
+                "mime_types": "jpg,jpeg,png,webp"
+            },
+            {
+                "key": "field_er_tab_ae_pessoas",
+                "label": "Pessoas",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_pessoas_titulo",
+                "label": "Título",
+                "name": "ae_pessoas_titulo",
+                "type": "text",
+                "instructions": "Vazio esconde a seção.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_pessoas_subtitulo",
+                "label": "Subtítulo",
+                "name": "ae_pessoas_subtitulo",
+                "type": "textarea",
+                "instructions": "Em azul, abaixo do título.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 2,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_ae_pessoas_texto",
+                "label": "Texto",
+                "name": "ae_pessoas_texto",
+                "type": "textarea",
+                "instructions": "Separe parágrafos com uma linha em branco.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 4,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_ae_pessoas_destaque",
+                "label": "Frase em destaque",
+                "name": "ae_pessoas_destaque",
+                "type": "text",
+                "instructions": "No card branco com o ícone de pessoas.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_tab_ae_futuro",
+                "label": "Futuro",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_futuro_titulo",
+                "label": "Título",
+                "name": "ae_futuro_titulo",
+                "type": "text",
+                "instructions": "Vazio esconde a seção.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_futuro_subtitulo",
+                "label": "Subtítulo",
+                "name": "ae_futuro_subtitulo",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_futuro_texto",
+                "label": "Texto",
+                "name": "ae_futuro_texto",
+                "type": "textarea",
+                "instructions": "Separe parágrafos com uma linha em branco.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 4,
+                "new_lines": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_er_ae_futuro_manifesto",
+                "label": "Manifesto",
+                "name": "ae_futuro_manifesto",
+                "type": "repeater",
+                "instructions": "Frases grandes à direita.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "table",
+                "min": 0,
+                "max": 6,
+                "button_label": "Adicionar frase",
+                "collapsed": "",
+                "sub_fields": [
+                    {
+                        "key": "field_er_ae_futuro_frase",
+                        "label": "Frase",
+                        "name": "frase",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "80",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "parent_repeater": "field_er_ae_futuro_manifesto"
+                    },
+                    {
+                        "key": "field_er_ae_futuro_frase_destaque",
+                        "label": "Azul-claro",
+                        "name": "destaque",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "20",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": "",
+                        "parent_repeater": "field_er_ae_futuro_manifesto"
+                    }
+                ]
+            },
+            {
+                "key": "field_er_tab_ae_assinatura",
+                "label": "Assinatura",
+                "name": "",
+                "type": "tab",
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_er_ae_assinatura_palavra",
+                "label": "Palavra grande",
+                "name": "ae_assinatura_palavra",
+                "type": "text",
+                "instructions": "Em degradê, ocupando a largura. Vazio esconde a assinatura.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_er_ae_assinatura_frase",
+                "label": "Frase",
+                "name": "ae_assinatura_frase",
+                "type": "textarea",
+                "instructions": "Uma linha por verso.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "",
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "page_template",
+                    "operator": "==",
+                    "value": "page-a-entre-rios.php"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": [
+            "the_content"
+        ],
+        "active": true,
+        "description": "Conteúdo da página A Entre Rios (Figma: Screen/About).",
+        "show_in_rest": 0
+    }
+]

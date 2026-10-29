@@ -1,0 +1,1240 @@
+/*
+ * Componentes autorais globais.
+ *
+ * Carrega depois de style.css (tokens/reset) e de tailwind.css (utilitários),
+ * por dependência declarada em inc/assets.php — nunca por prioridade de hook.
+ *
+ * Regra do projeto: aqui só se usam os tokens do Figma declarados na seção 1
+ * do style.css da raiz (--color-*, --radius-*, --font-size-*…). Nenhum hex
+ * literal. Os poucos --aw-* restantes são valores que o design system ainda
+ * não define — ver docs/TOKENS-FIGMA.md.
+ */
+
+/* ==========================================================================
+   Redes sociais
+   ========================================================================== */
+/* Cabeçalho e menu: assets/css/header.css. */
+
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 999px;
+  transition: border-color var(--aw-transicao), background var(--aw-transicao);
+}
+
+.social-links a:hover {
+  background: var(--color-surface-muted);
+  border-color: var(--neutral-gray-500);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero-interna {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 280px;
+  overflow: hidden;
+  background: var(--color-surface-inverse);
+}
+
+@media (min-width: 1280px) {
+  .hero-interna {
+    min-height: 460px;
+  }
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-media img,
+.hero-media .aw-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(31 41 51 / 82%), rgb(31 41 51 / 25%));
+}
+
+.hero-conteudo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-block: 2.5rem;
+  color: var(--color-text-inverse);
+}
+
+.hero-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.hero-titulo {
+  margin-top: 0.35em;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 700;
+}
+
+.hero-texto {
+  margin-top: 1rem;
+  max-width: 52ch;
+  opacity: 0.9;
+}
+
+.hero-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .hero-img {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+/* ==========================================================================
+   Botões
+   ========================================================================== */
+.btn,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-12);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition: background var(--aw-transicao), color var(--aw-transicao), border-color var(--aw-transicao);
+}
+
+.btn {
+  background: var(--color-action-primary);
+  color: var(--color-text-inverse);
+  border: 1px solid var(--color-action-primary);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--color-action-primary-hover);
+  border-color: var(--color-action-primary-hover);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--claro {
+  background: var(--color-surface-default);
+  color: var(--color-surface-inverse);
+  border-color: var(--color-surface-default);
+}
+
+.btn--claro:hover:not(:disabled) {
+  background: var(--color-surface-muted);
+  border-color: var(--color-surface-muted);
+}
+
+.btn-outline {
+  border: 1px solid var(--color-border-default);
+  color: var(--color-text-primary);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-text-primary);
+}
+
+.btn-texto {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--color-action-primary);
+  font-weight: 600;
+}
+
+.btn-texto:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-surface-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-16);
+  transition: box-shadow var(--aw-transicao), transform var(--aw-transicao);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-product-card-hover);
+}
+
+.card-thumb {
+  display: block;
+  aspect-ratio: 3 / 2;
+  background: var(--color-surface-muted);
+}
+
+.card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.25rem;
+}
+
+.card-titulo {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.card-titulo a:hover {
+  color: var(--color-action-primary);
+}
+
+.card-local,
+.card-resumo {
+  color: var(--neutral-gray-700);
+  font-size: 0.9375rem;
+}
+
+.card-resumo {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.card-difs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card-difs li {
+  padding: 0.15rem 0.5rem;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-12);
+  font-size: 0.8125rem;
+  color: var(--neutral-gray-700);
+}
+
+.card-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.card-preco span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--neutral-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.card-preco strong {
+  font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   Selos, meta e utilitários de conteúdo
+   ========================================================================== */
+.aw-badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-12);
+  background: var(--color-surface-muted);
+  color: var(--neutral-gray-700);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.aw-badge--esgotado {
+  background: var(--color-action-primary);
+  color: var(--color-text-inverse);
+}
+
+.aw-meta {
+  color: var(--neutral-gray-500);
+  font-size: 0.875rem;
+}
+
+.aw-meta > * + * {
+  margin-left: 0.4rem;
+}
+
+.aw-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--neutral-gray-500);
+}
+
+.aw-breadcrumb a:hover {
+  color: var(--color-action-primary);
+}
+
+.aw-breadcrumb--claro,
+.aw-breadcrumb--claro a {
+  color: rgb(255 255 255 / 80%);
+}
+
+.aw-vazio {
+  grid-column: 1 / -1;
+  padding: 2rem 0;
+  color: var(--neutral-gray-700);
+  text-align: center;
+}
+
+.aw-placeholder {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: repeating-linear-gradient(45deg, var(--color-surface-muted), var(--color-surface-muted) 10px, var(--color-surface-default) 10px, var(--color-surface-default) 20px);
+  color: var(--neutral-gray-500);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Filtro, skeleton e paginação
+   ========================================================================== */
+.aw-filtro {
+  padding: 1.25rem;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-16);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--neutral-gray-700);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  background: var(--color-surface-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-12);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--brand-navy-500);
+  box-shadow: var(--shadow-focus-ring); /* Input Field · State=Focus */
+  outline: none;
+}
+
+.form-group select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.aw-skeleton {
+  height: 320px;
+  border-radius: var(--radius-16);
+  background: linear-gradient(90deg, var(--color-surface-muted) 25%, var(--color-border-default) 37%, var(--color-surface-muted) 63%);
+  background-size: 400% 100%;
+  animation: aw-shimmer 1.3s ease-in-out infinite;
+}
+
+@keyframes aw-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+.aw-paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.aw-pg {
+  min-width: 40px;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-12);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--aw-transicao), background var(--aw-transicao);
+}
+
+.aw-pg:hover:not(:disabled) {
+  border-color: var(--color-text-primary);
+}
+
+.aw-pg:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.aw-pg.is-ativa {
+  background: var(--color-surface-inverse);
+  border-color: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.aw-pg-elipse {
+  padding-inline: 0.25rem;
+  color: var(--neutral-gray-500);
+}
+
+/* ==========================================================================
+   Formulário
+   ========================================================================== */
+.aw-form {
+  padding: 1.5rem;
+  background: var(--color-surface-default);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-16);
+}
+
+.aw-form-titulo {
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.aw-form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .aw-form:not(.aw-form--compacto) .aw-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group--full {
+  grid-column: 1 / -1;
+}
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.form-check input {
+  width: auto;
+  margin-top: 0.3rem;
+}
+
+.form-check label {
+  margin: 0;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: var(--neutral-gray-700);
+}
+
+.form-check a {
+  color: var(--color-action-primary);
+  text-decoration: underline;
+}
+
+.aw-form-status {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-12);
+  font-size: 0.9375rem;
+}
+
+.aw-form-status.is-success {
+  background: color-mix(in srgb, var(--aw-sucesso) 12%, transparent);
+  color: var(--aw-sucesso);
+}
+
+.aw-form-status.is-error {
+  background: color-mix(in srgb, var(--aw-erro) 12%, transparent);
+  color: var(--aw-erro);
+}
+
+.aw-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 999px;
+  animation: aw-girar 700ms linear infinite;
+}
+
+.aw-spinner[hidden] {
+  display: none;
+}
+
+@keyframes aw-girar {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Toast (fluxo de formulário sem JS)
+   ========================================================================== */
+.aw-toast {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 22rem;
+  padding: 1rem 1.15rem;
+  background: var(--color-surface-default);
+  border: 1px solid var(--color-border-default);
+  border-left: 4px solid var(--neutral-gray-500);
+  border-radius: var(--radius-16);
+  box-shadow: var(--shadow-md);
+}
+
+.aw-toast--success { border-left-color: var(--aw-sucesso); }
+.aw-toast--warning { border-left-color: var(--aw-atencao); }
+.aw-toast--error   { border-left-color: var(--aw-erro); }
+
+.aw-toast-corpo p {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--neutral-gray-700);
+}
+
+.aw-toast-fechar {
+  margin-left: auto;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--neutral-gray-500);
+}
+
+/* ==========================================================================
+   WhatsApp flutuante
+   ========================================================================== */
+.aw-whatsapp {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: #25d366;
+  color: var(--color-text-inverse);
+  box-shadow: var(--shadow-md);
+  transition: transform var(--aw-transicao);
+}
+
+.aw-whatsapp:hover {
+  transform: translateY(-2px);
+}
+
+/* Toast e botão não se sobrepõem. */
+.aw-toast ~ .aw-whatsapp,
+body:has(.aw-toast) .aw-whatsapp {
+  bottom: 6.5rem;
+}
+
+/* ==========================================================================
+   Blocos de conteúdo reutilizados
+   ========================================================================== */
+.section-cta {
+  padding-block: 3rem;
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.aw-diferenciais {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+.aw-diferenciais li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-12);
+  font-size: 0.9375rem;
+}
+
+.aw-ficha {
+  padding: 1.5rem;
+  background: var(--color-surface-muted);
+  border-radius: var(--radius-16);
+}
+
+.aw-preco {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.aw-galeria {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.aw-galeria img {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-12);
+}
+
+.aw-video-capa {
+  position: relative;
+  display: block;
+  border-radius: var(--radius-16);
+  overflow: hidden;
+}
+
+.aw-video-capa img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.aw-video-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(31 41 51 / 35%);
+}
+
+.aw-video-play::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 14px 0 14px 24px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.aw-resultados li + li {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.aw-resultados h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.aw-resultados a:hover h2 {
+  color: var(--color-action-primary);
+}
+
+.aw-resultados p {
+  margin-top: 0.25rem;
+  color: var(--neutral-gray-700);
+  font-size: 0.9375rem;
+}
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+.site-footer {
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+.site-footer a:hover {
+  color: rgb(255 255 255 / 75%);
+}
+
+.footer-titulo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.footer-legal {
+  background: var(--color-surface-inverse);
+  border-top: 1px solid rgb(255 255 255 / 14%);
+}
+
+/* ==========================================================================
+   Product Card (Figma: componente "Product Card", 296×420)
+   Cores pela Linha do produto: --linha-chip-clara / --linha-media /
+   --linha-chip-forte (inc/linhas.php). Hover = State=Hover do Figma
+   (Smart Animate 300 ms ease-out).
+   ========================================================================== */
+.card-produto {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 296px;
+  height: 420px;
+  padding: 24px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-32);
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  transition:
+    background-color var(--motion-product-card),
+    border-color var(--motion-product-card),
+    box-shadow var(--motion-product-card);
+}
+
+.card-produto__palco {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 248px;
+  height: 300px;
+}
+
+.card-produto__blob {
+  position: absolute;
+  top: 50px;
+  left: 14px;
+  width: 220px;
+  height: 220px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    180deg,
+    var(--linha-chip-clara, var(--category-agua-100)),
+    var(--linha-media, var(--category-agua-500))
+  );
+  opacity: 0.9;
+  transition: transform var(--motion-product-card);
+}
+
+.card-produto__img {
+  position: absolute;
+  top: 4px;
+  left: 24px;
+  width: 200px;
+  height: 290px;
+  object-fit: contain;
+  filter: drop-shadow(var(--drop-shadow-card-produto));
+  transition: transform var(--motion-product-card), filter var(--motion-product-card);
+}
+
+.card-produto__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  /* Figma: Footer space-between, Nome 208 + Go 40 */
+}
+
+.card-produto__nome {
+  transition: color var(--motion-product-card);
+}
+
+.card-produto__ir {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    180deg,
+    var(--linha-media, var(--category-agua-500)),
+    var(--linha-chip-forte, var(--category-agua-700))
+  );
+  color: var(--color-text-inverse);
+}
+
+.card-produto__ir svg {
+  transition: transform var(--motion-product-card);
+}
+
+.card-produto:hover,
+.card-produto:focus-visible {
+  border-color: var(--color-border-default);
+  background: var(--color-surface-default);
+  box-shadow: var(--shadow-product-card-hover);
+}
+
+/* Blob 220 → 252 (mesmo centro); produto sobe 18 px e inclina (Figma −5°,
+   horário na tela); seta gira −45°; nome na cor forte da linha. */
+.card-produto:hover .card-produto__blob,
+.card-produto:focus-visible .card-produto__blob {
+  transform: scale(1.1455);
+}
+
+.card-produto:hover .card-produto__img,
+.card-produto:focus-visible .card-produto__img {
+  filter: drop-shadow(var(--drop-shadow-card-produto-hover));
+  transform: translateY(-18px) rotate(5deg);
+}
+
+.card-produto:hover .card-produto__nome,
+.card-produto:focus-visible .card-produto__nome {
+  color: var(--linha-chip-forte, var(--category-agua-700));
+}
+
+.card-produto:hover .card-produto__ir svg,
+.card-produto:focus-visible .card-produto__ir svg {
+  transform: rotate(-45deg);
+}
+
+.card-produto:focus-visible {
+  outline: 2px solid var(--linha-chip-forte, var(--color-action-primary));
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Card "Ver todos" (Figma: componente "Card Ver Todos", 296×420)
+   ========================================================================== */
+.card-ver-todos {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 296px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: var(--radius-32);
+  background: linear-gradient(135deg, var(--brand-navy-500), var(--brand-royal-500));
+  color: var(--color-text-inverse);
+  transition: box-shadow var(--motion-product-card);
+}
+
+/* Hover: "gradiente clareia" (navy-500 → sky-500). Gradiente não anima, então
+   o do hover vem numa camada por cima que aparece em opacidade. */
+.card-ver-todos::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, var(--brand-navy-500), var(--brand-sky-500));
+  opacity: 0;
+  transition: opacity var(--motion-product-card);
+}
+
+.card-ver-todos__bolha {
+  position: absolute;
+  z-index: -1;
+  border-radius: var(--radius-full);
+}
+
+.card-ver-todos__bolha--1 {
+  top: -80px;
+  left: 140px;
+  width: 260px;
+  height: 260px;
+  background: var(--alpha-neutral-white-12);
+}
+
+.card-ver-todos__bolha--2 {
+  top: 250px;
+  left: -30px;
+  width: 180px;
+  height: 180px;
+  background: var(--alpha-neutral-white-10);
+}
+
+.card-ver-todos__bolha--3 {
+  top: 300px;
+  left: 200px;
+  width: 90px;
+  height: 90px;
+  background: var(--alpha-neutral-white-14);
+}
+
+.card-ver-todos__ir {
+  position: absolute;
+  top: 130px;
+  left: 102px;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-default);
+  color: var(--brand-navy-500);
+  transition: transform var(--motion-product-card);
+}
+
+.card-ver-todos__ir svg {
+  transition: transform var(--motion-product-card);
+}
+
+.card-ver-todos__texto {
+  position: absolute;
+  top: 262px;
+  left: 65px;
+  width: 166px;
+  font-size: 34px;                         /* Figma: Montserrat 800 34/105%, −1 */
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  text-align: center;
+}
+
+.card-ver-todos:hover,
+.card-ver-todos:focus-visible {
+  box-shadow: var(--shadow-card-ver-todos-hover);
+}
+
+.card-ver-todos:hover::before,
+.card-ver-todos:focus-visible::before {
+  opacity: 1;
+}
+
+/* Círculo 92 → 104 (mesmo centro), seta ↗. */
+.card-ver-todos:hover .card-ver-todos__ir,
+.card-ver-todos:focus-visible .card-ver-todos__ir {
+  transform: scale(1.1304);
+}
+
+.card-ver-todos:hover .card-ver-todos__ir svg,
+.card-ver-todos:focus-visible .card-ver-todos__ir svg {
+  transform: rotate(-45deg);
+}
+
+.card-ver-todos:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-produto,
+  .card-produto *,
+  .card-ver-todos,
+  .card-ver-todos *,
+  .card-ver-todos::before {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Play Button (Figma: Play Button) — vídeo institucional da Home e da
+   página A Entre Rios. Movido de home.css.
+   ========================================================================== */
+/* Play Button: 112 white/25, borda 1,5 white/80, blur 16 → hover 128 branco */
+.botao-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  border: 1.5px solid var(--alpha-neutral-white-80);
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-25);
+  color: var(--neutral-white);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform: translate(-50%, -50%);
+  transition: width 300ms ease-out, height 300ms ease-out, background-color 300ms ease-out, color 300ms ease-out, box-shadow 300ms ease-out;
+}
+
+.botao-play svg {
+  width: 28%;
+  height: auto;
+  margin-left: 6%;
+}
+
+@media (min-width: 1280px) {
+  .botao-play {
+    width: 112px;
+    height: 112px;
+  }
+}
+
+.botao-play:hover,
+.botao-play:focus-visible {
+  width: 104px;
+  height: 104px;
+  background: var(--neutral-white);
+  color: var(--brand-navy-500);
+  box-shadow: var(--shadow-play-button-hover);
+}
+
+@media (min-width: 1280px) {
+  .botao-play:hover,
+  .botao-play:focus-visible {
+    width: 128px;
+    height: 128px;
+  }
+}
+
+.botao-play:focus-visible {
+  outline: 3px solid var(--neutral-white);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   Arrow Button (Figma: Arrow/prev, Arrow/next) — vitrine da Home e galeria
+   da página A Entre Rios. Cor da linha via --linha-chip-forte (override).
+   Movido de home.css.
+   ========================================================================== */
+.seta-vitrine {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: box-shadow var(--motion-button), opacity var(--motion-button);
+}
+
+.seta-vitrine svg {
+  transition: transform var(--motion-button);
+}
+
+/* Type=Prev: contorno na cor da linha a 40%. Type=Next: cheia. */
+.seta-vitrine--anterior {
+  border-color: color-mix(in srgb, var(--linha-chip-forte, var(--brand-navy-500)) 40%, transparent);
+  background: transparent;
+  color: var(--linha-chip-forte, var(--brand-navy-500));
+}
+
+.seta-vitrine--proxima {
+  background: var(--linha-chip-forte, var(--brand-navy-500));
+  color: var(--color-text-inverse);
+}
+
+/* Hover: a seta desliza 5 px na direção e o botão ganha sombra. */
+.seta-vitrine:not(:disabled):hover {
+  box-shadow: var(--shadow-arrow-button-hover);
+}
+
+.seta-vitrine--anterior:not(:disabled):hover svg {
+  transform: translateX(-5px);
+}
+
+.seta-vitrine--proxima:not(:disabled):hover svg {
+  transform: translateX(5px);
+}
+
+/* Sem para onde rolar (adaptação: o Figma mostra as setas esmaecidas
+   quando todos os cards cabem, ex.: Energéticos). */
+.seta-vitrine:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.seta-vitrine:focus-visible {
+  outline: 2px solid var(--linha-chip-forte, var(--color-action-primary));
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Botões e abas compartilhados (movidos de home.css — agora a Home, a página
+   Produtos e a página do produto usam):
+   Button / Style=Light (.botao-claro), Button / Style=Primary (.botao-primario)
+   e Category Tabs (.aba-linha). Ajustes de escala da Home (--u) continuam em
+   home.css.
+   ========================================================================== */
+/* Button / Style=Light */
+.botao-claro {
+  --bc-gap: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bc-gap);
+  height: 60px;
+  padding: 8px 8px 8px 32px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-white);
+  color: var(--brand-navy-500);
+  transition: gap var(--motion-button), box-shadow var(--motion-button);
+}
+
+.botao-claro__icone {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-action-primary);
+  color: var(--neutral-white);
+  transition: background-color var(--motion-button);
+}
+
+.botao-claro:hover {
+  --bc-gap: 24px;
+
+  box-shadow: var(--shadow-button-light-hover);
+}
+
+.botao-claro:hover .botao-claro__icone {
+  background: var(--color-action-primary-hover);
+}
+
+/* Button / Style=Primary */
+.botao-primario {
+  --bp-gap: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bp-gap);
+  min-height: 60px;
+  padding: 8px 8px 8px 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-action-primary);
+  color: var(--neutral-white);
+  transition: gap var(--motion-button), background-color var(--motion-button), box-shadow var(--motion-button);
+}
+
+.botao-primario > .text-label-button {
+  white-space: nowrap;
+}
+
+.botao-primario__icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-white);
+  color: var(--color-action-primary);
+}
+
+.botao-primario:hover {
+  --bp-gap: 24px;
+
+  background: var(--color-action-primary-hover);
+  box-shadow: var(--shadow-button-primary-hover);
+}
+
+.aba-linha {
+  flex: none;
+  padding: 16px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--vit-transicao, 500ms ease-in-out), color var(--vit-transicao, 500ms ease-in-out); /* Figma: Category Tabs, smart animate 0,5 s */
+}
+
+/* Hover: "fundo azul claro". Active: cor da categoria. */
+.aba-linha:hover {
+  background: var(--color-surface-selected);
+}
+
+.aba-linha.is-ativo {
+  background: var(--linha-chip-forte, var(--brand-navy-500));
+  color: var(--color-text-inverse);
+}
+
+.aba-linha:focus-visible {
+  outline: 2px solid var(--linha-chip-forte, var(--color-action-primary));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao-claro,
+  .botao-claro__icone,
+  .botao-primario,
+  .aba-linha {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Breadcrumb (Label/Small branco, sobre degradê) — página Produtos e
+   página do produto (template-parts/produtos/trilha.php)
+   ========================================================================== */
+.trilha-er__lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;                                /* Figma: Breadcrumb gap 8 */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-inverse);
+}
+
+.trilha-er__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trilha-er__item + .trilha-er__item::before {
+  content: "/";
+}
+
+.trilha-er a {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--motion-button), color var(--motion-button);
+}
+
+.trilha-er a:hover {
+  color: var(--brand-sky-300);
+  text-decoration-color: currentcolor;
+}
+
+.trilha-er a:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trilha-er a {
+    transition: none;
+  }
+}

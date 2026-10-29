@@ -1,0 +1,180 @@
+/*
+ * Entrada do Tailwind v4 — compilada para assets/css/tailwind.css.
+ *
+ *   npm run dev    (watch)
+ *   npm run build  (minificado, para commit)
+ *
+ * Breakpoints, cores e estilos de texto espelham o design system do Figma
+ * "Entre Rios" (05_Documentation). Os valores ficam em style.css (seção 1);
+ * aqui só se expõem como utilitários. Mapa completo em docs/TOKENS-FIGMA.md.
+ *
+ * Por que os semânticos (--color-text-primary…) e os raios (--radius-12…) NÃO
+ * são espelhados no @theme: eles já usam o mesmo namespace do Tailwind, e
+ * "--color-x: var(--color-x)" vira referência circular (a variável fica
+ * inválida e o CSS é ignorado sem erro). Use a sintaxe de variável do v4:
+ *   bg-(--color-surface-subtle)  text-(--color-text-accent)  rounded-(--radius-24)
+ */
+
+@import "tailwindcss";
+
+@source "../**/*.php";
+
+@theme {
+  /* Breakpoints = layout guide styles do Figma (Mobile 390 / Tablet 768 /
+     Desktop 1600 com 1280 de área útil). Mobile é o padrão, sem prefixo.
+     Os breakpoints padrão do Tailwind (sm, md, lg…) são removidos. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1280px;
+
+  /* Família */
+  --font-sans: var(--font-family-base);
+
+  /* Primitivos de cor → bg-brand-navy-500, text-category-agua-700, … */
+  --color-brand-navy-500: var(--brand-navy-500);
+  --color-brand-navy-700: var(--brand-navy-700);
+  --color-brand-navy-900: var(--brand-navy-900);
+  --color-brand-sky-300: var(--brand-sky-300);
+  --color-brand-sky-500: var(--brand-sky-500);
+  --color-brand-lavender-50: var(--brand-lavender-50);
+  --color-brand-royal-500: var(--brand-royal-500);
+
+  --color-neutral-ink: var(--neutral-ink);
+  --color-neutral-gray-500: var(--neutral-gray-500);
+  --color-neutral-gray-700: var(--neutral-gray-700);
+  --color-neutral-white: var(--neutral-white);
+  --color-neutral-lavender-25: var(--neutral-lavender-25);
+  --color-neutral-lavender-100: var(--neutral-lavender-100);
+  --color-neutral-lavender-200: var(--neutral-lavender-200);
+  --color-neutral-lavender-300: var(--neutral-lavender-300);
+  --color-neutral-lavender-400: var(--neutral-lavender-400);
+  --color-neutral-lavender-600: var(--neutral-lavender-600);
+
+  --color-accent-green: var(--accent-green);
+  --color-accent-lime: var(--accent-lime);
+  --color-accent-yellow: var(--accent-yellow);
+
+  --color-category-agua-100: var(--category-agua-100);
+  --color-category-agua-500: var(--category-agua-500);
+  --color-category-agua-700: var(--category-agua-700);
+  --color-category-energeticos-300: var(--category-energeticos-300);
+  --color-category-energeticos-500: var(--category-energeticos-500);
+  --color-category-energeticos-700: var(--category-energeticos-700);
+  --color-category-energeticos-900: var(--category-energeticos-900);
+  --color-category-energeticos-950: var(--category-energeticos-950);
+  --color-category-refrigerantes-300: var(--category-refrigerantes-300);
+  --color-category-refrigerantes-400: var(--category-refrigerantes-400);
+  --color-category-refrigerantes-500: var(--category-refrigerantes-500);
+  --color-category-refrigerantes-700: var(--category-refrigerantes-700);
+  --color-category-refrigerantes-900: var(--category-refrigerantes-900);
+  --color-category-guarana-mais-300: var(--category-guarana-mais-300);
+  --color-category-guarana-mais-400: var(--category-guarana-mais-400);
+  --color-category-guarana-mais-500: var(--category-guarana-mais-500);
+  --color-category-guarana-mais-700: var(--category-guarana-mais-700);
+  --color-category-guarana-mais-900: var(--category-guarana-mais-900);
+  --color-category-guarana-mais-950: var(--category-guarana-mais-950);
+
+  /* Estilos de texto do Figma → text-display-xxl, text-heading-h1, …
+     Cada utilitário aplica tamanho (responsivo, via --font-size-*), entrelinha,
+     tracking e peso exatamente como no text style. */
+  --text-display-wordmark: var(--font-size-display-wordmark);
+  --text-display-wordmark--line-height: normal; /* LH Auto */
+  --text-display-wordmark--letter-spacing: 0;
+  --text-display-wordmark--font-weight: 900;
+
+  --text-display-xxl: var(--font-size-display-xxl);
+  --text-display-xxl--line-height: 0.85;
+  --text-display-xxl--letter-spacing: -4px;
+  --text-display-xxl--font-weight: 900;
+
+  --text-display-xl: var(--font-size-display-xl);
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: -2px;
+  --text-display-xl--font-weight: 900;
+
+  --text-display-l: var(--font-size-display-l);
+  --text-display-l--line-height: 1;
+  --text-display-l--letter-spacing: 0;
+  --text-display-l--font-weight: 900;
+
+  --text-heading-h1: var(--font-size-heading-h1);
+  --text-heading-h1--line-height: 1;
+  --text-heading-h1--letter-spacing: -1.5px;
+  --text-heading-h1--font-weight: 800;
+
+  --text-heading-h2: var(--font-size-heading-h2);
+  --text-heading-h2--line-height: 1.05;
+  --text-heading-h2--letter-spacing: -1px;
+  --text-heading-h2--font-weight: 800;
+
+  --text-heading-h3: var(--font-size-heading-h3);
+  --text-heading-h3--line-height: 1.2;
+  --text-heading-h3--letter-spacing: -0.5px;
+  --text-heading-h3--font-weight: 700;
+
+  --text-heading-h4: var(--font-size-heading-h4);
+  --text-heading-h4--line-height: 1.3;
+  --text-heading-h4--letter-spacing: 0;
+  --text-heading-h4--font-weight: 700;
+
+  --text-body-large: var(--font-size-body-large);
+  --text-body-large--line-height: 1.6;
+  --text-body-large--letter-spacing: 0;
+  --text-body-large--font-weight: 400;
+
+  --text-body-regular: var(--font-size-body-regular);
+  --text-body-regular--line-height: 1.7;
+  --text-body-regular--letter-spacing: 0;
+  --text-body-regular--font-weight: 400;
+
+  --text-label-caps: var(--font-size-label-caps);
+  --text-label-caps--line-height: 1.2;
+  --text-label-caps--letter-spacing: 2px;
+  --text-label-caps--font-weight: 700;
+
+  --text-label-bold: var(--font-size-label-bold);
+  --text-label-bold--line-height: 1.4;
+  --text-label-bold--letter-spacing: 0;
+  --text-label-bold--font-weight: 700;
+
+  --text-label-button: var(--font-size-label-button);
+  --text-label-button--line-height: 1.2;
+  --text-label-button--letter-spacing: 0.2px;
+  --text-label-button--font-weight: 600;
+
+  --text-label-button-sm: var(--font-size-label-button-sm);
+  --text-label-button-sm--line-height: 1.2;
+  --text-label-button-sm--letter-spacing: 0;
+  --text-label-button-sm--font-weight: 600;
+
+  --text-label-small: var(--font-size-label-small);
+  --text-label-small--line-height: 1.4;
+  --text-label-small--letter-spacing: 0;
+  --text-label-small--font-weight: 500;
+}
+
+/* Container = área útil do layout guide: margem 20 (Mobile) / 40 (Tablet e
+   Desktop), largura útil máxima de 1280 px (Desktop 1600 − 2 × 160).
+   Declarado com @utility para SUBSTITUIR o .container nativo do Tailwind v4 —
+   num @layer components ele perderia para o utilitário nativo (camada
+   utilities vence components) e ganharia max-width por breakpoint. */
+@utility container {
+  width: 100%;
+  max-width: calc(var(--grid-max-width) + 2 * var(--grid-margin));
+  margin-inline: auto;
+  padding-inline: var(--grid-margin);
+}
+
+@layer components {
+  /* Grade do Figma: 4 / 8 / 12 colunas, gutter 16 / 24 / 24. */
+  .grid-figma {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  /* Label/Caps é sempre em caixa alta no Figma. */
+  .text-label-caps {
+    text-transform: uppercase;
+  }
+}

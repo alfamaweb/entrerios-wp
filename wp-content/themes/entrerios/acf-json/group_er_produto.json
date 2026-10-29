@@ -1,0 +1,226 @@
+{
+    "key": "group_er_produto",
+    "title": "Produto — Ficha",
+    "fields": [
+        {
+            "key": "field_er_tab_produto_ficha",
+            "label": "Ficha e versões",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_produto_tamanho",
+            "label": "Tamanho",
+            "name": "produto_tamanho",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Como aparece na pílula TAMANHO. Ex.: 500ml, Lata 269ml, 2L.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_produto_sabor",
+            "label": "Sabor",
+            "name": "produto_sabor",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Só quando a linha tem sabores. Ex.: Guaraná. Vazio esconde o grupo SABOR.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_produto_imagem",
+            "label": "Foto em alta (opcional)",
+            "name": "produto_imagem",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Foto recortada maior para o topo da página (cerca de 800 × 1500 px). Vazio usa a imagem destacada.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "mime_types": "png,webp",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0
+        },
+        {
+            "key": "field_er_produto_versoes",
+            "label": "Outras versões",
+            "name": "produto_versoes",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Produtos que são versões deste (outro tamanho, sabor ou com\/sem gás). As pílulas TIPO, SABOR e TAMANHO levam a eles. Cadastre nos dois sentidos.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "produto"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "taxonomy"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": "",
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_er_tab_produto_sanfona",
+            "label": "Sanfona",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_produto_sanfona",
+            "label": "Itens da sanfona",
+            "name": "produto_sanfona",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Figma: Composição, Informações e Release. O primeiro abre sozinho. Vazio esconde a sanfona.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "min": 0,
+            "max": 6,
+            "collapsed": "field_er_produto_sanfona_titulo",
+            "button_label": "Adicionar item",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_er_produto_sanfona_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "maxlength": "",
+                    "parent_repeater": "field_er_produto_sanfona",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_er_produto_sanfona_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Linha em branco separa parágrafos.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "maxlength": "",
+                    "rows": 4,
+                    "new_lines": "",
+                    "parent_repeater": "field_er_produto_sanfona"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "produto"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "Página do produto (single-produto.php). Linha, Embalagem e Tipo ficam nas caixas de taxonomia ao lado.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793299977
+}

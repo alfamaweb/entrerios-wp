@@ -1,0 +1,2423 @@
+/*
+ * Home — Hero Slider (Figma: componente "Hero Slider", Desktop 1600×1000,
+ * Tablet 768 e Mobile 390).
+ *
+ * ALTURA (LCP/FCP: o hero é a primeira dobra inteira, sem saltos de layout)
+ *   Desktop:        clamp(90svh, 62.5vw, 100svh) — proporção 1600:1000 do
+ *                   Figma, presa entre 90% e 100% da altura da tela.
+ *   Tablet/Mobile:  100svh (cresce só se a tela for baixa demais).
+ *   svh = altura com a barra do navegador visível: não muda ao rolar, então
+ *   o hero não "pula" no mobile.
+ *
+ * ESCALA — a unidade --u vale "1 px do Figma" e é calculada por container
+ * query (cqw/cqh), sem JS:
+ *   Desktop: --u = min(altura do hero / 1000, largura / 1600). Tudo dentro do
+ *            hero (cena, texto, botões, seletor) é posicionado e dimensionado
+ *            em --u, então a composição do Figma se mantém em qualquer tela.
+ *            A cena fica ancorada embaixo (o arco branco encosta no fim).
+ *   Tablet/Mobile: texto, botões e seletor ficam em tamanho real (tokens);
+ *            só a cena (produto, ondas, bolhas) escala para caber no espaço
+ *            que sobra: --u = min(espaço / 500, largura / 768) no Tablet e
+ *            min(espaço / 380, largura / 390) no Mobile.
+ * Cada "calc(N * var(--u))" é a medida N do frame no Figma. Tamanhos de texto
+ * no Desktop repetem o valor do token Desktop × --u (comentados).
+ *
+ * As cores de cada slide chegam por style="--linha-…" (inc/linhas.php); os
+ * fallbacks abaixo são os tokens da marca (slide Água Mineral).
+ */
+
+.hero-er {
+  /* Figma: interação "After delay 5000 ms → Smart animate, ease in and out,
+     900 ms" (a descrição do componente fala em 700 ms; vale a interação). */
+  --hero-transicao: 900ms ease-in-out;
+  /* Centro do produto na cena e escala da cena em relação ao Desktop —
+     usados para reposicionar as bolhas (desenhados só no Desktop). */
+  --pcx: 195;
+  --pcy: 199;
+  --esc: 0.434;
+
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                                /* Figma Mobile: gap do hero */
+  /* Ocupa a tela; só cresce além dela se a tela for baixa demais para o
+     texto + a cena mínima + o seletor (ex.: celular deitado). */
+  min-height: 100svh;
+  overflow: hidden;
+  padding-top: calc(16px + 60px + 32px);   /* cabeçalho: topo 16 + logo 60 + gap 32 */
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .hero-er {
+    --pcx: 384;
+    --pcy: 260;
+    --esc: 0.579;
+
+    gap: 16px;                             /* Figma Tablet */
+    padding-top: calc(24px + 76px + 40px); /* topo 24 + logo 76 + gap 40 */
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er {
+    --pcx: 950;
+    --pcy: 490;
+    --esc: 1;
+    /* Resolvida em cada descendente contra o hero (container). */
+    --u: min(calc(100cqh / 1000), calc(100cqw / 1600));
+
+    container-type: size;
+    display: block;
+    height: clamp(90svh, 62.5vw, 100svh);
+    min-height: 0;
+    padding-top: 0;
+  }
+}
+
+/* ==========================================================================
+   Fundos — gradiente da linha, em crossfade
+   ========================================================================== */
+.hero-er__fundos,
+.hero-er__fundo {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-er__fundos {
+  z-index: -1;
+}
+
+.hero-er__fundo {
+  /* Ângulo não legível no modo de visualização do Figma: 135° (escuro no
+     canto do texto, claro atrás do produto) — adaptação, ver README. */
+  background: linear-gradient(
+    135deg,
+    var(--linha-hero-inicio, var(--brand-navy-500)),
+    var(--linha-hero-meio, var(--brand-sky-500)),
+    var(--linha-hero-fim, var(--brand-sky-300))
+  );
+  opacity: 0;
+  transition: opacity var(--hero-transicao);
+}
+
+.hero-er__fundo.is-ativo {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Palco (área disponível) e cena (composição do Figma, escalada)
+   ========================================================================== */
+.hero-er__palco {
+  position: relative;
+  z-index: 1;
+  order: 2;
+  flex: 1 1 0;
+  min-height: 220px;
+  container-type: size;
+  /* Resolvida na cena contra o palco (container mais próximo). */
+  --u: min(calc(100cqh / 380), calc(100cqw / 390));
+}
+
+.hero-er__cena {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(390 * var(--u));
+  height: calc(380 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+@media (min-width: 768px) {
+  .hero-er__palco {
+    --u: min(calc(100cqh / 500), calc(100cqw / 768));
+  }
+
+  .hero-er__cena {
+    width: calc(768 * var(--u));
+    height: calc(500 * var(--u));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__palco {
+    position: absolute;
+    inset: 0;
+    --u: min(calc(100cqh / 1000), calc(100cqw / 1600));
+  }
+
+  .hero-er__cena {
+    top: auto;
+    bottom: 0;
+    width: calc(1600 * var(--u));
+    height: calc(1000 * var(--u));
+    transform: translateX(-50%);
+  }
+}
+
+/* Glow: círculo com radial branco 55% → 0%. Desktop 760 em (570,150);
+   Tablet/Mobile: mesmo diâmetro do produto, centrado nele (adaptação). */
+.hero-er__brilho {
+  position: absolute;
+  top: calc(34 * var(--u));
+  left: calc(30 * var(--u));
+  width: calc(330 * var(--u));
+  aspect-ratio: 1;
+  border-radius: var(--radius-full);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--neutral-white) 55%, transparent), transparent);
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .hero-er__brilho {
+    top: calc(40 * var(--u));
+    left: calc(164 * var(--u));
+    width: calc(440 * var(--u));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__brilho {
+    top: calc(150 * var(--u));
+    left: calc(570 * var(--u));
+    width: calc(760 * var(--u));
+  }
+}
+
+/* BG Word: Display/XXL vazado (stroke branco 16%). */
+.hero-er__palavra {
+  position: absolute;
+  top: calc(8 * var(--u));
+  inset-inline: 0;
+  margin: 0;
+  color: transparent;
+  font-size: calc(56 * var(--u));          /* Display/XXL Mobile */
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: calc(-2 * var(--u));
+  text-align: center;
+  white-space: nowrap;
+  -webkit-text-stroke: 1px var(--alpha-neutral-white-16);
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .hero-er__palavra {
+    top: calc(10 * var(--u));              /* Figma Tablet: (47, 10) */
+    font-size: calc(112 * var(--u));       /* Display/XXL Tablet */
+    letter-spacing: calc(-4 * var(--u));
+    -webkit-text-stroke-width: 1.5px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__palavra {
+    top: calc(110 * var(--u));             /* Figma Desktop: (108.5, 110) */
+    font-size: calc(220 * var(--u));       /* Display/XXL Desktop */
+    -webkit-text-stroke-width: 2px;
+  }
+}
+
+/* "ENTRE RIOS" em vetor (exportado do Figma): 1372×166 em Display/XXL 220.
+   Tablet e Mobile escalam pela proporção do token (112/220 e 56/220). O
+   contorno não escala com o desenho (vector-effect) para manter 2 / 1,5 / 1 px
+   (o traço é de 2× porque metade fica mascarada pela própria letra). */
+.hero-er__palavra--svg {
+  top: calc(11 * var(--u));
+  right: 0;
+  left: 0;
+  width: calc(349.2 * var(--u));
+  height: auto;
+  margin-inline: auto;
+  color: var(--alpha-neutral-white-16);
+  -webkit-text-stroke: 0;
+}
+
+.hero-er__palavra--svg .er-palavra__traco {
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+@media (min-width: 768px) {
+  .hero-er__palavra--svg {
+    top: calc(15 * var(--u));
+    width: calc(698.5 * var(--u));
+  }
+
+  .hero-er__palavra--svg .er-palavra__traco {
+    stroke-width: 3px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__palavra--svg {
+    top: calc(120 * var(--u));             /* caixa do texto em 110 + respiro da linha */
+    width: calc(1372 * var(--u));
+  }
+
+  .hero-er__palavra--svg .er-palavra__traco {
+    stroke-width: 4px;
+  }
+}
+
+/* Ripples: 3 elipses concêntricas, borda branca 50 / 36 / 22 %.
+   Desktop: R1 520×114.4 com centro em (950, 745). */
+.hero-er__ondas {
+  --onda-base: 357;
+  --onda-borda: 1px;
+
+  position: absolute;
+  top: calc(356 * var(--u));
+  left: calc(195 * var(--u));
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .hero-er__ondas {
+    --onda-base: 476.16;                   /* Figma Tablet: Ripple1 476.16×95.23 */
+    --onda-borda: 1.5px;
+
+    top: calc(470 * var(--u));
+    left: calc(384 * var(--u));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__ondas {
+    --onda-base: 520;
+    --onda-borda: 2px;
+
+    top: calc(745 * var(--u));
+    left: calc(950 * var(--u));
+  }
+}
+
+.hero-er__onda {
+  position: absolute;
+  width: calc(var(--onda-base) * var(--k) * var(--u));
+  height: calc(var(--onda-base) * var(--k) * 0.22 * var(--u));
+  border: var(--onda-borda) solid var(--c);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hero-er__onda--1 {
+  --k: 1;
+  --c: color-mix(in srgb, var(--neutral-white) 50%, transparent);
+}
+
+.hero-er__onda--2 {
+  --k: 1.2308;                             /* 640 / 520 */
+  --c: color-mix(in srgb, var(--neutral-white) 36%, transparent);
+}
+
+.hero-er__onda--3 {
+  --k: 1.4615;                             /* 760 / 520 */
+  --c: color-mix(in srgb, var(--neutral-white) 22%, transparent);
+}
+
+/* ==========================================================================
+   Produto
+   ========================================================================== */
+.hero-er__produto {
+  --rot: 0deg;
+  --px: 92.46;                             /* Figma Mobile: 205.07×330 em (92.46, 34) */
+  --py: 34;
+  --pw: 205.07;
+  --ph: 330;
+
+  position: absolute;
+  top: calc(var(--py) * var(--u));
+  left: calc(var(--px) * var(--u));
+  width: calc(var(--pw) * var(--u));
+  height: calc(var(--ph) * var(--u));
+  margin: 0;
+  opacity: 0;
+  /* Entrada "com leve rotação/escala" (descrição do componente). */
+  transform: rotate(calc(var(--rot) + 6deg)) scale(0.9);
+  transition: opacity var(--hero-transicao), transform var(--hero-transicao);
+}
+
+.hero-er__produto.is-ativo {
+  opacity: 1;
+  transform: rotate(var(--rot));
+}
+
+.hero-er__produto.is-inclinado {
+  --rot: 6deg;                             /* Figma: −6° (horário na tela) */
+  --px: 74.5;
+}
+
+.hero-er__produto--copo {
+  --px: 130;
+  --py: 99;
+  --pw: 130.2;
+  --ph: 243;
+}
+
+.hero-er__produto--copo.is-inclinado {
+  --px: 112;
+}
+
+@media (min-width: 768px) {
+  .hero-er__produto {
+    --px: 247.29;                          /* Figma Tablet: 273.43×440 em (247.29, 40) */
+    --py: 40;
+    --pw: 273.43;
+    --ph: 440;
+  }
+
+  .hero-er__produto.is-inclinado {
+    --px: 223;
+  }
+
+  .hero-er__produto--copo {
+    --px: 297;
+    --py: 127;
+    --pw: 173.7;
+    --ph: 324.2;
+  }
+
+  .hero-er__produto--copo.is-inclinado {
+    --px: 273;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__produto {
+    --px: 750;                             /* Figma Desktop: 400×760 em (750, 110) */
+    --py: 110;
+    --pw: 400;
+    --ph: 760;
+  }
+
+  /* Variants inclinados: eixo do produto em x ≈ 909 no frame (medido). */
+  .hero-er__produto.is-inclinado {
+    --px: 709;
+  }
+
+  .hero-er__produto--copo {
+    --px: 800;                             /* Figma Desktop: copo 300×560, top 260 */
+    --py: 260;
+    --pw: 300;
+    --ph: 560;
+  }
+
+  .hero-er__produto--copo.is-inclinado {
+    --px: 759;
+  }
+}
+
+.hero-er__produto-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(var(--drop-shadow-hero-product-mobile));
+  animation: hero-flutuar 4s ease-in-out infinite alternate;
+}
+
+@media (min-width: 768px) {
+  .hero-er__produto-img {
+    filter: drop-shadow(var(--drop-shadow-hero-product-tablet));
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-er__produto-img {
+    filter: drop-shadow(var(--drop-shadow-hero-product));
+  }
+}
+
+/* "Hero Product (float)": flutuação contínua (amplitude e período são
+   adaptação — o Figma nomeia o efeito, mas não o anima). */
+@keyframes hero-flutuar {
+  to {
+    transform: translateY(calc(-12 * var(--u)));
+  }
+}
+
+/* ==========================================================================
+   Bolhas
+   ========================================================================== */
+.hero-er__bolhas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-er__bolha {
+  position: absolute;
+  top: calc((var(--pcy) + (var(--y) - 490) * var(--esc)) * var(--u));
+  left: calc((var(--pcx) + (var(--x) - 950) * var(--esc)) * var(--u));
+  width: calc(var(--b) * var(--esc) * var(--u));
+  aspect-ratio: 1;
+  border: 1px solid var(--alpha-neutral-white-60);
+  border-radius: var(--radius-full);
+  /* Figma: radial branco 5% / 25% / 70%. */
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in srgb, var(--neutral-white) 70%, transparent),
+    color-mix(in srgb, var(--neutral-white) 25%, transparent) 45%,
+    color-mix(in srgb, var(--neutral-white) 5%, transparent)
+  );
+  opacity: 0;
+  /* "Bolhas sobem (parallax)": cada uma com ritmo próprio. Durações são
+     adaptação (o Figma não define). */
+  animation: hero-bolha calc(9s + var(--n) * 0.37s) linear infinite;
+  animation-delay: calc(var(--n) * -1.13s);
+}
+
+@keyframes hero-bolha {
+  10% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0.8;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(calc(var(--y) * var(--esc) * var(--u) * -0.85));
+  }
+}
+
+/* ==========================================================================
+   Arco branco (Desktop): elipse 2400×900 em (−400, 800) do frame 1000
+   ========================================================================== */
+.hero-er__arco {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .hero-er__arco {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% - 200 * var(--u));
+    left: calc(50% - 1200 * var(--u));
+    display: block;
+    width: calc(2400 * var(--u));
+    height: calc(900 * var(--u));
+    border-radius: 50%;
+    background: var(--color-surface-default);
+  }
+}
+
+/* ==========================================================================
+   Conteúdo
+   ========================================================================== */
+.hero-er__conteudo {
+  position: relative;
+  z-index: 3;
+  order: 1;
+  flex-shrink: 0;
+  padding-inline: 24px;                    /* Figma Mobile: "Top" com 24 */
+}
+
+@media (min-width: 768px) {
+  .hero-er__conteudo {
+    padding-inline: var(--grid-margin);
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Mesmo quadro 1000 da cena, ancorado embaixo. */
+  .hero-er__conteudo {
+    position: absolute;
+    inset: auto 0 0;
+    height: calc(1000 * var(--u));
+    margin-inline: auto;
+    pointer-events: none;
+  }
+
+  .hero-er__conteudo > * {
+    pointer-events: auto;
+  }
+}
+
+.hero-er__copias {
+  display: grid;
+}
+
+@media (min-width: 1280px) {
+  .hero-er__copias {
+    position: absolute;
+    top: calc(330 * var(--u));             /* Figma: Hero Copy em (160, 330) */
+    left: var(--grid-margin);
+    width: calc(582 * var(--u));
+  }
+}
+
+.hero-er__copia {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;                               /* Figma Mobile */
+  grid-area: 1 / 1;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--hero-transicao), transform var(--hero-transicao), visibility var(--hero-transicao);
+}
+
+.hero-er__copia.is-ativo {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
+
+@media (min-width: 768px) {
+  .hero-er__copia {
+    gap: 24px;                             /* Figma Tablet */
+  }
+}
+
+.hero-er__contador {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.hero-er__divisor {
+  width: 48px;
+  height: 2px;
+  background: var(--neutral-white);
+}
+
+.hero-er__titulo {
+  margin: 0;
+  color: var(--color-text-inverse);
+}
+
+.hero-er__texto {
+  max-width: 380px;                        /* Figma: Paragraph 380 */
+  margin: 0;
+}
+
+/* Button / Style=Light (.botao-claro): global, em assets/css/style.css. */
+
+/* Desktop: texto e botão na escala --u (tokens Desktop × --u). */
+@media (min-width: 1280px) {
+  .hero-er__copia {
+    gap: calc(32 * var(--u));              /* Figma Desktop */
+  }
+
+  .hero-er__contador {
+    gap: calc(16 * var(--u));
+    font-size: calc(14 * var(--u));        /* Label/Caps */
+    letter-spacing: calc(2 * var(--u));
+  }
+
+  .hero-er__divisor {
+    width: calc(48 * var(--u));
+    height: calc(2 * var(--u));
+  }
+
+  .hero-er__titulo {
+    font-size: calc(72 * var(--u));        /* Heading/H1 */
+    letter-spacing: calc(-1.5 * var(--u));
+  }
+
+  .hero-er__texto {
+    max-width: calc(380 * var(--u));
+    font-size: calc(20 * var(--u));        /* Body/Large */
+  }
+
+  .hero-er .botao-claro {
+    --bc-gap: calc(16 * var(--u));
+
+    height: calc(60 * var(--u));
+    padding: calc(8 * var(--u)) calc(8 * var(--u)) calc(8 * var(--u)) calc(32 * var(--u));
+  }
+
+  .hero-er .botao-claro:hover {
+    --bc-gap: calc(24 * var(--u));
+  }
+
+  .hero-er .text-label-button {
+    font-size: calc(16 * var(--u));        /* Label/Button */
+    letter-spacing: calc(0.2 * var(--u));
+  }
+
+  .hero-er .botao-claro__icone {
+    width: calc(44 * var(--u));
+    height: calc(44 * var(--u));
+  }
+
+  .hero-er .botao-claro__icone svg,
+  .cta-circular__seta {
+    width: calc(16 * var(--u));
+    height: calc(14 * var(--u));
+  }
+}
+
+/* Circle CTA (Desktop) */
+.cta-circular {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .cta-circular {
+    position: absolute;
+    top: calc(560 * var(--u));             /* Figma: 168 em (1272, 560) */
+    right: var(--grid-margin);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(8 * var(--u));
+    width: calc(168 * var(--u));
+    height: calc(168 * var(--u));
+    border-radius: var(--radius-full);
+    color: var(--color-text-inverse);
+    text-align: center;
+    transition: background-color var(--motion-circle-cta), color var(--motion-circle-cta), box-shadow var(--motion-circle-cta);
+  }
+}
+
+.cta-circular__anel {
+  position: absolute;
+  inset: 0;
+  border: 1.5px dashed var(--neutral-white);
+  border-radius: var(--radius-full);
+  animation: hero-girar 12s linear infinite;  /* Figma: rotação 12s linear */
+}
+
+.cta-circular__texto {
+  width: calc(110 * var(--u));
+}
+
+.cta-circular__seta {
+  transition: transform var(--motion-circle-cta);
+}
+
+.cta-circular:hover {
+  background: var(--neutral-white);
+  color: var(--brand-navy-500);
+  box-shadow: var(--shadow-circle-cta-hover);
+}
+
+.cta-circular:hover .cta-circular__seta {
+  transform: rotate(-45deg);               /* seta ↗ */
+}
+
+@keyframes hero-girar {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Slider Controls (Desktop): Anterior / Próximo */
+.hero-er__controles {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .hero-er__controles {
+    position: absolute;
+    top: calc(760 * var(--u));             /* Figma: (1275, 760) */
+    right: var(--grid-margin);
+    display: flex;
+    align-items: center;
+    gap: calc(16 * var(--u));
+  }
+}
+
+.link-texto {
+  position: relative;
+  padding: 0 0 calc(6 * var(--u));         /* gap 4 + sublinhado */
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: color var(--motion-button);
+}
+
+.link-texto::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentcolor;
+  transform-origin: left;
+}
+
+.link-texto:hover {
+  color: var(--brand-sky-300);
+}
+
+.link-texto:hover::after {
+  animation: hero-sublinhar var(--motion-button);
+}
+
+@keyframes hero-sublinhar {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.hero-er a:focus-visible,
+.hero-er button:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Category Selector
+   ========================================================================== */
+.hero-er__seletor {
+  position: relative;
+  z-index: 4;
+  order: 3;
+  flex-shrink: 0;
+  height: 180px;                           /* Figma Mobile */
+  padding: 24px 0 16px;
+  border-radius: var(--radius-36) var(--radius-36) 0 0;
+  background: var(--color-surface-default);
+}
+
+.hero-er__chips {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  height: 140px;                           /* Figma Mobile: Viewport 390×140 */
+  padding-inline: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.hero-er__chips::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero-er__seletor {
+    height: 196px;                         /* Figma Tablet */
+    padding: 32px 0 24px;
+    /* 48 px: valor do frame Tablet, fora da escala de --radius-* do Figma. */
+    border-radius: 48px 48px 0 0;
+  }
+
+  .hero-er__chips {
+    justify-content: space-between;
+    padding-inline: var(--grid-margin);
+    overflow: visible;
+  }
+}
+
+/* Category Chip */
+.chip-linha {
+  --chip: 88px;
+  --chip-hover: 100px;
+  --chip-ativo: 112px;
+  --chip-borda-hover: 3px;
+  --chip-borda-ativo: 4px;
+
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  scroll-snap-align: center;
+}
+
+.chip-linha__thumb {
+  display: block;
+  width: var(--chip);
+  height: var(--chip);
+  overflow: hidden;
+  border: 0 solid var(--neutral-white);
+  border-radius: var(--radius-full);
+  background: linear-gradient(
+    180deg,
+    var(--linha-chip-clara, var(--category-agua-100)),
+    var(--linha-chip-forte, var(--category-agua-700))
+  );
+  transition:
+    width var(--motion-category-chip),
+    height var(--motion-category-chip),
+    border-width var(--motion-category-chip),
+    box-shadow var(--motion-category-chip);
+}
+
+.chip-linha__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+  object-fit: contain;
+}
+
+.chip-linha__rotulo {
+  white-space: nowrap;
+}
+
+.chip-linha:hover .chip-linha__thumb {
+  width: var(--chip-hover);
+  height: var(--chip-hover);
+  border-width: var(--chip-borda-hover);
+}
+
+.chip-linha.is-ativo .chip-linha__thumb {
+  width: var(--chip-ativo);
+  height: var(--chip-ativo);
+  border-width: var(--chip-borda-ativo);
+  box-shadow: var(--shadow-category-chip-active);
+}
+
+.chip-linha:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 4px;
+  border-radius: var(--radius-12);
+}
+
+@media (min-width: 1280px) {
+  .hero-er__seletor {
+    position: absolute;
+    top: calc(100% - 180 * var(--u));      /* Figma: (378, 820), 694×145 */
+    left: calc(50% - 422 * var(--u));
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .hero-er__chips {
+    justify-content: flex-start;
+    gap: calc(48 * var(--u));
+    height: calc(145 * var(--u));
+    padding: 0;
+  }
+
+  .chip-linha {
+    --chip: calc(88 * var(--u));
+    --chip-hover: calc(100 * var(--u));
+    --chip-ativo: calc(112 * var(--u));
+    --chip-borda-hover: calc(3 * var(--u));
+    --chip-borda-ativo: calc(4 * var(--u));
+
+    gap: calc(16 * var(--u));
+  }
+
+  .chip-linha__rotulo {
+    font-size: calc(14 * var(--u));        /* Label/Caps */
+    letter-spacing: calc(2 * var(--u));
+  }
+}
+
+/* ==========================================================================
+   Movimento reduzido: sem flutuação, bolhas e anel; troca quase instantânea.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-er {
+    --hero-transicao: 1ms linear;
+  }
+
+  .hero-er__produto-img,
+  .cta-circular__anel {
+    animation: none;
+  }
+
+  .hero-er__bolha {
+    animation: none;
+    opacity: 1;
+  }
+
+  .chip-linha__thumb {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Letreiro — "Marquee — Conheça Nossos Produtos (loop)"
+   Desktop: padding 32, gap 40 · Tablet: 24 / 32 · Mobile: 16 / 16.
+   Texto Display/L (64 / 44 / 32). Icon/Drop 40 px no Desktop, proporcional
+   nos outros (0,625 × o texto). Velocidade do loop: adaptação (~80 px/s).
+   ========================================================================== */
+.marquee-er {
+  --mq-gap: 16px;
+  --mq-duracao: 25s;
+
+  overflow: hidden;
+  padding-block: 16px;
+  background: var(--color-surface-default);
+}
+
+@media (min-width: 768px) {
+  .marquee-er {
+    --mq-gap: 32px;
+    --mq-duracao: 35s;
+
+    padding-block: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .marquee-er {
+    --mq-gap: 40px;
+    --mq-duracao: 50s;
+
+    padding-block: 32px;
+  }
+}
+
+.marquee-er__faixa {
+  display: flex;
+  width: max-content;
+  animation: marquee-er var(--mq-duracao) linear infinite;
+}
+
+.marquee-er__grupo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--mq-gap);
+  padding-right: var(--mq-gap);
+}
+
+.marquee-er__texto {
+  color: var(--brand-navy-900);
+  font-size: var(--font-size-display-l);   /* Display/L */
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.marquee-er__texto--vazado {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--brand-navy-500);
+}
+
+/* Texto do Figma: SVG exportado (cheia navy-900; vazada com contorno
+   externo 1,5 px navy-500). Altura = 1 linha do Display/L, como o texto. */
+.marquee-er__sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.marquee-er__svg {
+  flex: none;
+  display: block;
+  width: auto;
+  height: var(--font-size-display-l);
+  aspect-ratio: 905.344 / 64;
+  overflow: visible;
+  color: var(--brand-navy-900);
+}
+
+.marquee-er__svg--vazado {
+  color: var(--brand-navy-500);
+}
+
+.marquee-er__gota {
+  flex: none;
+  width: calc(var(--font-size-display-l) * 0.625);
+  height: calc(var(--font-size-display-l) * 0.625);
+  fill: var(--brand-sky-500);
+}
+
+@keyframes marquee-er {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-er__faixa {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Vitrine — "Produtos / Vitrine"
+   Desktop: padding 96 / 120, gap 48, laterais 160 (área útil do grid)
+   Tablet:  padding 72 / 72, gap 32, laterais 40
+   Mobile:  padding 56 / 56, gap 24, laterais 24
+   Troca de aba: Smart Animate 500 ms ease-in-out (fade entre variants).
+   Setas: passos de cards inteiros (mín. 3 passos), 600 ms ease-in-out.
+   ========================================================================== */
+.vitrine-er {
+  --vit-pad: 24px;
+  --vit-gap: 24px;
+  --vit-transicao: 500ms ease-in-out;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--vit-gap);
+  padding-block: 56px;
+  background: var(--color-surface-default);
+}
+
+@media (min-width: 768px) {
+  .vitrine-er {
+    --vit-pad: var(--grid-margin);
+    --vit-gap: 32px;
+
+    padding-block: 72px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .vitrine-er {
+    /* Alinha à área útil de 1280 em qualquer largura (160 em 1600). */
+    --vit-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+    --vit-gap: 48px;
+
+    padding-block: 96px 120px;
+  }
+}
+
+.vitrine-er__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma Tablet: Header gap 16 */
+}
+
+@media (min-width: 1280px) {
+  .vitrine-er__cabecalho {
+    gap: 32px;                             /* Figma Desktop: Header gap 32 */
+  }
+}
+
+.vitrine-er__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Title gap 16 */
+  padding-inline: var(--vit-pad);
+}
+
+.vitrine-er__rotulo {
+  margin: 0;
+  color: var(--color-text-accent);
+}
+
+.vitrine-er__titulo {
+  margin: 0;
+  color: var(--linha-chip-forte, var(--brand-navy-500));
+  text-transform: uppercase;
+}
+
+.vitrine-er__titulo:not([hidden]),
+.vitrine-er__painel:not([hidden]) {
+  animation: vitrine-entra var(--vit-transicao);
+}
+
+@keyframes vitrine-entra {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Category Tabs: no Tablet/Mobile rolam na horizontal ("Tabs Viewport"). */
+.vitrine-er__abas-viewport {
+  overflow-x: auto;
+  padding-inline: var(--vit-pad);
+  scrollbar-width: none;
+}
+
+.vitrine-er__abas-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.vitrine-er__abas {
+  display: inline-flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-muted);
+}
+
+/* Category Tabs (.aba-linha): global, em assets/css/style.css. */
+
+.vitrine-er__painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vit-gap);
+}
+
+/* Carousel Viewport (rolagem horizontal) + Track */
+.vitrine-er__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: var(--vit-pad);
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.vitrine-er__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.vitrine-er__viewport.is-arrastando {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  user-select: none;
+}
+
+.vitrine-er__viewport.is-arrastando a {
+  pointer-events: none;
+}
+
+.vitrine-er__viewport:focus-visible {
+  outline: 2px solid var(--linha-chip-forte, var(--color-action-primary));
+  outline-offset: -2px;
+}
+
+.vitrine-er__trilho {
+  display: flex;
+  gap: 24px;                               /* Figma: Track gap 24 */
+  width: max-content;
+  margin: 0;
+  padding: 8px var(--vit-pad);             /* Figma: Track padding 8 / laterais */
+  list-style: none;
+}
+
+.vitrine-er__item {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.vitrine-er__item img {
+  -webkit-user-drag: none;
+}
+
+/* Carousel Nav: barra de progresso + setas 56 */
+.vitrine-er__nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;                               /* Figma Mobile */
+  padding-inline: var(--vit-pad);
+}
+
+@media (min-width: 768px) {
+  .vitrine-er__nav {
+    gap: 24px;                             /* Figma Tablet/Desktop */
+  }
+}
+
+.vitrine-er__progresso {
+  position: relative;
+  flex: 1;
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--radius-2);
+  background: var(--neutral-lavender-300);
+}
+
+.vitrine-er__progresso-barra {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: var(--vit-visivel, 100%);
+  border-radius: var(--radius-2);
+  background: var(--linha-chip-forte, var(--brand-navy-500));
+  transform: translateX(var(--vit-posicao, 0%));
+}
+
+/* Setas (.seta-vitrine): globais (assets/css/style.css) — também usadas na galeria da página A Entre Rios. */
+
+
+@media (prefers-reduced-motion: reduce) {
+  .vitrine-er__titulo:not([hidden]),
+  .vitrine-er__painel:not([hidden]) {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Seções da Home depois da vitrine — Linhas (bento), Produto 360°, Sobre,
+   Sustentabilidade e Instagram. Medidas "Figma" = frame Desktop 1600.
+   Laterais: área útil de 1280 no Desktop (160 em 1600), grid-margin abaixo.
+   ========================================================================== */
+.linhas-er,
+.sobre-er,
+.sust-er,
+.insta-er {
+  --sec-pad: var(--grid-margin);
+}
+
+@media (min-width: 1280px) {
+  .linhas-er,
+  .sobre-er,
+  .sust-er,
+  .insta-er {
+    --sec-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Linhas de Bebidas (bento) + Linha Card
+   Posições internas do card em cqw (base: card 628 px de largura), ancoradas
+   na base, para a composição escalar inteira em qualquer largura.
+   -------------------------------------------------------------------------- */
+.linhas-er {
+  padding: 0 var(--sec-pad) 56px;          /* Figma: 0 160 120 160 */
+  background: var(--color-surface-default);
+}
+
+.linhas-er__grade {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .linhas-er {
+    padding-bottom: 72px;
+  }
+
+  .linhas-er__grade {
+    gap: 24px;                             /* Figma: gap 24 */
+  }
+}
+
+@media (min-width: 1280px) {
+  .linhas-er {
+    padding-bottom: 120px;
+  }
+
+  .linhas-er__grade {
+    grid-template-columns: repeat(2, 1fr); /* Figma: Row 1280, 2 × 628, gap 24 */
+  }
+}
+
+.linhas-er__item {
+  container-type: inline-size;
+}
+
+.linha-card {
+  /* Mobile: composição ampliada (base 520) e leque centrado no card. */
+  --lc-u: calc(100cqw / 520);
+
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 5 / 6;
+  border-radius: var(--radius-32);
+  background: linear-gradient(135deg, var(--linha-media, var(--brand-sky-500)) 0%, var(--linha-chip-forte, var(--brand-navy-500)) 100%);
+  color: var(--neutral-white);
+  isolation: isolate;
+  transition: box-shadow var(--motion-linha-card), transform var(--motion-linha-card);
+}
+
+@media (min-width: 768px) {
+  .linha-card {
+    --lc-u: calc(100cqw / 628);            /* 1 px do Figma */
+
+    aspect-ratio: 628 / 460;               /* Figma: Linha Card 628×460 */
+    border-radius: var(--radius-40);
+  }
+}
+
+.linha-card:hover,
+.linha-card:focus-visible {
+  /* Figma: Linha Card · Hover — 0 32 64 −12, cor da linha (500) a 40 % */
+  box-shadow: 0 32px 64px -12px color-mix(in srgb, var(--linha-media, var(--brand-sky-500)) 40%, transparent);
+}
+
+.linha-card:focus-visible {
+  outline: 3px solid var(--neutral-white);
+  outline-offset: 3px;
+}
+
+/* Nome da linha vazado ao fundo — SVG do Figma (contorno 1,5 px white/25). */
+.linha-card__palavra {
+  position: absolute;
+  z-index: -1;
+  left: calc(-13.78 * var(--lc-u));        /* Figma: x −13.78 */
+  bottom: calc(15 * var(--lc-u));          /* Figma: y 330, altura 115 */
+  width: auto;
+  height: calc(115 * var(--lc-u));
+  overflow: visible;
+  color: var(--alpha-neutral-white-25);
+  pointer-events: none;
+  transition: transform var(--motion-linha-card), color var(--motion-linha-card);
+}
+
+.linha-card__palavra path {
+  vector-effect: non-scaling-stroke;
+}
+
+.linha-card__palavra--texto {
+  font-size: calc(120 * var(--lc-u));
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--alpha-neutral-white-25);
+}
+
+.linha-card:hover .linha-card__palavra,
+.linha-card:focus-visible .linha-card__palavra {
+  color: var(--alpha-neutral-white-45);    /* Figma Hover: white/45, x −70 */
+  transform: translateX(calc(-56 * var(--lc-u)));
+}
+
+.linha-card__info {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.linha-card__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+@media (min-width: 768px) {
+  .linha-card__info {
+    top: 40px;                             /* Figma: Info (40, 40), gap 16 */
+    left: 40px;
+    right: 120px;
+    gap: 16px;
+  }
+}
+
+/* Go — círculo branco 56 → 64 no hover, seta ↗ */
+.linha-card__ir {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--neutral-white);
+  color: var(--linha-chip-forte, var(--brand-navy-500));
+  transition: transform var(--motion-linha-card);
+}
+
+@media (min-width: 768px) {
+  .linha-card__ir {
+    top: 40px;                             /* Figma: Go 56 em (532, 40) */
+    right: 40px;
+    width: 56px;
+    height: 56px;
+  }
+}
+
+.linha-card:hover .linha-card__ir,
+.linha-card:focus-visible .linha-card__ir {
+  transform: scale(1.1428);                /* Figma Hover: 64 */
+}
+
+/* Produtos — slots ancorados na base (Figma: base dos produtos em y 432). */
+.linha-card__produtos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.linha-card__produto {
+  --lc-x: 410;                             /* centro do slot, px do Figma */
+  --lc-h: 290;
+  --lc-giro: 0deg;
+
+  position: absolute;
+  bottom: calc(28 * var(--lc-u));
+  left: calc(50cqw + (var(--lc-x) - 410) * var(--lc-u));
+  height: calc(var(--lc-h) * var(--lc-u));
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  transition: transform var(--motion-linha-card);
+}
+
+.linha-card__produto--p { --lc-h: 213; }   /* Figma: lata DUB 100×213 */
+.linha-card__produto--m { --lc-h: 277; }   /* garrafas 270–300; Refri 295 com topo em y 155 */
+.linha-card__produto--g { --lc-h: 345; }   /* garrafão 186×345, DUB 2 L 320 */
+
+.linha-card__produtos--3 .linha-card__produto:nth-child(1) { --lc-x: 280; --lc-giro: -6deg; }
+.linha-card__produtos--3 .linha-card__produto:nth-child(2) { --lc-x: 410; }
+.linha-card__produtos--3 .linha-card__produto:nth-child(3) { --lc-x: 540; --lc-giro: 6deg; }
+.linha-card__produtos--2 .linha-card__produto:nth-child(1) { --lc-x: 330; --lc-giro: -6deg; }
+.linha-card__produtos--2 .linha-card__produto:nth-child(2) { --lc-x: 490; --lc-giro: 6deg; }
+.linha-card__produtos--1 .linha-card__produto { --lc-x: 455; }   /* Figma: copo 230×330 em (340, 100) */
+
+@media (min-width: 768px) {
+  .linha-card__produto {
+    left: calc(var(--lc-x) * var(--lc-u)); /* posições do Figma */
+  }
+}
+
+.linha-card__foto {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 30px rgb(0 0 0 / 25%));   /* Shadow/2XL */
+}
+
+.linha-card:hover .linha-card__produto,
+.linha-card:focus-visible .linha-card__produto {
+  /* Figma Hover: produtos sobem ~24 px e abrem em leque (±6°). */
+  transform: translateX(-50%) translateY(calc(-24 * var(--lc-u))) rotate(var(--lc-giro));
+}
+
+/* --------------------------------------------------------------------------
+   Produto 360°
+   Desktop: palco 1600×1000 escalado por --u (mesma regra do hero), preso na
+   tela enquanto a seção rola. Tablet/Mobile: coluna (Figma Mobile 390×714).
+   -------------------------------------------------------------------------- */
+.p360-er {
+  --p360-brilho: var(--linha-chip-clara, var(--brand-sky-300));
+  --p360-orbita: var(--linha-chip-clara, var(--brand-sky-300));
+
+  position: relative;
+  background: var(--brand-navy-900);
+  color: var(--neutral-white);
+}
+
+/* A pista que a rolagem percorre só existe com JS e sem reduced motion. */
+.p360-er.is-giratorio {
+  height: 260svh;
+}
+
+.p360-er__palco {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+}
+
+.p360-er.is-giratorio .p360-er__palco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+.p360-er__cena {
+  position: relative;
+  min-height: inherit;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 24px var(--grid-margin) 32px;
+}
+
+.p360-er__variante {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 96px var(--grid-margin) 88px;   /* espaço do filtro e da sequência */
+  background: linear-gradient(180deg, var(--linha-profunda, var(--brand-navy-900)) 0%, var(--linha-chip-forte, var(--brand-navy-700)) 100%);
+  opacity: 0;
+  transition: opacity var(--motion-chip-360);
+}
+
+.p360-er__variante[hidden] {
+  display: grid;                           /* some por opacidade (dissolve) */
+  visibility: hidden;
+}
+
+.p360-er__variante.is-ativo {
+  opacity: 1;
+  visibility: visible;
+}
+
+.p360-er__fundo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.p360-er__brilho,
+.p360-er__orbita,
+.p360-er__chao {
+  position: absolute;
+  border-radius: 50%;
+}
+
+/* Glow 620 (cor do item 55 % → 0) e órbitas 720 tracejada / 560. */
+.p360-er__brilho {
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--p360-brilho) 55%, transparent), transparent);
+}
+
+.p360-er__orbita--2 {
+  border: 1.5px dashed color-mix(in srgb, var(--p360-orbita) 20%, transparent);
+}
+
+.p360-er__orbita--1 {
+  border: 1px solid color-mix(in srgb, var(--p360-orbita) 35%, transparent);
+}
+
+.p360-er__chao {
+  background: radial-gradient(closest-side, rgb(0 0 0 / 45%), transparent);
+}
+
+.p360-er__vistas {
+  position: relative;
+  min-height: 0;
+}
+
+.p360-er__vista {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  filter: drop-shadow(0 30px 50px rgb(13 0 20 / 35%));   /* --shadow-produto-360 */
+}
+
+.p360-er__vista.is-ativo {
+  opacity: 1;
+}
+
+.p360-er__conteudo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.p360-er__sobretitulo {
+  margin: 0;
+  color: var(--color-text-accent);
+}
+
+.p360-er__titulo {
+  margin: 0;
+}
+
+.p360-er__texto {
+  margin: 0;
+  color: var(--alpha-neutral-white-80);
+}
+
+.p360-er__dica {
+  display: none;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+}
+
+.p360-er__dica-roda {
+  animation: p360-roda 1.6s ease-in-out infinite;
+}
+
+@keyframes p360-roda {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(5px); opacity: 0.2; }
+}
+
+/* Filtro (chips) — pílula white/6, borda white/16, padding 4, gap 4 */
+.p360-er__filtro {
+  position: relative;
+  z-index: 2;
+  justify-self: center;
+  display: flex;
+  gap: 4px;
+  max-width: 100%;
+  padding: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border: 1px solid var(--alpha-neutral-white-16);
+  border-radius: var(--radius-full);
+  background: rgb(255 255 255 / 6%);
+}
+
+.p360-er__chip {
+  flex: none;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  color: var(--neutral-white);
+  white-space: nowrap;
+  transition: background-color var(--motion-chip-360), color var(--motion-chip-360);
+}
+
+.p360-er__chip:hover {
+  background: var(--alpha-neutral-white-10);
+}
+
+.p360-er__chip.is-ativo {
+  background: var(--neutral-white);
+  color: var(--brand-navy-900);
+}
+
+.p360-er__chip:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 2px;
+}
+
+/* Destaques (callouts): só no Desktop */
+.p360-er__destaque {
+  display: none;
+}
+
+/* Mostrador: no Tablet/Mobile só o grau (Figma Mobile: "0°" à direita). */
+.p360-er__mostrador {
+  position: relative;
+  z-index: 2;
+  grid-row: 3;
+  justify-self: end;
+  align-self: end;
+  margin-bottom: 40px;
+}
+
+.p360-er__anel,
+.p360-er__botao-giro,
+.p360-er__marca {
+  display: none;
+}
+
+.p360-er__grau {
+  font-variant-numeric: tabular-nums;
+}
+
+.p360-er__sequencia {
+  position: absolute;
+  z-index: 2;
+  left: var(--grid-margin);
+  right: var(--grid-margin);
+  bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.p360-er__barra {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(255 255 255 / 15%);
+}
+
+.p360-er__barra-cheia {
+  position: absolute;
+  inset: 0;
+  background: var(--brand-sky-300);
+  transform: scaleX(var(--p360-p, 0));
+  transform-origin: 0 50%;
+}
+
+.p360-er__contador {
+  color: var(--alpha-neutral-white-80);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tablet/Mobile: palco em coluna */
+@media (max-width: 1279.98px) {
+  .p360-er__variante .p360-er__fundo {
+    top: 40%;
+  }
+
+  .p360-er__brilho {
+    left: 50%;
+    top: 30%;
+    width: min(150vw, 620px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .p360-er__orbita--2,
+  .p360-er__orbita--1 {
+    left: 50%;
+    top: 30%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .p360-er__orbita--2 { width: min(92vw, 560px); }
+  .p360-er__orbita--1 { width: min(72vw, 440px); }
+
+  .p360-er__chao {
+    left: 50%;
+    bottom: 12%;
+    width: 50%;
+    height: 32px;
+    transform: translateX(-50%);
+  }
+
+  .p360-er__conteudo {
+    position: static;                      /* a dica se posiciona na variante */
+    grid-row: 1;
+  }
+
+  .p360-er__chip {
+    padding: 8px 12px;
+  }
+
+  @media (max-width: 767.98px) {
+    .p360-er__chip {
+      padding: 8px;
+      font-size: 13px;
+    }
+  }
+
+  .p360-er__vistas {
+    grid-row: 2;
+    margin-block: 8px 24px;
+  }
+
+  .p360-er__dica {
+    position: absolute;
+    left: var(--grid-margin);
+    bottom: 26px;
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+  }
+
+  .p360-er__sequencia {
+    left: calc(var(--grid-margin) + 120px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  .p360-er__variante {
+    padding-top: 112px;
+  }
+
+  .p360-er__conteudo {
+    max-width: 560px;
+  }
+}
+
+/* Desktop: composição do Figma em --u */
+@media (min-width: 1280px) {
+  .p360-er__palco {
+    min-height: 0;
+    height: clamp(90svh, 62.5vw, 100svh);
+    container-type: size;
+  }
+
+  .p360-er.is-giratorio .p360-er__palco {
+    height: 100svh;
+  }
+
+  .p360-er__cena {
+    --u: min(calc(100cqh / 1000), calc(100cqw / 1600));
+
+    display: block;
+    padding: 0;
+  }
+
+  .p360-er__variante {
+    display: block;
+    padding: 0;
+  }
+
+  /* Elementos posicionados no frame 1600×1000, centrado na tela. */
+  .p360-er__brilho,
+  .p360-er__orbita,
+  .p360-er__chao,
+  .p360-er__vistas,
+  .p360-er__conteudo,
+  .p360-er__destaque,
+  .p360-er__mostrador,
+  .p360-er__sequencia,
+  .p360-er__filtro {
+    position: absolute;
+    left: calc(50cqw + (var(--x) - 800) * var(--u));
+    top: calc(50cqh + (var(--y) - 500) * var(--u));
+  }
+
+  .p360-er__brilho { --x: 490; --y: 190; width: calc(620 * var(--u)); height: calc(620 * var(--u)); }
+  .p360-er__orbita--2 { --x: 440; --y: 140; width: calc(720 * var(--u)); height: calc(720 * var(--u)); border-width: calc(1.5 * var(--u)); }
+  .p360-er__orbita--1 { --x: 520; --y: 220; width: calc(560 * var(--u)); height: calc(560 * var(--u)); }
+  .p360-er__chao { --x: 640; --y: 795; width: calc(320 * var(--u)); height: calc(40 * var(--u)); }
+
+  .p360-er__vistas { --x: 601; --y: 183; width: calc(398 * var(--u)); height: calc(607 * var(--u)); }
+
+  .p360-er__conteudo {
+    --x: 160;
+    --y: 330;
+
+    width: calc(420 * var(--u));
+    gap: calc(24 * var(--u));
+    padding: 0;
+  }
+
+  .p360-er__sobretitulo { font-size: calc(14 * var(--u)); letter-spacing: calc(2 * var(--u)); }
+  .p360-er__titulo { font-size: calc(56 * var(--u)); letter-spacing: calc(-1 * var(--u)); }
+  .p360-er__texto { font-size: calc(20 * var(--u)); }
+
+  .p360-er__dica {
+    display: flex;
+    gap: calc(16 * var(--u));
+    font-size: calc(14 * var(--u));
+    letter-spacing: calc(2 * var(--u));
+  }
+
+  .p360-er__dica svg {
+    width: calc(20 * var(--u));
+    height: auto;
+  }
+
+  .p360-er__filtro {
+    --x: 800;
+    --y: 48;
+
+    transform: translateX(-50%);
+  }
+
+  .p360-er__chip {
+    padding: calc(10 * var(--u)) calc(20 * var(--u));
+    font-size: calc(14 * var(--u));
+  }
+
+  /* Callouts: ponto 12 + traço 90 + pílula de vidro (radius 16, 16/24) */
+  .p360-er__destaque {
+    display: flex;
+    align-items: center;
+    gap: calc(16 * var(--u));
+    opacity: 0;
+    transform: translateX(calc(-12 * var(--u)));
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+
+  .p360-er__destaque--1 { --x: 995; --y: 250; }
+  .p360-er__destaque--2 { --x: 995; --y: 470; }
+
+  .p360-er__destaque.is-visivel {
+    opacity: 1;
+    transform: none;
+  }
+
+  .p360-er__destaque-ponto {
+    width: calc(12 * var(--u));
+    height: calc(12 * var(--u));
+    border-radius: 50%;
+    background: var(--neutral-white);
+    box-shadow: 0 0 0 calc(4 * var(--u)) var(--alpha-neutral-white-25);
+  }
+
+  .p360-er__destaque-linha {
+    width: calc(90 * var(--u));
+    height: 1px;
+    background: var(--alpha-neutral-white-40);
+  }
+
+  .p360-er__destaque-pilula {
+    display: flex;
+    flex-direction: column;
+    gap: calc(4 * var(--u));
+    padding: calc(16 * var(--u)) calc(24 * var(--u));
+    border: 1px solid var(--alpha-neutral-white-20);
+    border-radius: var(--radius-16);
+    background: var(--alpha-neutral-white-8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .p360-er__destaque-rotulo {
+    font-size: calc(12 * var(--u));
+    color: var(--color-text-accent);
+  }
+
+  .p360-er__destaque-valor {
+    font-size: calc(16 * var(--u));
+  }
+
+  /* Rotation Dial 200 em (1240, 630) */
+  .p360-er__mostrador {
+    --x: 1240;
+    --y: 630;
+
+    display: grid;
+    place-items: center;
+    width: calc(200 * var(--u));
+    height: calc(200 * var(--u));
+    margin: 0;
+  }
+
+  .p360-er__anel {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+
+  .p360-er__anel circle {
+    fill: none;
+    stroke-width: 3;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .p360-er__anel-trilho {
+    stroke: rgb(255 255 255 / 15%);
+  }
+
+  .p360-er__anel-progresso {
+    stroke: var(--brand-sky-300);
+    stroke-dasharray: 360;
+    stroke-dashoffset: calc(360 - var(--p360-graus, 0));
+  }
+
+  .p360-er__botao-giro {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(16 * var(--u));
+    height: calc(16 * var(--u));
+    margin: calc(-8 * var(--u));
+    border-radius: 50%;
+    background: var(--neutral-white);
+    box-shadow: 0 0 0 calc(4 * var(--u)) rgb(112 207 246 / 35%);
+    transform: rotate(calc(var(--p360-graus, 0) * 1deg)) translateY(calc(-92 * var(--u)));
+  }
+
+  .p360-er__grau {
+    font-size: calc(56 * var(--u));
+  }
+
+  .p360-er__marca {
+    display: block;
+    position: absolute;
+    font-size: calc(12 * var(--u));
+    color: var(--alpha-neutral-white-60);
+  }
+
+  .p360-er__marca--0 { top: calc(-24 * var(--u)); }
+  .p360-er__marca--90 { right: calc(-36 * var(--u)); }
+  .p360-er__marca--180 { bottom: calc(-24 * var(--u)); }
+  .p360-er__marca--270 { left: calc(-40 * var(--u)); }
+
+  /* Sequence Progress em (160, 920): barra 1040 × 2 + contador */
+  .p360-er__sequencia {
+    --x: 160;
+    --y: 920;
+
+    right: auto;
+    bottom: auto;
+    width: calc(1136 * var(--u));
+    gap: calc(16 * var(--u));
+  }
+
+  .p360-er__contador {
+    font-size: calc(14 * var(--u));
+    letter-spacing: calc(2 * var(--u));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Sobre a Entre Rios — card de vídeo 560×620 + conteúdo, gap 96
+   -------------------------------------------------------------------------- */
+.sobre-er {
+  display: grid;
+  gap: 40px;
+  padding: 56px var(--sec-pad);
+  background: var(--color-surface-muted);
+}
+
+@media (min-width: 768px) {
+  .sobre-er {
+    gap: 48px;
+    padding-block: 72px;
+  }
+
+  .sobre-er__video {
+    max-width: 560px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sobre-er {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sobre-er {
+    grid-template-columns: 560px minmax(0, 1fr);
+    gap: 96px;                             /* Figma: gap 96, padding 120/160 */
+    padding-block: 120px;
+  }
+}
+
+.sobre-er__video {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 560 / 620;
+  border-radius: var(--radius-32);
+  background: var(--brand-navy-900);
+  isolation: isolate;
+}
+
+@media (min-width: 1280px) {
+  .sobre-er__video {
+    border-radius: var(--radius-40);
+  }
+}
+
+.sobre-er__capa,
+.sobre-er__video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* "2002" — Display/XXL vazado, SVG do Figma (contorno 2 px white/30) */
+.sobre-er__ano {
+  position: absolute;
+  left: 0.2%;
+  bottom: 3.9%;                            /* Figma: texto em (1, 421), 559×187 */
+  width: 99.5%;
+  height: auto;
+  overflow: visible;
+  color: rgb(255 255 255 / 30%);
+  pointer-events: none;
+}
+
+.sobre-er__ano path {
+  vector-effect: non-scaling-stroke;
+}
+
+.sobre-er__video.is-tocando .sobre-er__ano,
+.sobre-er__video.is-tocando .botao-play {
+  display: none;
+}
+
+/* Play Button: global (assets/css/style.css) — também usado na página A Entre Rios. */
+
+.sobre-er__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+@media (min-width: 1280px) {
+  .sobre-er__conteudo {
+    gap: 24px;                             /* Figma: Content gap 24 */
+  }
+}
+
+.sobre-er__conteudo p,
+.sobre-er__titulo {
+  margin: 0;
+}
+
+.sobre-er__rotulo {
+  color: var(--color-text-accent);
+}
+
+.sobre-er__titulo {
+  color: var(--brand-navy-900);
+}
+
+.sobre-er__destaque {
+  color: var(--color-text-primary);
+}
+
+.sobre-er__texto {
+  color: var(--neutral-gray-700);
+}
+
+.sobre-er__botao {
+  margin-top: 8px;                         /* Figma: Spacer 8 */
+}
+
+/* Button / Style=Primary (.botao-primario): global, em assets/css/style.css. */
+
+/* --------------------------------------------------------------------------
+   Sustentabilidade — gradiente navy-900 → navy-700, cabeçalho + 3 pilares
+   -------------------------------------------------------------------------- */
+.sust-er {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px var(--sec-pad);
+  background: linear-gradient(180deg, var(--brand-navy-900) 0%, var(--brand-navy-700) 100%);
+  color: var(--neutral-white);
+}
+
+.sust-er__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sust-er__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Title gap 16 */
+}
+
+.sust-er p,
+.sust-er h2,
+.sust-er h3 {
+  margin: 0;
+}
+
+.sust-er__rotulo {
+  color: var(--color-text-accent);
+}
+
+.sust-er__pilares {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .sust-er {
+    gap: 48px;
+    padding-block: 72px;
+  }
+
+  .sust-er__pilares {
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sust-er {
+    gap: 64px;                             /* Figma: padding 120/160, gap 64 */
+    padding-block: 120px;
+  }
+
+  .sust-er__cabecalho {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 96px;                             /* Figma: Header horizontal, gap 96 */
+  }
+
+  .sust-er__titulos {
+    flex: none;
+    width: 589px;
+  }
+
+  .sust-er__pilares {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Pilar — vidro white/6, borda white/14, radius 32, padding 40, gap 24, blur 20 */
+.pilar-er {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  border: 1px solid var(--alpha-neutral-white-14);
+  border-radius: var(--radius-32);
+  background: rgb(255 255 255 / 6%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@media (min-width: 768px) {
+  .pilar-er {
+    gap: 24px;
+    padding: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .pilar-er {
+    min-height: 525px;                     /* Figma: Pilares height 525 */
+  }
+}
+
+.pilar-er__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pilar-er__icone {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: rgb(112 207 246 / 12%);      /* alpha/brand-sky-300/12 */
+  color: var(--brand-sky-300);
+}
+
+/* Número 01/02/03 — Display/L vazado, SVG do Figma (contorno 1 px white/35) */
+.pilar-er__numero {
+  width: auto;
+  height: 49px;
+  overflow: visible;
+  color: var(--alpha-neutral-white-35);
+}
+
+.pilar-er__numero--texto {
+  height: auto;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--alpha-neutral-white-35);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pilar-er,
+  .p360-er__destaque-pilula,
+  .botao-play {
+    background-color: rgb(255 255 255 / 12%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Instagram — eyebrow + @perfil Display/XL em gradiente + feed de 4
+   -------------------------------------------------------------------------- */
+.insta-er {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 56px 0;
+  background: var(--color-surface-default);
+}
+
+.insta-er__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-inline: var(--sec-pad);
+}
+
+.insta-er__rotulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--brand-navy-500);
+}
+
+.insta-er__perfil {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.insta-er__perfil,
+.insta-er__perfil a {
+  /* Figma: gradiente navy-700 → navy-500 → sky-300 no texto */
+  background: linear-gradient(90deg, var(--brand-navy-700) 0%, var(--brand-navy-500) 50%, var(--brand-sky-300) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.insta-er__perfil a:focus-visible {
+  outline: 3px solid var(--brand-navy-500);
+  outline-offset: 4px;
+}
+
+.insta-er__feed {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 70%;
+  gap: 16px;
+  margin: 0;
+  padding: 0 var(--sec-pad);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--sec-pad);
+  scrollbar-width: none;
+  list-style: none;
+}
+
+.insta-er__post {
+  position: relative;                      /* contém o .sr-only dentro da rolagem */
+  scroll-snap-align: start;
+  overflow: hidden;
+  aspect-ratio: 302 / 295;
+  border-radius: var(--radius-24);
+  background: var(--color-surface-muted);
+}
+
+.insta-er__post a {
+  display: block;
+  height: 100%;
+}
+
+.insta-er__foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease-out;
+}
+
+.insta-er__post a:hover .insta-er__foto,
+.insta-er__post a:focus-visible .insta-er__foto {
+  transform: scale(1.05);
+}
+
+.insta-er__post a:focus-visible {
+  outline: 3px solid var(--brand-navy-500);
+  outline-offset: -3px;
+}
+
+@media (min-width: 768px) {
+  .insta-er {
+    gap: 32px;
+    padding-block: 72px;
+  }
+
+  .insta-er__feed {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    overflow: visible;
+  }
+}
+
+@media (min-width: 1280px) {
+  .insta-er {
+    gap: 40px;                             /* Figma: padding 120/160, gap 40 */
+    padding-block: 120px;
+  }
+
+  .insta-er__cabecalho {
+    gap: 16px;
+  }
+
+  .insta-er__feed {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-auto-flow: column;                /* Figma: Feed horizontal, 4 × 302, gap 24 */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .linha-card,
+  .linha-card__palavra,
+  .linha-card__produto,
+  .linha-card__ir,
+  .p360-er__variante,
+  .p360-er__destaque,
+  .botao-play,
+  .botao-primario,
+  .insta-er__foto {
+    transition: none;
+  }
+
+  .p360-er__dica-roda {
+    animation: none;
+  }
+}

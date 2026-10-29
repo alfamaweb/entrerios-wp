@@ -1,0 +1,973 @@
+{
+    "key": "group_er_home_secoes",
+    "title": "Home — Linhas, 360°, Sobre, Sustentabilidade e Instagram",
+    "fields": [
+        {
+            "key": "field_er_tab_linhas",
+            "label": "Linhas de bebidas",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_linhas_cards",
+            "label": "Cards das linhas",
+            "name": "linhas_cards",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Um card por linha, 2 por fileira no Desktop. Vazio esconde a seção.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "min": 0,
+            "max": 8,
+            "button_label": "Adicionar card",
+            "collapsed": "",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_er_linhas_card_linha",
+                    "label": "Linha",
+                    "name": "linha",
+                    "aria-label": "",
+                    "type": "taxonomy",
+                    "instructions": "Nome, cores e palavra vazada de fundo vêm da linha.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "linha",
+                    "field_type": "select",
+                    "allow_null": 0,
+                    "add_term": 0,
+                    "save_terms": 0,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_er_linhas_cards"
+                },
+                {
+                    "key": "field_er_linhas_card_link",
+                    "label": "Link do card",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "O card inteiro é clicável (no Figma: página Produtos).",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "parent_repeater": "field_er_linhas_cards"
+                },
+                {
+                    "key": "field_er_linhas_card_produtos",
+                    "label": "Produtos em leque",
+                    "name": "produtos",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Até 3. Com 1 produto ele fica centralizado; com 3, o do meio é o central do leque.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "table",
+                    "min": 0,
+                    "max": 3,
+                    "button_label": "Adicionar produto",
+                    "collapsed": "",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_er_linhas_card_produto",
+                            "label": "Produto",
+                            "name": "produto",
+                            "aria-label": "",
+                            "type": "post_object",
+                            "instructions": "Foto = imagem destacada do produto; o nome aparece na lista do card.",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "60",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "produto"
+                            ],
+                            "taxonomy": "",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "return_format": "id",
+                            "ui": 1,
+                            "bidirectional_target": [],
+                            "parent_repeater": "field_er_linhas_card_produtos"
+                        },
+                        {
+                            "key": "field_er_linhas_card_tamanho",
+                            "label": "Tamanho da foto",
+                            "name": "tamanho",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "40",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "p": "Pequeno (lata, copo)",
+                                "m": "Médio (garrafa)",
+                                "g": "Grande (garrafão, 2 L)"
+                            },
+                            "default_value": "m",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0,
+                            "parent_repeater": "field_er_linhas_card_produtos"
+                        }
+                    ],
+                    "parent_repeater": "field_er_linhas_cards"
+                }
+            ]
+        },
+        {
+            "key": "field_er_tab_p360",
+            "label": "Produto 360°",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_p360_dica",
+            "label": "Dica de rolagem",
+            "name": "p360_dica",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ao lado do ícone do mouse. Ex.: 0° → 360°.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_p360_itens",
+            "label": "Produtos",
+            "name": "p360_itens",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Um chip por produto. Vazio esconde a seção.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "min": 0,
+            "max": 6,
+            "button_label": "Adicionar produto",
+            "collapsed": "",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_er_p360_rotulo",
+                    "label": "Rótulo do chip",
+                    "name": "rotulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Texto do filtro no topo. Vazio usa o título.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_linha",
+                    "label": "Linha",
+                    "name": "linha",
+                    "aria-label": "",
+                    "type": "taxonomy",
+                    "instructions": "Cores do fundo (escura → forte).",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "linha",
+                    "field_type": "select",
+                    "allow_null": 0,
+                    "add_term": 0,
+                    "save_terms": 0,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_sobretitulo",
+                    "label": "Sobretítulo",
+                    "name": "sobretitulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "34",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 3,
+                    "new_lines": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_vistas",
+                    "label": "Vistas do produto (em ordem de giro)",
+                    "name": "vistas",
+                    "aria-label": "",
+                    "type": "gallery",
+                    "instructions": "PNG\/WebP com fundo transparente, na ordem 0° → 360°, todas com o mesmo recorte. A rolagem passa por todas: com ~70 quadros o giro fica contínuo (o Guaraná Mais usa 70).",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "insert": "append",
+                    "library": "all",
+                    "min": 1,
+                    "max": 72,
+                    "mime_types": "png,webp",
+                    "min_width": 0,
+                    "min_height": 0,
+                    "min_size": 0,
+                    "max_width": 0,
+                    "max_height": 0,
+                    "max_size": 0,
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_destaques",
+                    "label": "Destaques",
+                    "name": "destaques",
+                    "aria-label": "",
+                    "type": "repeater",
+                    "instructions": "Até 2 pílulas ao lado do produto (Desktop): a 1ª na primeira metade do giro, a 2ª na segunda.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "layout": "table",
+                    "min": 0,
+                    "max": 2,
+                    "button_label": "Adicionar destaque",
+                    "collapsed": "",
+                    "rows_per_page": 20,
+                    "sub_fields": [
+                        {
+                            "key": "field_er_p360_destaque_rotulo",
+                            "label": "Rótulo",
+                            "name": "rotulo",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_er_p360_destaques"
+                        },
+                        {
+                            "key": "field_er_p360_destaque_valor",
+                            "label": "Valor",
+                            "name": "valor",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "parent_repeater": "field_er_p360_destaques"
+                        }
+                    ],
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_cor_brilho",
+                    "label": "Cor do brilho",
+                    "name": "cor_brilho",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "Halo atrás do produto.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string",
+                    "custom_palette_source": "",
+                    "palette_colors": "",
+                    "show_color_wheel": true,
+                    "parent_repeater": "field_er_p360_itens"
+                },
+                {
+                    "key": "field_er_p360_cor_orbita",
+                    "label": "Cor das órbitas",
+                    "name": "cor_orbita",
+                    "aria-label": "",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "enable_opacity": 0,
+                    "return_format": "string",
+                    "custom_palette_source": "",
+                    "palette_colors": "",
+                    "show_color_wheel": true,
+                    "parent_repeater": "field_er_p360_itens"
+                }
+            ]
+        },
+        {
+            "key": "field_er_tab_sobre",
+            "label": "Sobre",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_sobre_video",
+            "label": "Vídeo institucional",
+            "name": "sobre_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "MP4 (H.264), até ~10 MB. Só é baixado quando a pessoa clica em Play.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "mime_types": "mp4,webm",
+            "min_size": 0,
+            "max_size": 0
+        },
+        {
+            "key": "field_er_sobre_capa",
+            "label": "Capa do vídeo",
+            "name": "sobre_capa",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "1120×1240 (card 560×620).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg,jpeg,png,webp",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0
+        },
+        {
+            "key": "field_er_sobre_rotulo",
+            "label": "Sobretítulo",
+            "name": "sobre_rotulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_sobre_titulo",
+            "label": "Título",
+            "name": "sobre_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vazio esconde a seção.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_sobre_destaque",
+            "label": "Texto em destaque",
+            "name": "sobre_destaque",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_er_sobre_texto",
+            "label": "Texto",
+            "name": "sobre_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_er_sobre_botao",
+            "label": "Botão",
+            "name": "sobre_botao",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_er_tab_sust",
+            "label": "Sustentabilidade",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_sust_rotulo",
+            "label": "Sobretítulo",
+            "name": "sust_rotulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_sust_titulo",
+            "label": "Título",
+            "name": "sust_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Vazio esconde a seção.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_sust_texto",
+            "label": "Texto",
+            "name": "sust_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 5,
+            "new_lines": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_er_sust_pilares",
+            "label": "Pilares",
+            "name": "sust_pilares",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Até 3 cards; o número (01, 02, 03) é automático.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "min": 0,
+            "max": 3,
+            "button_label": "Adicionar pilar",
+            "collapsed": "",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_er_sust_pilar_icone",
+                    "label": "Ícone",
+                    "name": "icone",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "gota": "Gota (fontes)",
+                        "garrafa": "Garrafa (embalagens)",
+                        "folha": "Folha (matéria-prima)"
+                    },
+                    "default_value": "gota",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "return_format": "value",
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "parent_repeater": "field_er_sust_pilares"
+                },
+                {
+                    "key": "field_er_sust_pilar_titulo",
+                    "label": "Título",
+                    "name": "titulo",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_er_sust_pilares"
+                },
+                {
+                    "key": "field_er_sust_pilar_texto",
+                    "label": "Texto",
+                    "name": "texto",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 4,
+                    "new_lines": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_er_sust_pilares"
+                }
+            ]
+        },
+        {
+            "key": "field_er_tab_insta",
+            "label": "Instagram",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_insta_rotulo",
+            "label": "Sobretítulo",
+            "name": "insta_rotulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_insta_usuario",
+            "label": "@perfil",
+            "name": "insta_usuario",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_insta_url",
+            "label": "Link do perfil",
+            "name": "insta_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_er_insta_posts",
+            "label": "Posts",
+            "name": "insta_posts",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Escolhidos à mão (sem API do Instagram). 4 no Desktop.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "min": 0,
+            "max": 8,
+            "button_label": "Adicionar post",
+            "collapsed": "",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_er_insta_post_imagem",
+                    "label": "Imagem",
+                    "name": "imagem",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Quadrada ou 604×590.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg,jpeg,png,webp",
+                    "min_width": 0,
+                    "min_height": 0,
+                    "min_size": 0,
+                    "max_width": 0,
+                    "max_height": 0,
+                    "max_size": 0,
+                    "parent_repeater": "field_er_insta_posts"
+                },
+                {
+                    "key": "field_er_insta_post_link",
+                    "label": "Link do post",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "Vazio leva ao perfil.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_er_insta_posts"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-home.php"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793299976
+}

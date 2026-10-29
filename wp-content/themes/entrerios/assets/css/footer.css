@@ -1,0 +1,247 @@
+/**
+ * Rodapé — componente "Footer" do Figma.
+ *
+ * Desktop: padding 96 / 160 / 40, gap 64, raio 48 no topo, fundo
+ * color/surface/inverse. Wordmark "ENTRE RIOS" (Display/Wordmark, contorno
+ * 1,5 px alpha/brand-sky-500/45) com as letras subindo de baixo quando o
+ * rodapé entra na tela (assets/js/footer.js põe .is-revelado).
+ *
+ * @package AlfamaWeb
+ */
+
+.footer-er {
+  --ft-pad: var(--grid-margin);
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 56px var(--ft-pad) 32px;
+  border-radius: var(--radius-32) var(--radius-32) 0 0;
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .footer-er {
+    gap: 48px;
+    padding-top: 72px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .footer-er {
+    --ft-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+
+    gap: 64px;
+    padding: 96px var(--ft-pad) 40px;
+    border-radius: 48px 48px 0 0;          /* Figma: Top-left/right 48 */
+  }
+}
+
+.footer-er p {
+  margin: 0;
+}
+
+.footer-er a {
+  transition: color var(--aw-transicao), opacity var(--aw-transicao);
+}
+
+/* Topo: marca + contato | menu | Instagram */
+.footer-er__topo {
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  .footer-er__topo {
+    grid-template-columns: 1fr auto;
+    column-gap: 48px;
+  }
+
+  .footer-er__marca {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1280px) {
+  .footer-er__topo {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    column-gap: 56px;
+  }
+
+  .footer-er__marca {
+    grid-column: auto;
+  }
+}
+
+.footer-er__marca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 24px 48px;
+}
+
+/* Logo 136 — círculo com borda 3 px branca e Shadow/MD */
+.footer-er__logo {
+  display: block;
+  flex: none;
+  width: 96px;
+  height: 96px;
+  overflow: hidden;
+  border: 3px solid var(--color-border-inverse);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+}
+
+@media (min-width: 1280px) {
+  .footer-er__logo {
+    width: 136px;
+    height: 136px;
+  }
+}
+
+.footer-er__logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.footer-er__contato {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Contato gap 16 */
+  max-width: 420px;
+  font-style: normal;
+}
+
+.footer-er__contato a:hover {
+  opacity: 0.8;
+}
+
+.footer-er__email {
+  color: var(--color-text-accent);
+}
+
+/* Menu — Text Link, Label/Caps, gap 16 */
+.footer-er__menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-er__link {
+  display: inline-block;
+  padding-block: 2px;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat;
+  transition: background-size var(--motion-button);
+}
+
+.footer-er__link:hover,
+.footer-er__link[aria-current="page"] {
+  background-size: 100% 1.5px;
+}
+
+.footer-er__social {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-er__perfil:hover {
+  color: var(--brand-sky-300);
+}
+
+.footer-er a:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 3px;
+}
+
+/* Wordmark — 1265×240 no Desktop; cada letra na própria coluna (clip). */
+.footer-er__wordmark {
+  color: rgb(47 164 221 / 45%);            /* alpha/brand-sky-500/45 */
+}
+
+.er-wordmark {
+  display: block;
+  width: 100%;
+  max-width: 1265px;
+  height: auto;
+  margin-inline: auto;
+}
+
+.er-wordmark path {
+  vector-effect: non-scaling-stroke;
+}
+
+.er-wordmark__glifo {
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Só esconde as letras quando o JS vai revelá-las. */
+.footer-er.is-revelavel .er-wordmark__glifo {
+  transform: translateY(240px);
+}
+
+.footer-er.is-revelavel.is-revelado .er-wordmark__glifo {
+  transform: none;
+}
+
+.er-wordmark__letra:nth-of-type(2) .er-wordmark__glifo { transition-delay: 60ms; }
+.er-wordmark__letra:nth-of-type(3) .er-wordmark__glifo { transition-delay: 120ms; }
+.er-wordmark__letra:nth-of-type(4) .er-wordmark__glifo { transition-delay: 180ms; }
+.er-wordmark__letra:nth-of-type(5) .er-wordmark__glifo { transition-delay: 240ms; }
+.er-wordmark__letra:nth-of-type(6) .er-wordmark__glifo { transition-delay: 300ms; }
+.er-wordmark__letra:nth-of-type(7) .er-wordmark__glifo { transition-delay: 360ms; }
+.er-wordmark__letra:nth-of-type(8) .er-wordmark__glifo { transition-delay: 420ms; }
+.er-wordmark__letra:nth-of-type(9) .er-wordmark__glifo { transition-delay: 480ms; }
+
+/* Base: divisor white/15 + linha (gap 64) */
+.footer-er__base {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 24px;
+  border-top: 1px solid rgb(255 255 255 / 15%);
+}
+
+@media (min-width: 768px) {
+  .footer-er__base {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 64px;
+  }
+}
+
+.footer-er__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 24px;                           /* Figma: Legal gap 24 */
+}
+
+.footer-er__politica:hover {
+  opacity: 0.8;
+}
+
+.footer-er__alfama {
+  display: inline-flex;
+  flex: none;
+}
+
+.footer-er__alfama svg {
+  display: block;
+  width: 121px;
+  height: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .er-wordmark__glifo,
+  .footer-er__link {
+    transition: none;
+  }
+}

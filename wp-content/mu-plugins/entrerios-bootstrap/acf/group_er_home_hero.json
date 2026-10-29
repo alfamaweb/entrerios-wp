@@ -1,0 +1,252 @@
+[
+  {
+    "key": "group_er_home_hero",
+    "title": "Home — Hero",
+    "fields": [
+      {
+        "key": "field_er_hero_slides",
+        "label": "Slides do hero",
+        "name": "hero_slides",
+        "type": "repeater",
+        "instructions": "Um slide por linha de produto. O desenho prevê 4 slides; o seletor de linhas embaixo do hero é montado a partir desta lista, na mesma ordem.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "layout": "block",
+        "min": 1,
+        "max": 6,
+        "collapsed": "field_er_hero_slide_titulo",
+        "button_label": "Adicionar slide",
+        "rows_per_page": 20,
+        "sub_fields": [
+          {
+            "key": "field_er_hero_slide_linha",
+            "label": "Linha",
+            "name": "linha",
+            "type": "taxonomy",
+            "instructions": "Define as cores do slide e o nome do seletor.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "40",
+              "class": "",
+              "id": ""
+            },
+            "taxonomy": "linha",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "multiple": 0,
+            "parent_repeater": "field_er_hero_slides"
+          },
+          {
+            "key": "field_er_hero_slide_formato",
+            "label": "Formato do produto",
+            "name": "formato",
+            "type": "select",
+            "instructions": "Garrafa ocupa 400×760 no desktop; copo, 300×560.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "30",
+              "class": "",
+              "id": ""
+            },
+            "choices": {
+              "garrafa": "Garrafa",
+              "copo": "Copo"
+            },
+            "default_value": "garrafa",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "parent_repeater": "field_er_hero_slides"
+          },
+          {
+            "key": "field_er_hero_slide_inclinado",
+            "label": "Inclinar produto",
+            "name": "inclinado",
+            "type": "true_false",
+            "instructions": "Gira o produto −6°, como no Figma para Energéticos, Refrigerantes e Guaraná Mais.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "30",
+              "class": "",
+              "id": ""
+            },
+            "default_value": 0,
+            "ui": 1,
+            "message": "",
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "parent_repeater": "field_er_hero_slides"
+          },
+          {
+            "key": "field_er_hero_slide_titulo",
+            "label": "Título",
+            "name": "titulo",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "default_value": "",
+            "parent_repeater": "field_er_hero_slides"
+          },
+          {
+            "key": "field_er_hero_slide_texto",
+            "label": "Texto de apoio",
+            "name": "texto",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+            },
+            "rows": 3,
+            "new_lines": "",
+            "maxlength": "",
+            "placeholder": "",
+            "default_value": "",
+            "parent_repeater": "field_er_hero_slides"
+          },
+          {
+            "key": "field_er_hero_slide_imagem",
+            "label": "Imagem do produto",
+            "name": "imagem",
+            "type": "image",
+            "instructions": "PNG ou WebP com fundo transparente, recortado rente ao produto. Garrafa: 800×1520 px; copo: 600×1120 px.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "50",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "png,webp",
+            "min_width": "",
+            "min_height": "",
+            "max_width": "",
+            "max_height": "",
+            "min_size": "",
+            "max_size": "",
+            "parent_repeater": "field_er_hero_slides"
+          },
+          {
+            "key": "field_er_hero_slide_botao",
+            "label": "Botão",
+            "name": "botao",
+            "type": "link",
+            "instructions": "Botão branco abaixo do texto. Vazio esconde.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+              "width": "50",
+              "class": "",
+              "id": ""
+            },
+            "return_format": "array",
+            "parent_repeater": "field_er_hero_slides"
+          }
+        ]
+      },
+      {
+        "key": "field_er_hero_palavra_fundo",
+        "label": "Palavra de fundo",
+        "name": "hero_palavra_fundo",
+        "type": "text",
+        "instructions": "Texto vazado gigante atrás do produto. Vazio esconde.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": 20,
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_er_hero_cta_circular",
+        "label": "Botão circular",
+        "name": "hero_cta_circular",
+        "type": "link",
+        "instructions": "Círculo à direita do produto (só no desktop). Vazio esconde.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array"
+      },
+      {
+        "key": "field_er_hero_intervalo",
+        "label": "Troca automática a cada",
+        "name": "hero_intervalo",
+        "type": "number",
+        "instructions": "Em segundos. 0 desliga a troca automática.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": 5,
+        "min": 0,
+        "max": 30,
+        "step": 1,
+        "append": "s",
+        "placeholder": "",
+        "prepend": ""
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-home.php"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+  }
+]

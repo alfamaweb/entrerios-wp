@@ -1,0 +1,101 @@
+[
+  {
+    "key": "group_er_home_vitrine",
+    "title": "Home — Letreiro e vitrine de produtos",
+    "fields": [
+      {
+        "key": "field_er_marquee_texto",
+        "label": "Texto do letreiro",
+        "name": "marquee_texto",
+        "type": "text",
+        "instructions": "Frase que corre em loop abaixo do hero, alternando cheia e vazada. Vazio esconde o letreiro.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": 40,
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_er_vitrine_rotulo",
+        "label": "Rótulo da vitrine",
+        "name": "vitrine_rotulo",
+        "type": "text",
+        "instructions": "Texto pequeno acima do nome da linha.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_er_vitrine_linhas",
+        "label": "Linhas na vitrine",
+        "name": "vitrine_linhas",
+        "type": "taxonomy",
+        "instructions": "Uma aba por linha, na ordem escolhida. Cada aba mostra os produtos publicados da linha (ordem: atributo Ordem do produto). Vazio esconde a vitrine.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "taxonomy": "linha",
+        "field_type": "multi_select",
+        "allow_null": 0,
+        "add_term": 0,
+        "save_terms": 0,
+        "load_terms": 0,
+        "return_format": "id",
+        "multiple": 0
+      },
+      {
+        "key": "field_er_vitrine_ver_todos",
+        "label": "Card \"Ver todos\"",
+        "name": "vitrine_ver_todos",
+        "type": "link",
+        "instructions": "Último card de cada carrossel. Vazio esconde o card.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array"
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_template",
+          "operator": "==",
+          "value": "page-home.php"
+        }
+      ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+  }
+]

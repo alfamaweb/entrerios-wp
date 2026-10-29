@@ -1,0 +1,258 @@
+{
+    "key": "group_er_contato",
+    "title": "Contato — Página",
+    "fields": [
+        {
+            "key": "field_er_tab_contato_hero",
+            "label": "Topo",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_contato_hero_titulo",
+            "label": "Título (H1)",
+            "name": "contato_hero_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Fale Conosco. Vazio esconde o topo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_tab_contato_form",
+            "label": "Formulário",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_contato_form_titulo",
+            "label": "Título do formulário",
+            "name": "contato_form_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Nos envie uma mensagem. Vazio esconde o formulário.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_contato_form_botao",
+            "label": "Texto do botão",
+            "name": "contato_form_botao",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Enviar Mensagem.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_contato_form_texto",
+            "label": "Texto de apoio",
+            "name": "contato_form_texto",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Aparece abaixo do título. Vazio esconde.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_er_contato_form_aceite",
+            "label": "Aceite da política",
+            "name": "contato_form_aceite",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Texto da caixa de aceite (obrigatória para enviar). Se tiver o nome do link legal das Opções do Site (ex.: Política de Privacidade), esse trecho vira link. Atenção: só esvazie se o formulário \"contato\" (inc\/Forms\/handlers\/contato.php) não exigir o campo aceite_lgpd.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_tab_contato_local",
+            "label": "Contatos e mapa",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_contato_info_titulo",
+            "label": "Título do card de contatos",
+            "name": "contato_info_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Nossos Contatos. Vazio esconde o card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_contato_info_aviso",
+            "label": "De onde vêm os contatos",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Endereço, telefone e e-mail do card são os das <strong>Opções do Site → Contato<\/strong> (os mesmos do cabeçalho e do rodapé).",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_er_contato_mapa_embed",
+            "label": "Mapa do Google (incorporar)",
+            "name": "contato_mapa_embed",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "No Google Maps: Compartilhar → Incorporar um mapa → Copiar HTML, e cole aqui (o código inteiro ou só o endereço do src). Só são aceitos mapas do google.com. Vazio esconde o mapa.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_er_contato_mapa_link",
+            "label": "Botão sobre o mapa",
+            "name": "contato_mapa_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Ex.: Abrir no Google Maps → link do local no Google Maps (abre em nova aba). Vazio esconde o botão.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-contato.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Textos da página Contato (Fale Conosco). Endereço, telefone e e-mail vêm das Opções do Site.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793299976
+}

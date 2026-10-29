@@ -1,0 +1,215 @@
+{
+    "key": "group_er_produtos",
+    "title": "Produtos — Página",
+    "fields": [
+        {
+            "key": "field_er_tab_prod_hero",
+            "label": "Topo",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_prod_hero_titulo",
+            "label": "Título (H1)",
+            "name": "prod_hero_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Conheça Nossos Produtos. Vazio esconde o topo.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_er_prod_hero_imagens",
+            "label": "Produtos do topo",
+            "name": "prod_hero_imagens",
+            "aria-label": "",
+            "type": "gallery",
+            "instructions": "Até 4 fotos recortadas (PNG/WebP transparente), na ordem da esquerda para a direita: lata, garrafa, garrafa, copo — as posições e inclinações são as do Figma.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min": 0,
+            "max": 4,
+            "insert": "append",
+            "preview_size": "thumbnail",
+            "mime_types": "png,webp"
+        },
+        {
+            "key": "field_er_tab_prod_catalogo",
+            "label": "Catálogo",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_prod_linhas",
+            "label": "Ordem das categorias",
+            "name": "prod_linhas",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Ordem das abas e do filtro CATEGORIA. Linhas fora da lista aparecem depois, por nome.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "linha",
+            "field_type": "multi_select",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 1,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_er_prod_mais_texto",
+            "label": "Botão \"carregar mais\"",
+            "name": "prod_mais_texto",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Carregar mais produtos. Vazio esconde o botão (a página mostra 12 por vez).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_er_tab_prod_single",
+            "label": "Página de cada produto",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_prod_rel_titulo",
+            "label": "Título dos relacionados",
+            "name": "prod_rel_titulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Produtos relacionados. Vazio esconde a seção em todos os produtos. O sobretítulo é o nome da linha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_er_prod_rel_link",
+            "label": "Texto do link \"ver todos\"",
+            "name": "prod_rel_link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Ex.: Ver todos os produtos. Leva à página Produtos filtrada pela linha do produto.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_er_prod_cta",
+            "label": "Botão de contato",
+            "name": "prod_cta",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Botão abaixo da sanfona em todos os produtos. Ex.: Fale Conosco → página Contato.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-produtos.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Textos da página Produtos e os compartilhados pela página de cada produto.",
+    "show_in_rest": 0
+}

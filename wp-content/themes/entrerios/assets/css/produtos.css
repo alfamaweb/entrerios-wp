@@ -1,0 +1,522 @@
+/*
+ * Página Produtos — Figma: Screen/Products/Desktop (1600) e
+ * Screen/Products/Mobile (390). Carregado só nessa página (template
+ * page-produtos.php, ver aw_slugs_de_css() em inc/assets.php).
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop (layout guides do Figma).
+ * Medidas comentadas com "Figma" vêm dos frames; o Tablet não foi conferido
+ * e está marcado como "adaptação" (ver docs/PRODUTOS.md).
+ *
+ * Componentes globais (assets/css/style.css): .card-produto (Product Card),
+ * .aba-linha (Category Tabs), .botao-primario (Button Primary) e .trilha-er
+ * (Breadcrumb).
+ */
+
+.prod {
+  --prod-pad: 24px;                        /* Figma Mobile: Hero e Catálogo, laterais 24 */
+}
+
+@media (min-width: 768px) {
+  .prod {
+    --prod-pad: var(--grid-margin);
+  }
+}
+
+@media (min-width: 1280px) {
+  .prod {
+    /* Figma: área útil 1280 centralizada (160 de margem em 1600). */
+    --prod-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+/* ==========================================================================
+   Topo (Figma: Hero — 1600 × 521; Mobile 390 × 311)
+   ========================================================================== */
+.prod-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 136px var(--prod-pad) 72px;     /* Figma Mobile: 32 + Nav 64 + gap 40 · bottom 72 */
+  /* Figma: navy-500 → sky-500 → sky-300. Ângulo não aparece no modo de
+     visualização: 165° reproduz as cores medidas no wireframe Desktop. */
+  background: linear-gradient(165deg, var(--brand-navy-500) 0%, var(--brand-sky-500) 50%, var(--brand-sky-300) 100%);
+  color: var(--color-text-inverse);
+}
+
+.prod-hero__copia {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;                               /* Figma: Hero Copy gap 24 */
+  max-width: 800px;                        /* Figma: Hero Copy 800 */
+}
+
+.prod-hero__titulo {
+  margin: 0;
+  text-wrap: wrap;
+}
+
+/* Produtos (decor): só no Desktop — no Mobile do Figma o grupo não aparece. */
+.prod-hero__decor {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .prod-hero {
+    padding-top: calc(24px + 76px + 40px);  /* adaptação Tablet: topo 24 + logo 76 + respiro 40 */
+    padding-bottom: 96px;                   /* adaptação Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .prod-hero {
+    padding-top: 252px;                    /* Figma: 32 + Header Interno 132 + gap 88 */
+    padding-bottom: 152px;                 /* Figma: bottom 152 */
+  }
+
+  .prod-hero__decor {
+    position: absolute;
+    top: 110px;                            /* Figma: grupo 468 × 327,6 (posição medida no wireframe) */
+    right: max(0px, calc(var(--prod-pad) - 102px));  /* 58 em 1600 */
+    display: block;
+    width: 468px;
+    height: 327.6px;
+  }
+
+  /* Figma: cada foto é uma caixa (W × H, Top, Left, Rotation). As fotos do
+     site são 400 × 580 com sobra transparente nas laterais, então a imagem
+     ocupa a ALTURA da caixa e fica centrada no meio da largura dela.
+     Rotação do Figma é anti-horária → no CSS vai com o sinal invertido. */
+  .prod-hero__produto {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: auto;
+    max-width: none;
+    height: var(--h);
+    filter: drop-shadow(0 18.72px 23.4px rgb(13 13 51 / 35%)); /* #0D0D33 35% */
+    transform: translateX(-50%) rotate(var(--r, 0deg));
+    transform-origin: 50% 50%;
+  }
+
+  /* 1 lata · 85,8 × 187,2 em (31,2; 105,06), 8° */
+  .prod-hero__produto:nth-child(1) { --x: 74.1px; --y: 105.06px; --h: 187.2px; --r: -8deg; }
+  /* 2 garrafa · 93,6 × 312 em (132,6; 15,6) */
+  .prod-hero__produto:nth-child(2) { --x: 179.4px; --y: 15.6px; --h: 312px; }
+  /* 3 garrafa · 93,6 × 296,4 em (203,02; 31,2), −6° */
+  .prod-hero__produto:nth-child(3) { --x: 249.82px; --y: 31.2px; --h: 296.4px; --r: 6deg; }
+  /* 4 copo · 117 × 179,4 em (315,09; 148,2), −4° */
+  .prod-hero__produto:nth-child(4) { --x: 373.59px; --y: 148.2px; --h: 179.4px; --r: 4deg; }
+}
+
+/* ==========================================================================
+   Catálogo (Figma: Catálogo → Toolbar + Body)
+   ========================================================================== */
+.prod-catalogo {
+  padding: 0 var(--prod-pad) 56px;         /* Figma Mobile: bottom 56 */
+  background: var(--color-surface-default);
+}
+
+.prod-catalogo__form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma: Catálogo gap 40 */
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+}
+
+@media (min-width: 1280px) {
+  .prod-catalogo {
+    padding-bottom: 128px;                 /* Figma Desktop: bottom 128 */
+  }
+}
+
+/* Toolbar: abas (Category Tabs) + botão de filtros (< 1280, adaptação) */
+.prod-catalogo__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 48px;                       /* Figma: Toolbar padding-top 48 */
+}
+
+/* Mobile/Tablet: as abas rolam na horizontal (Figma: Tabs Viewport). */
+.prod-abas {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.prod-abas::-webkit-scrollbar {
+  display: none;
+}
+
+.prod-abas__trilho {
+  display: inline-flex;
+  gap: 8px;                                /* Figma: Category Tabs gap 8, padding 8 */
+  padding: 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-muted);
+}
+
+/* "TODOS" ativo e categorias sem cor: navy-500 (Figma: Tab/TODOS Active). */
+.prod-abas .aba-linha {
+  text-decoration: none;
+}
+
+/* Botão "Filtros" — só existe com JS e abaixo de 1280 (adaptação: o Mobile
+   do Figma esconde o painel; aqui ele abre e fecha). */
+.prod-filtros-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  background: var(--neutral-lavender-25);
+  color: var(--brand-navy-900);
+  cursor: pointer;
+  transition: border-color var(--motion-button), background-color var(--motion-button);
+}
+
+.prod-filtros-botao:hover,
+.prod-filtros-botao[aria-expanded="true"] {
+  border-color: var(--brand-navy-500);
+}
+
+.prod-filtros-botao:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 2px;
+}
+
+.prod-filtros-botao__total {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: var(--radius-full);
+  background: var(--brand-navy-500);
+  color: var(--color-text-inverse);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (min-width: 1280px) {
+  .prod-filtros-botao {
+    display: none;
+  }
+}
+
+/* Body: Filtros 290 + gap 40 + Resultados (Figma Desktop) */
+.prod-catalogo__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma: Body gap 40 */
+}
+
+@media (min-width: 1280px) {
+  .prod-catalogo__corpo {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   Filtros (Figma: Filtros — 290, radius 28, padding 32/24, gap 32,
+   lavender-25 + borda border-default)
+   ========================================================================== */
+.prod-filtros {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px 24px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-28);
+  background: var(--neutral-lavender-25);
+}
+
+@media (min-width: 1280px) {
+  .prod-filtros {
+    position: sticky;                      /* adaptação: acompanha a rolagem da grade */
+    top: 24px;
+    width: 290px;
+  }
+}
+
+/* Com JS, abaixo de 1280 o painel fica recolhido até o botão abrir. */
+@media (max-width: 1279.98px) {
+  .tem-painel-recolhivel .prod-filtros:not(.is-aberto) {
+    display: none;
+  }
+}
+
+.prod-filtros__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prod-filtros__titulo {
+  margin: 0;
+  color: var(--brand-navy-900);
+  font-size: var(--font-size-heading-h4); /* Heading/H4 */
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.prod-filtros__limpar {
+  color: var(--color-text-accent);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--motion-button);
+}
+
+.prod-filtros__limpar:hover {
+  text-decoration-color: currentcolor;
+}
+
+/* Grupo: título Label/Caps, spacer 6, opções de 40 (gap 4) */
+.prod-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;                                /* Figma: Grupo gap 4 */
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Divider 1px lavender-300 entre os grupos (Figma: Divider 240 × 1). */
+.prod-filtros__divisor {
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: var(--neutral-lavender-300);
+}
+
+.prod-filtro__titulo {
+  margin: 0 0 10px;                        /* Figma: Spacer 6 + gap 4 */
+  padding: 0;
+  color: var(--color-text-primary);
+}
+
+/* Filter Option: 40 de altura, padding 8, gap 16 */
+.prod-opcao {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 40px;
+  padding-block: 8px;
+  cursor: pointer;
+}
+
+.prod-opcao__input {
+  position: absolute;
+  opacity: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+}
+
+/* Checkbox 22, radius 7, borda 1,5 lavender-600 */
+.prod-opcao__caixa {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--neutral-lavender-600);
+  border-radius: 7px;
+  background: var(--color-surface-default);
+  color: transparent;
+  transition: background-color var(--motion-button), border-color var(--motion-button), color var(--motion-button);
+}
+
+/* Checked: o estado não foi lido no Figma — navy-500 cheio com o check
+   branco (cor de ação do sistema). */
+.prod-opcao__input:checked + .prod-opcao__caixa {
+  border-color: var(--brand-navy-500);
+  background: var(--brand-navy-500);
+  color: var(--neutral-white);
+}
+
+.prod-opcao:hover .prod-opcao__caixa {
+  border-color: var(--brand-navy-500);
+}
+
+.prod-opcao__input:focus-visible + .prod-opcao__caixa {
+  box-shadow: var(--shadow-focus-ring);
+  border-color: var(--brand-navy-500);
+}
+
+.prod-opcao__nome {
+  flex: 1;
+  color: var(--color-text-primary);
+}
+
+/* Count: pílula muted, padding 4/8, texto navy-500 (12 px, 17 de altura) */
+.prod-opcao__total {
+  flex: none;
+  min-width: 25px;
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-muted);
+  color: var(--brand-navy-500);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.prod-filtros__aplicar {
+  align-self: flex-start;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Resultados (Figma: Resultados — gap 32: Resumo, Grid, Paginação)
+   ========================================================================== */
+.prod-resultados {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 32px;
+  min-width: 0;
+}
+
+/* Resumo: número (H3 no Mobile, H4 no Desktop) + Body/Regular, gap 8 */
+.prod-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+}
+
+.prod-resumo__numero {
+  color: var(--brand-navy-900);
+  font-size: var(--font-size-heading-h3); /* Figma Mobile: Heading/H3 */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.prod-resumo__texto {
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 1280px) {
+  .prod-resumo__numero {
+    font-size: var(--font-size-heading-h4); /* Figma Desktop: Heading/H4 */
+    line-height: 1.3;
+    letter-spacing: 0;
+  }
+}
+
+/* Grid: cards 296 (Product Card) com gap 24 — 3 colunas no Desktop.
+   Mobile: uma coluna centrada, gap 16 (Figma: Track). */
+.prod-grade {
+  display: grid;
+  grid-template-columns: 296px;
+  justify-content: center;
+  gap: 16px;
+  transition: opacity 200ms ease;
+}
+
+@media (min-width: 768px) {
+  .prod-grade {
+    grid-template-columns: repeat(2, 296px); /* adaptação Tablet */
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .prod-grade {
+    grid-template-columns: repeat(3, 296px);
+    justify-content: start;
+  }
+}
+
+.is-carregando .prod-grade[aria-busy="true"] {
+  opacity: 0.5;
+}
+
+.prod-grade .card-produto.is-novo {
+  animation: prod-card-entra 400ms ease-out both;
+}
+
+@keyframes prod-card-entra {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Paginação: texto Label/Small, Progress 280 × 4 (radius 2), botão primário */
+.prod-paginacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;                               /* Figma: Paginação gap 16 */
+  padding-top: 24px;                       /* Figma: padding-top 24 */
+  text-align: center;
+}
+
+.prod-paginacao__texto {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.prod-paginacao__progresso {
+  position: relative;
+  width: 280px;
+  max-width: 100%;
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-2);
+  background: var(--neutral-lavender-300);
+}
+
+.prod-paginacao__barra {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: var(--radius-2);
+  background: var(--color-action-primary);
+  transition: width 400ms ease-out;
+}
+
+.prod-paginacao__mais[aria-disabled="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.prod-paginacao__mais:focus-visible,
+.prod-filtros__aplicar:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prod-grade,
+  .prod-paginacao__barra,
+  .prod-opcao__caixa,
+  .prod-filtros-botao {
+    transition: none;
+  }
+
+  .prod-grade .card-produto.is-novo {
+    animation: none;
+  }
+}

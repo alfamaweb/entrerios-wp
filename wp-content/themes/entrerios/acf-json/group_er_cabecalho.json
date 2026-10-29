@@ -1,0 +1,98 @@
+{
+    "key": "group_er_cabecalho",
+    "title": "Cabeçalho e menu",
+    "fields": [
+        {
+            "key": "field_er_cab_logo",
+            "label": "Logo",
+            "name": "logo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Selo redondo da marca, quadrado e com fundo transparente (mínimo 464×464 px). O círculo branco em volta é desenhado pelo tema.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "mime_types": "png,webp,svg",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0
+        },
+        {
+            "key": "field_er_cab_contato_rotulo",
+            "label": "Rótulo do contato",
+            "name": "contato_rotulo",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Texto pequeno acima do telefone, no cabeçalho e no menu. O número vem da aba Contato das Opções do Site.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_er_cab_menu_imagem",
+            "label": "Imagem do menu (mobile e tablet)",
+            "name": "menu_imagem",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Produto em transparência no fundo do menu aberto. Vazio esconde.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "mime_types": "png,webp",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "aw-opcoes"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793299976
+}

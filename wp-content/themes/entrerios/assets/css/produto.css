@@ -1,0 +1,657 @@
+/*
+ * Página do produto — Figma: Screen/Product/<linha>/Desktop (1600) e
+ * /Mobile (390). Carregado em single-produto.php (post type "produto", ver
+ * aw_slugs_de_css() em inc/assets.php).
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop. Medidas com "Figma" vêm
+ * dos frames; o Tablet não tem frame conferido ("adaptação", docs/PRODUTOS.md).
+ * Cores da linha: --linha-chip-clara / --linha-media / --linha-chip-forte,
+ * no <main> (inc/linhas.php). Fallback = Água Mineral.
+ *
+ * Globais usados (assets/css/style.css): .trilha-er, .botao-claro, .card-produto.
+ */
+
+.produto-er {
+  --produto-pad: 24px;                     /* Figma Mobile: laterais 24 */
+}
+
+@media (min-width: 768px) {
+  .produto-er {
+    --produto-pad: var(--grid-margin);
+  }
+}
+
+@media (min-width: 1280px) {
+  .produto-er {
+    --produto-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+/* ==========================================================================
+   Topo (Figma: Produto — gap 40: Header, Breadcrumb, Conteúdo)
+   ========================================================================== */
+.produto-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma: gap 40 */
+  padding: 136px var(--produto-pad) 56px;  /* Figma Mobile: 32 + Nav 64 + gap 40 · bottom 56 */
+  overflow: hidden;
+  /* Figma: navy-900 → navy-500 → royal-500 (mesmo em todas as linhas). O
+     ângulo não aparece no modo de visualização: 140° reproduz as cores
+     medidas no wireframe Desktop. */
+  background: linear-gradient(140deg, var(--brand-navy-900) 0%, var(--brand-navy-500) 50%, var(--brand-royal-500) 100%);
+  color: var(--color-text-inverse);
+}
+
+.produto-topo__trilha {
+  padding-top: 16px;                       /* Figma: Breadcrumb padding-top 16 */
+}
+
+.produto-topo__conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma Mobile: Conteúdo vertical, gap 40 */
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .produto-topo {
+    padding-top: calc(24px + 76px + 40px);  /* adaptação Tablet: topo 24 + logo 76 + respiro 40 */
+    padding-bottom: 96px;                   /* adaptação Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .produto-topo {
+    padding-top: 204px;                    /* Figma: 32 + Header Interno 132 + gap 40 */
+    padding-bottom: 120px;                 /* Figma: bottom 120 */
+  }
+
+  .produto-topo__trilha {
+    width: 100%;
+    max-width: var(--grid-max-width);
+    margin-inline: auto;
+  }
+
+  .produto-topo__conteudo {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;                             /* Figma: Conteúdo horizontal, gap 80 */
+  }
+}
+
+/* ==========================================================================
+   Palco (Figma: Stage 620 × 760). Tudo em % do palco: no Mobile ele tem
+   ~350 × 429 (Figma) e as camadas escalam junto.
+   ========================================================================== */
+.produto-palco {
+  position: relative;
+  flex: none;
+  width: 100%;
+  max-width: 620px;
+  aspect-ratio: 620 / 760;
+  margin-inline: auto;
+  isolation: isolate;
+  container-type: inline-size;             /* 1cqw = 6,2 px do Figma no Desktop: o movimento escala junto */
+}
+
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  .produto-palco {
+    max-width: 460px;                      /* adaptação Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .produto-palco {
+    width: 620px;
+    margin: 0;
+  }
+}
+
+.produto-palco > * {
+  position: absolute;
+}
+
+/* Glow 700 em (−40, 30): radial, cor média da linha 50% → 0 */
+.produto-palco__brilho {
+  left: -6.452%;
+  top: 3.947%;
+  width: 112.903%;
+  height: 92.105%;
+  border-radius: var(--radius-full);
+  background: radial-gradient(closest-side,
+    color-mix(in srgb, var(--linha-media, var(--brand-sky-500)) 50%, transparent),
+    color-mix(in srgb, var(--linha-media, var(--brand-sky-500)) 0%, transparent));
+  z-index: -3;
+}
+
+/* Blob 480 em (70, 150): tom claro → tom forte da linha */
+.produto-palco__blob {
+  left: 11.29%;
+  top: 19.737%;
+  width: 77.419%;
+  height: 63.158%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(180deg,
+    var(--linha-chip-clara, var(--category-agua-100)),
+    var(--linha-chip-forte, var(--category-agua-700)));
+  z-index: -2;
+  animation: produto-pulsa 2.5s ease-in-out infinite alternate;
+}
+
+/* Ring 580 em (20, 100): tracejado 4/10, 1,5 px, white/25 */
+.produto-palco__anel {
+  left: 3.226%;
+  top: 13.158%;
+  width: 93.548%;
+  height: 76.316%;
+  color: var(--alpha-neutral-white-25);
+  overflow: visible;
+  z-index: -1;
+}
+
+/* Bolhas: radial white 5% → 25% → 80% + borda 1 px white/60 */
+.produto-palco__bolha {
+  left: var(--x);
+  top: var(--y);
+  width: var(--s);
+  aspect-ratio: 1;
+  border: 1px solid var(--alpha-neutral-white-60);
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle,
+    rgb(255 255 255 / 5%) 0%,              /* alpha/neutral-white/5 */
+    var(--alpha-neutral-white-25) 60%,
+    var(--alpha-neutral-white-80) 100%);
+  opacity: 0;
+  animation: produto-bolha var(--d, 4s) linear var(--atraso, 0s) infinite;
+}
+
+/* Figma (tamanho, x, y) em px do palco 620 × 760 → %.
+   Movimento (protótipo): cada bolha sobe em linha reta, aparece e some, e
+   recomeça — velocidades de ~22 a ~56 px/s. --sobe = distância do ciclo
+   (px do Figma ÷ 6,2 = cqw), --d = duração, --atraso = fase. */
+.produto-palco__bolha--1 { --s: 2.903%; --x: 17.742%; --y: 18.421%; --d: 4s; --sobe: 36.13cqw; --atraso: -0.7s; }  /* 18 (110, 140) · 224 px */
+.produto-palco__bolha--2 { --s: 4.194%; --x: 77.419%; --y: 26.316%; --d: 4s; --sobe: 29.03cqw; --atraso: -2.6s; }  /* 26 (480, 200) · 180 px */
+.produto-palco__bolha--3 { --s: 2.258%; --x: 85.484%; --y: 50%; --d: 4s; --sobe: 35.48cqw; --atraso: -2.4s; }      /* 14 (530, 380) · 220 px */
+.produto-palco__bolha--4 { --s: 3.548%; --x: 14.516%; --y: 55.263%; --d: 4s; --sobe: 26.45cqw; --atraso: -3.6s; }  /* 22 (90, 420) · 164 px */
+.produto-palco__bolha--5 { --s: 2.903%; --x: 80.645%; --y: 73.684%; --d: 6s; --sobe: 21.29cqw; --atraso: -3.8s; }  /* 18 (500, 560) · 132 px */
+.produto-palco__bolha--6 { --s: 1.935%; --x: 22.581%; --y: 78.947%; --d: 4s; --sobe: 34.19cqw; --atraso: -3.3s; }  /* 12 (140, 600) · 212 px */
+.produto-palco__bolha--7 { --s: 1.613%; --x: 67.742%; --y: 11.842%; --d: 5s; --sobe: 24.19cqw; --atraso: -3.2s; }  /* 10 (420, 90) · 150 px */
+.produto-palco__bolha--8 { --s: 1.613%; --x: 9.677%; --y: 36.842%; --d: 6s; --sobe: 21.29cqw; --atraso: -1s; }     /* 10 (60, 280) · 132 px */
+
+/* Foto: centrada no palco (Figma: x central 310). Garrafa: 720 de altura
+   em y 20. A foto 400 × 580 tem sobra transparente nas laterais e o produto
+   ocupa a altura toda, então a altura do Figma vale direto. */
+.produto-palco__foto {
+  left: 50%;
+  top: 2.632%;
+  width: auto;
+  max-width: none;
+  height: 94.737%;
+  translate: -50% 0;
+  filter: drop-shadow(0 40px 60px rgb(5 5 26 / 45%)); /* Figma: #05051A 45%, Y 40, blur 60 */
+  animation: produto-flutua 2s ease-in-out infinite alternate;
+}
+
+.produto-palco--lata .produto-palco__foto {
+  top: 7.895%;                             /* Figma: lata 300 × 640 em y 60 */
+  height: 84.211%;
+}
+
+/* Copo e garrafão: adaptação (sem frame conferido) — 500 de altura, centrado
+   no círculo (centro em y 390). */
+.produto-palco--largo .produto-palco__foto {
+  top: 18.421%;
+  height: 65.789%;
+}
+
+/* Movimento do protótipo (Screen/Product/<linha>, medido quadro a quadro):
+   - foto: sobe 16 px e desce, ciclo de 4 s, ease-in-out;
+   - círculo (Blob): pulsa 480 → ~508 (escala 1,06), ciclo de 5 s;
+   - bolhas: sobem, aparecendo e sumindo (acima);
+   - anel tracejado e brilho: parados.
+   Só transform e opacity, sem JS; desliga com prefers-reduced-motion. */
+@keyframes produto-flutua {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-2.58cqw);       /* 16 px do Figma */
+  }
+}
+
+@keyframes produto-pulsa {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes produto-bolha {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(var(--sobe) * 0.25));
+  }
+
+  20%,
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(calc(var(--sobe) * -0.75));
+  }
+}
+
+/* ==========================================================================
+   Informações (Figma: 580, gap 24)
+   ========================================================================== */
+.produto-topo__info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  min-width: 0;
+}
+
+@media (min-width: 1280px) {
+  .produto-topo__info {
+    max-width: 580px;
+    padding-top: 16px;                     /* alinhamento medido no wireframe (rótulo em y 289) */
+  }
+}
+
+.produto-topo__rotulo {
+  margin: 0;
+  color: var(--brand-sky-300);             /* Figma: brand/sky-300 em todas as linhas */
+}
+
+.produto-topo__titulo {
+  margin: 0;
+  color: var(--color-text-inverse);
+  text-wrap: wrap;
+}
+
+/* Versões: grupos (rótulo Label/Caps + pílulas, gap 8). Mobile empilha
+   (Figma: Versões vertical, gap 16); Desktop em linha (gap 16). */
+.produto-versoes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .produto-versoes {
+    flex-flow: row wrap;
+    align-items: center;
+    column-gap: 24px;                      /* adaptação: separa os grupos quando quebram */
+    row-gap: 16px;
+  }
+}
+
+.produto-versao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.produto-versao__opcoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Opção: padding 8/24, borda 1,5 branca, pílula. Atual = fundo branco e
+   texto navy-500; as outras = contorno, com link. */
+.produto-opcao {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 24px;
+  border: 1.5px solid var(--color-border-inverse);
+  border-radius: var(--radius-full);
+  color: var(--color-text-inverse);
+  transition: background-color var(--motion-button), color var(--motion-button);
+}
+
+a.produto-opcao:hover {
+  background: var(--alpha-neutral-white-16); /* adaptação: hover não desenhado */
+}
+
+a.produto-opcao:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 2px;
+}
+
+.produto-opcao.is-atual {
+  background: var(--color-surface-default);
+  color: var(--brand-navy-500);
+}
+
+/* ==========================================================================
+   Sanfona (Figma: Accordion gap 16 · item radius 20, padding 24/32, gap 16)
+   ========================================================================== */
+.produto-sanfona {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.sanfona-item {
+  border: 1px solid var(--alpha-neutral-white-20);
+  border-radius: var(--radius-20);
+  background: var(--alpha-neutral-white-8);
+  backdrop-filter: blur(var(--blur-20));
+  -webkit-backdrop-filter: blur(var(--blur-20));
+  transition: background-color 300ms ease-out, border-color 300ms ease-out;
+}
+
+.sanfona-item[open] {
+  border-color: var(--alpha-neutral-white-40);
+  background: var(--alpha-neutral-white-16);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sanfona-item {
+    background: var(--alpha-neutral-white-16);
+  }
+
+  .sanfona-item[open] {
+    background: var(--alpha-neutral-white-25);
+  }
+}
+
+.sanfona-item__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 32px;                      /* Figma: padding 24/32 */
+  list-style: none;
+  cursor: pointer;
+}
+
+.sanfona-item__cabecalho::-webkit-details-marker {
+  display: none;
+}
+
+.sanfona-item__cabecalho:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: -4px;
+  border-radius: var(--radius-20);
+}
+
+/* Título: o Figma não dá nome ao estilo (texto de 24 de altura = 20/120%
+   no Desktop). Segue a escala do Body/Large nos outros modos (adaptação). */
+.sanfona-item__titulo {
+  font-size: var(--font-size-body-large);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Toggle 36: fechado white/15 + "+" branco; aberto branco + "−" navy-500 */
+.sanfona-item__botao {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: rgb(255 255 255 / 15%);      /* alpha/neutral-white/15 (sem token no CSS) */
+  color: var(--neutral-white);
+  transition: background-color 300ms ease-out, color 300ms ease-out;
+}
+
+.sanfona-item__vertical {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 300ms ease-out;
+}
+
+.sanfona-item[open] .sanfona-item__botao {
+  background: var(--color-surface-default);
+  color: var(--brand-navy-500);
+}
+
+.sanfona-item[open] .sanfona-item__vertical {
+  transform: scaleY(0);
+}
+
+.sanfona-item__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 32px 24px;
+}
+
+/* Aberto: 16 entre o cabeçalho e o texto (Figma: item gap 16). */
+.sanfona-item[open] .sanfona-item__cabecalho {
+  padding-bottom: 16px;
+}
+
+.sanfona-item__corpo p {
+  margin: 0;
+}
+
+/* Abre/fecha animado onde o navegador sabe animar até "auto" (Chrome 131+);
+   nos outros, abre na hora. Figma: Smart Animate. */
+@supports (interpolate-size: allow-keywords) {
+  .sanfona-item {
+    interpolate-size: allow-keywords;
+  }
+
+  .sanfona-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size 300ms ease-out, content-visibility 300ms allow-discrete;
+  }
+
+  .sanfona-item[open]::details-content {
+    block-size: auto;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .sanfona-item__cabecalho {
+    padding: 20px 24px;                    /* adaptação Mobile (Figma Mobile não conferido item a item) */
+  }
+
+  .sanfona-item[open] .sanfona-item__cabecalho {
+    padding-bottom: 16px;
+  }
+
+  .sanfona-item__corpo {
+    padding: 0 24px 20px;
+  }
+}
+
+.produto-topo__cta {
+  padding-top: 8px;                        /* Figma: CTA padding-top 8 */
+}
+
+.produto-topo__cta .botao-claro:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Produtos relacionados (Figma: padding 112/160/120, gap 40 ·
+   Mobile 48/0/56 com carrossel horizontal)
+   ========================================================================== */
+.produto-rel {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 48px 0 56px;                    /* Figma Mobile */
+  background: var(--color-surface-default);
+}
+
+.produto-rel__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-inline: var(--produto-pad);
+}
+
+.produto-rel__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                                /* Figma Mobile: Header 57 de altura */
+}
+
+.produto-rel__rotulo {
+  margin: 0;
+  color: var(--color-text-accent);
+}
+
+.produto-rel__titulo {
+  margin: 0;
+  color: var(--brand-navy-900);
+}
+
+/* No Mobile do Figma o cabeçalho só tem o título. */
+.produto-rel__cabecalho .link-sublinhado {
+  display: none;
+}
+
+/* Carousel Viewport: rolagem horizontal; trilho com padding lateral 24 e gap 16. */
+.produto-rel__viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--produto-pad);
+  scrollbar-width: none;
+}
+
+.produto-rel__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.produto-rel__viewport:focus-visible {
+  outline: 2px solid var(--linha-chip-forte, var(--color-action-primary));
+  outline-offset: -2px;
+}
+
+.produto-rel__trilho {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  margin: 0;
+  padding: 8px var(--produto-pad) 24px;    /* respiro para a sombra do hover */
+  list-style: none;
+}
+
+.produto-rel__item {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .produto-rel {
+    padding-block: 96px;                   /* adaptação Tablet */
+  }
+
+  .produto-rel__cabecalho {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .produto-rel__titulos {
+    gap: 16px;                             /* Figma Desktop: Title gap 16 */
+  }
+
+  .produto-rel__cabecalho .link-sublinhado {
+    display: inline-block;
+  }
+
+  .produto-rel__trilho {
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .produto-rel {
+    padding: 112px 0 120px;                /* Figma Desktop */
+  }
+
+  .produto-rel__viewport {
+    overflow: visible;
+  }
+
+  .produto-rel__trilho {
+    width: auto;
+    padding-bottom: 8px;
+  }
+}
+
+/* Text Link (Figma: Label/Button navy-500 + sublinhado sky-500 de 2 px que
+   cresce da esquerda no hover, 250 ms; texto vai a azul-céu). */
+.link-sublinhado {
+  position: relative;
+  padding-bottom: 6px;                     /* Figma: gap 4 + sublinhado 2 */
+  color: var(--brand-navy-500);
+  white-space: nowrap;
+  transition: color var(--motion-button);
+}
+
+.link-sublinhado::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--brand-sky-500);
+  transition: width var(--motion-button);
+}
+
+.link-sublinhado:hover,
+.link-sublinhado:focus-visible {
+  color: var(--brand-sky-500);
+}
+
+.link-sublinhado:hover::after,
+.link-sublinhado:focus-visible::after {
+  width: 100%;
+}
+
+.link-sublinhado:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .produto-palco__foto,
+  .produto-palco__blob,
+  .produto-palco__bolha {
+    animation: none;
+  }
+
+  .produto-palco__bolha {
+    opacity: 1;                            /* parado, na posição do Figma */
+  }
+
+  .sanfona-item,
+  .sanfona-item__botao,
+  .sanfona-item__vertical,
+  .sanfona-item::details-content,
+  .produto-opcao,
+  .link-sublinhado,
+  .link-sublinhado::after {
+    transition: none;
+  }
+}

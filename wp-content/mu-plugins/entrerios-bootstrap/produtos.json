@@ -1,0 +1,137 @@
+[
+ {
+  "slug": "copo-200ml",
+  "linha": "agua-mineral",
+  "titulo": "Copo 200ml"
+ },
+ {
+  "slug": "copo-295ml",
+  "linha": "agua-mineral",
+  "titulo": "Copo 295ml"
+ },
+ {
+  "slug": "garrafa-330ml-sem-gas",
+  "linha": "agua-mineral",
+  "titulo": "Garrafa 330ml Sem Gás"
+ },
+ {
+  "slug": "garrafa-330ml-com-gas",
+  "linha": "agua-mineral",
+  "titulo": "Garrafa 330ml Com Gás"
+ },
+ {
+  "slug": "garrafa-500ml-sem-gas",
+  "linha": "agua-mineral",
+  "titulo": "Garrafa 500ml Sem Gás"
+ },
+ {
+  "slug": "garrafa-500ml-com-gas",
+  "linha": "agua-mineral",
+  "titulo": "Garrafa 500ml Com Gás"
+ },
+ {
+  "slug": "garrafa-1-5-litros",
+  "linha": "agua-mineral",
+  "titulo": "Garrafa 1,5 Litros"
+ },
+ {
+  "slug": "agua-mineral-lata-350ml-sem-gas",
+  "linha": "agua-mineral",
+  "titulo": "Água Mineral Lata 350ml Sem Gás"
+ },
+ {
+  "slug": "agua-mineral-lata-350ml-com-gas",
+  "linha": "agua-mineral",
+  "titulo": "Água Mineral Lata 350ml Com Gás"
+ },
+ {
+  "slug": "agua-mineral-5-litros",
+  "linha": "agua-mineral",
+  "titulo": "5 Litros"
+ },
+ {
+  "slug": "garrafao-20-litros",
+  "linha": "agua-mineral",
+  "titulo": "Garrafão 20 Litros"
+ },
+ {
+  "slug": "dub-lata-269ml",
+  "linha": "energeticos",
+  "titulo": "DUB Lata 269ml"
+ },
+ {
+  "slug": "dub-1-litro",
+  "linha": "energeticos",
+  "titulo": "DUB 1 Litro"
+ },
+ {
+  "slug": "dub-2-litros",
+  "linha": "energeticos",
+  "titulo": "DUB 2 Litros"
+ },
+ {
+  "slug": "qtal-fresh-cola-lata-350ml",
+  "linha": "refrigerantes",
+  "titulo": "QTal Fresh Cola Lata 350ml"
+ },
+ {
+  "slug": "qtal-fresh-guarana-lata-350ml",
+  "linha": "refrigerantes",
+  "titulo": "QTal Fresh Guaraná Lata 350ml"
+ },
+ {
+  "slug": "qtal-fresh-cola-250ml",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Cola 250ml"
+ },
+ {
+  "slug": "qtal-fresh-cola-2l",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Cola 2L"
+ },
+ {
+  "slug": "qtal-fresh-guarana-250ml",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Guaraná 250ml"
+ },
+ {
+  "slug": "qtal-fresh-guarana-2l",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Guaraná 2L"
+ },
+ {
+  "slug": "qtal-fresh-laranja-250ml",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Laranja 250ml"
+ },
+ {
+  "slug": "qtal-fresh-laranja-2l",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Laranja 2L"
+ },
+ {
+  "slug": "qtal-fresh-uva-250ml",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Uva 250ml"
+ },
+ {
+  "slug": "qtal-fresh-uva-2l",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Uva 2L"
+ },
+ {
+  "slug": "qtal-fresh-tubaina-1l",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Tubaína 1L"
+ },
+ {
+  "slug": "qtal-fresh-tubaina-2l",
+  "linha": "refrigerantes",
+  "titulo": "Refrigerante Fresh QTal Tubaína 2L"
+ },
+ {
+  "slug": "copo-guarana-mais-acai-290ml",
+  "linha": "guarana-mais",
+  "titulo": "Copo Guaraná Mais Açaí 290ml"
+ }
+]

@@ -1,0 +1,434 @@
+/*
+ * Página Contato — Figma: Screen/Contact/Desktop (1600) e
+ * Screen/Contact/Mobile (390). Carregado só nessa página (template
+ * page-contato.php, ver aw_slugs_de_css() em inc/assets.php).
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop (layout guides do Figma).
+ * Medidas comentadas com "Figma" vêm dos frames; o Tablet não tem frame e
+ * está marcado como "adaptação" (ver docs/CONTATO-POLITICA.md).
+ *
+ * Componentes globais (assets/css/style.css): .botao-primario (Button
+ * Primary), .trilha-er (Breadcrumb), .aw-form-status e .aw-spinner.
+ */
+
+.contato {
+  --contato-pad: 24px;                     /* Figma Mobile: laterais 24 */
+}
+
+@media (min-width: 768px) {
+  .contato {
+    --contato-pad: var(--grid-margin);
+  }
+}
+
+@media (min-width: 1280px) {
+  .contato {
+    /* Figma: área útil 1280 centralizada (160 de margem em 1600). */
+    --contato-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+.contato h1,
+.contato h2,
+.contato p,
+.contato ul,
+.contato address {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Topo (Figma: Hero — 1600 × 520; Mobile 390 × 289)
+   ========================================================================== */
+.contato-hero {
+  padding: 136px var(--contato-pad) 72px;  /* Figma Mobile: 32 + Nav 64 + gap 40 · bottom 72 */
+  /* Figma: navy-500 → sky-500 → sky-300 (o mesmo topo da página Produtos;
+     165° reproduz as cores medidas no wireframe). */
+  background: linear-gradient(165deg, var(--brand-navy-500) 0%, var(--brand-sky-500) 50%, var(--brand-sky-300) 100%);
+  color: var(--color-text-inverse);
+}
+
+.contato-hero__copia {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;                               /* Figma: Hero Copy gap 24 (breadcrumb 20 + 24 + H1 72 = 116) */
+  max-width: 800px;
+}
+
+.contato-hero__titulo {
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .contato-hero {
+    padding-top: calc(24px + 76px + 40px);  /* adaptação Tablet: topo 24 + logo 76 + respiro 40 */
+    padding-bottom: 96px;                   /* adaptação Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .contato-hero {
+    padding-top: 252px;                    /* Figma: 32 + Header Interno 132 + gap 88 */
+    padding-bottom: 152px;                 /* Figma: bottom 152 */
+  }
+}
+
+/* ==========================================================================
+   Corpo (Figma: Contato — padding 64/160/128 · gap 40; Mobile 48/24/56 · gap 40)
+   ========================================================================== */
+.contato-corpo {
+  padding: 48px var(--contato-pad) 56px;
+  background: var(--color-surface-default);
+}
+
+.contato-corpo__grade {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .contato-corpo {
+    padding-top: 64px;
+    padding-bottom: 96px;                  /* adaptação Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .contato-corpo {
+    padding-bottom: 128px;
+  }
+
+  .contato-corpo__grade {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .contato-form {
+    flex: 1 1 760px;                       /* Figma: Formulário Fill (760) */
+    min-width: 0;
+  }
+
+  .contato-local {
+    flex: 0 0 480px;                       /* Figma: Localização Fixed 480 */
+  }
+}
+
+/* ==========================================================================
+   Formulário (Figma: Formulário — radius 32, borda 1 lavender-300,
+   padding 48, gap 24, sombra 0 24 60 navy-500 10%; Mobile gap 16)
+   ========================================================================== */
+.contato-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 48px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-32);
+  background: var(--color-surface-default);
+  box-shadow: 0 24px 60px rgb(53 51 147 / 10%); /* Figma: #353393 10% (sem token) */
+}
+
+/* Adaptação: abaixo da largura do Mobile do Figma (390) o padding de 48
+   espremeria os campos. */
+@media (max-width: 374px) {
+  .contato-form {
+    padding: 32px 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .contato-form {
+    gap: 24px;
+  }
+}
+
+.contato-form__cabeca {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;                                /* Figma: Stack gap 8 */
+}
+
+.contato-form__titulo {
+  color: var(--brand-navy-900);
+}
+
+.contato-form__texto {
+  color: var(--neutral-gray-700);
+}
+
+.contato-form__campos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Stack gap 16 */
+}
+
+.contato-form__linha {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Linha gap 16 (E-mail + Telefone) */
+}
+
+@media (min-width: 768px) {
+  .contato-form__linha {
+    flex-direction: row;                   /* Mobile do Figma empilha; Desktop lado a lado */
+  }
+
+  .contato-form__linha > .campo-er {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* --- Campo (Figma: componente "Campo" — 56, radius 16, borda 1,5
+   lavender-300, fundo surface/muted, padding 16/24, Body/Regular) ------- */
+.campo-er__controle {
+  display: block;
+  width: 100%;
+  height: 56px;
+  padding: 16px 24px;
+  border: 1.5px solid var(--color-border-default);
+  border-radius: var(--radius-16);
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  transition: border-color var(--motion-button), box-shadow var(--motion-button), background-color var(--motion-button);
+}
+
+.campo-er__controle::placeholder {
+  color: var(--color-text-primary);        /* Figma: placeholder em color/text/primary */
+  opacity: 1;
+}
+
+/* Figma: "Clique/hover: Focus (borda azul-marinho + anel azul-claro)". */
+.campo-er__controle:hover {
+  border-color: var(--brand-navy-500);
+}
+
+.campo-er__controle:focus {
+  border-color: var(--brand-navy-500);
+  background: var(--color-surface-default);
+  box-shadow: var(--shadow-focus-ring);
+  outline: none;
+}
+
+/* Erro só depois que a pessoa mexeu no campo (adaptação: estado não
+   desenhado no Figma; usa a cor de erro do starter). */
+.campo-er__controle:user-invalid {
+  border-color: var(--aw-erro);
+}
+
+.campo-er--area .campo-er__controle {
+  height: 160px;                           /* Figma: Campo/Mensagem Fixed 160 */
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* --- Aceite da política (adaptação: não está no Figma; ver docs) --------- */
+.contato-form__aceite {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--neutral-gray-700);
+}
+
+.contato-form__aceite input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--brand-navy-500);
+}
+
+.contato-form__aceite a {
+  color: var(--color-action-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* --- Envio (Figma: Envio, botão à direita; Mobile ocupa a largura) ------- */
+.contato-form__envio {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contato-form__enviar {
+  width: 100%;
+  justify-content: space-between;
+  border: 0;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .contato-form__enviar {
+    width: auto;
+  }
+}
+
+.contato-form__enviar:focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 3px;
+}
+
+.contato-form__enviar:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+/* Enviando: o spinner ocupa o círculo no lugar da seta. */
+.contato-form__enviar .aw-spinner:not([hidden]) + svg {
+  display: none;
+}
+
+.contato-form .aw-form-status {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   Localização (Figma: Localização — 480, gap 24)
+   ========================================================================== */
+.contato-local {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Adaptação Tablet: card e mapa lado a lado. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .contato-local {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+}
+
+/* --- Nossos Contatos (Figma: Nossa Localização — radius 32, padding 40,
+   gap 24, degradê navy-900 → navy-500; Mobile padding 40/24) ------------- */
+.contato-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px 24px;
+  border-radius: var(--radius-32);
+  /* Ângulo não aparece no modo de visualização: 135° (escuro no alto à
+     esquerda) reproduz o wireframe. */
+  background: linear-gradient(135deg, var(--brand-navy-900) 0%, var(--brand-navy-500) 100%);
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .contato-info {
+    padding: 40px;
+  }
+}
+
+.contato-info__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;                               /* Figma: Container gap 16 */
+  padding: 0;
+  list-style: none;
+}
+
+.contato-info__item {
+  display: flex;
+  align-items: center;
+  gap: 16px;                               /* Figma: Item gap 16 */
+}
+
+.contato-info__icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-10);
+  color: var(--brand-sky-300);             /* Figma: ícone 22, traço 1,65 sky-300 */
+}
+
+.contato-info__texto {
+  min-width: 0;
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.contato-info__link {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: color var(--motion-button), text-decoration-color var(--motion-button);
+}
+
+.contato-info__link:hover {
+  color: var(--brand-sky-300);
+  text-decoration-color: currentcolor;
+}
+
+.contato-info__link:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 2px;
+}
+
+/* --- Mapa (Figma: 480 × 340, radius 32; botão "Abrir mapa" em
+   left 24 / bottom 16) ---------------------------------------------------- */
+.contato-mapa {
+  position: relative;
+  isolation: isolate;
+  min-height: 340px;
+  overflow: hidden;
+  border-radius: var(--radius-32);
+  background: var(--color-surface-muted); /* enquanto o iframe carrega */
+}
+
+.contato-mapa__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.contato-mapa__abrir {
+  position: absolute;
+  left: 24px;
+  bottom: 16px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;                                /* Figma: gap 8 */
+  padding: 16px;                           /* Figma: padding 16 */
+  border-radius: var(--radius-full);
+  background: var(--color-action-primary);
+  color: var(--color-text-inverse);
+  transition: background-color var(--motion-button), box-shadow var(--motion-button);
+}
+
+.contato-mapa__abrir svg {
+  transition: transform var(--motion-button);
+}
+
+.contato-mapa__abrir:hover {
+  background: var(--color-action-primary-hover);
+  box-shadow: var(--shadow-button-primary-hover);
+}
+
+.contato-mapa__abrir:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.contato-mapa__abrir:focus-visible {
+  outline: 2px solid var(--neutral-white);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campo-er__controle,
+  .contato-info__link,
+  .contato-mapa__abrir,
+  .contato-mapa__abrir svg {
+    transition: none;
+  }
+}

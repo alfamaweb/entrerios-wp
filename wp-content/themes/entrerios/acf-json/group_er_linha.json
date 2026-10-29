@@ -1,0 +1,232 @@
+{
+    "key": "group_er_linha",
+    "title": "Linha — cores do design system",
+    "fields": [
+        {
+            "key": "field_er_linha_tab_hero",
+            "label": "Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_linha_cor_hero_inicio",
+            "label": "Gradiente do hero — início",
+            "name": "cor_hero_inicio",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Canto superior esquerdo, onde fica o texto branco. Use o tom mais escuro da linha (no Figma: 900, ou brand\/navy-500 na Água). Precisa de contraste mínimo 4.5:1 com o branco — o WordPress recusa salvar se não tiver.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_cor_hero_meio",
+            "label": "Gradiente do hero — meio",
+            "name": "cor_hero_meio",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Tom intermediário (no Figma: 700, ou brand\/sky-500 na Água).",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_cor_hero_fim",
+            "label": "Gradiente do hero — fim",
+            "name": "cor_hero_fim",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Canto inferior direito, atrás do produto (no Figma: 500\/400, ou brand\/sky-300 na Água).",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_tab_chip",
+            "label": "Seletor, cards e destaque",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_er_linha_cor_chip_clara",
+            "label": "Tom claro",
+            "name": "cor_chip_clara",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Início do gradiente da miniatura do seletor e do círculo atrás do produto nos cards (no Figma: 100\/300).",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_cor_media",
+            "label": "Tom médio",
+            "name": "cor_media",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Fim do círculo atrás do produto e início do botão de seta dos cards (no Figma: 500).",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_cor_chip_forte",
+            "label": "Tom forte",
+            "name": "cor_chip_forte",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Títulos, aba ativa, barra de progresso e setas da vitrine; fim dos gradientes (no Figma: 700).",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_cor_destaque",
+            "label": "Cor de destaque da linha",
+            "name": "cor_destaque",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Equivale ao token color\/category da linha: selos, títulos e detalhes nas páginas de produto.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_er_linha_cor_profunda",
+            "label": "Fundo escuro (Produto 360°)",
+            "name": "cor_profunda",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Início do gradiente do Produto 360° — no Figma, o tom 950 da linha.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "linha"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Cores por papel (não por degrau). Ver docs\/TOKENS-FIGMA.md do tema.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1793299977
+}

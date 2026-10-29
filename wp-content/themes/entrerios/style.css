@@ -1,0 +1,486 @@
+/*
+Theme Name: Alfama WEB v3
+Theme URI: https://alfamaweb.com.br/
+Author: Alfama Web
+Author URI: https://alfamaweb.com.br/
+Description: Starter theme da Alfamaweb. Sucessor do "None Plate" / Alfama WEB v2, reescrito sem a herança do Twenty Sixteen e sem as dívidas técnicas que se replicavam por cópia entre projetos. Ver README.md e docs/.
+Version: 3.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: alfama-web
+Tags: custom-menu, featured-images, translation-ready
+*/
+
+/* Ordem de cascata declarada antes do Tailwind entrar (assets/css/tailwind.css
+   repete a mesma linha; ser idempotente remove a ambiguidade sobre qual
+   arquivo estabelece a ordem, já que este carrega primeiro). */
+@layer theme, base, components, utilities;
+
+/* ==========================================================================
+   Sumário
+   ==========================================================================
+   1. Tokens de design
+   2. Reset e base
+   3. Acessibilidade
+   4. Tipografia de conteúdo
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Tokens de design — Figma "Entre Rios" (05_Documentation)
+   --------------------------------------------------------------------------
+   Nomes = codeSyntax WEB das variables do Figma (ex.: brand/navy-500 vira
+   --brand-navy-500). Valores lidos das collections Colors e Semantic (modo
+   Light), Typography (Desktop/Tablet/Mobile) e Spacing / Radius em
+   19/10/2026. Para mudar um valor, mude no Figma e depois aqui — nunca o
+   contrário. Mapa completo e pendências em docs/TOKENS-FIGMA.md.
+
+   Regra: componentes usam os semânticos (--color-*). Primitivos só quando o
+   Figma não tem alias para o caso (ex.: rampas de categoria em gradientes).
+   ========================================================================== */
+:root {
+  /* --- Colors / brand ---------------------------------------------------- */
+  --brand-navy-500: #353393;
+  --brand-navy-700: #28276f;
+  --brand-navy-900: #1b1a4a;
+  --brand-sky-300: #70cff6;
+  --brand-sky-500: #2fa4dd;
+  --brand-lavender-50: #eeeffa;
+  --brand-royal-500: #2e5fb8;
+
+  /* --- Colors / neutral -------------------------------------------------- */
+  --neutral-ink: #212529;
+  --neutral-gray-500: #626e79;
+  --neutral-gray-700: #494949;
+  --neutral-white: #ffffff;
+  --neutral-lavender-25: #f8f8fd;
+  --neutral-lavender-100: #f4f4fb;
+  --neutral-lavender-200: #eaeaf7;
+  --neutral-lavender-300: #e6e6f4;
+  --neutral-lavender-400: #e2e2f4;
+  --neutral-lavender-600: #c9c9e6;
+
+  /* --- Colors / accent (não são cores de estado) ------------------------- */
+  --accent-green: #00ce66;
+  --accent-lime: #86cf49;
+  --accent-yellow: #fcbf02;
+
+  /* --- Colors / category (rampas por linha de produto) ------------------- */
+  --category-agua-100: #8ed6f6;
+  --category-agua-500: #2fa4dd;
+  --category-agua-700: #1a7dba;
+
+  --category-energeticos-300: #5a84e4;
+  --category-energeticos-500: #2f5bc8;
+  --category-energeticos-700: #163184;
+  --category-energeticos-900: #0e1f5c;
+  --category-energeticos-950: #0a1240;
+
+  --category-refrigerantes-300: #f0646a;
+  --category-refrigerantes-400: #e0484c;
+  --category-refrigerantes-500: #d52b30;
+  --category-refrigerantes-700: #a51615;
+  --category-refrigerantes-900: #5e0b0b;
+
+  --category-guarana-mais-300: #b067c6;
+  --category-guarana-mais-400: #9a4db0;
+  --category-guarana-mais-500: #7e2d96;
+  --category-guarana-mais-700: #5c156b;
+  --category-guarana-mais-900: #3a0a45;
+  --category-guarana-mais-950: #24082e;
+
+  /* --- Semantic (aliases) ------------------------------------------------- */
+  --color-text-primary: var(--neutral-ink);
+  --color-text-inverse: var(--neutral-white);
+  --color-text-accent: var(--brand-sky-500);
+
+  --color-surface-default: var(--neutral-white);
+  --color-surface-subtle: var(--brand-lavender-50);
+  --color-surface-inverse: var(--brand-navy-900);
+  --color-surface-muted: var(--neutral-lavender-100);
+  --color-surface-selected: var(--neutral-lavender-400);
+
+  --color-action-primary: var(--brand-navy-500);
+  --color-action-primary-hover: var(--brand-navy-700);
+  --color-action-accent: var(--brand-sky-500);
+
+  --color-border-default: var(--neutral-lavender-300);
+  --color-border-inverse: var(--neutral-white);
+
+  --color-category-agua: var(--category-agua-500);
+  --color-category-energeticos: var(--category-energeticos-700);
+  --color-category-refrigerantes: var(--category-refrigerantes-500);
+  --color-category-guarana-mais: var(--category-guarana-mais-700);
+
+  /* --- Radius ------------------------------------------------------------- */
+  --radius-2: 2px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-28: 28px;
+  --radius-32: 32px;
+  --radius-36: 36px;
+  --radius-40: 40px;
+  --radius-full: 999px;
+
+  /* --- Alpha (alpha/<cor>/<opacidade>) usados nos componentes ----------- */
+  --alpha-neutral-white-8: rgb(255 255 255 / 8%);
+  --alpha-neutral-white-10: rgb(255 255 255 / 10%);
+  --alpha-neutral-white-12: rgb(255 255 255 / 12%);   /* Card Ver todos — Bolha 1 */
+  --alpha-neutral-white-14: rgb(255 255 255 / 14%);   /* Card Ver todos — Bolha 3 */
+  --alpha-neutral-white-16: rgb(255 255 255 / 16%);
+  --alpha-neutral-white-20: rgb(255 255 255 / 20%);
+  --alpha-neutral-white-25: rgb(255 255 255 / 25%);
+  --alpha-neutral-white-35: rgb(255 255 255 / 35%);
+  --alpha-neutral-white-40: rgb(255 255 255 / 40%);
+  --alpha-neutral-white-45: rgb(255 255 255 / 45%);
+  --alpha-neutral-white-60: rgb(255 255 255 / 60%);
+  --alpha-neutral-white-80: rgb(255 255 255 / 80%);
+  --alpha-neutral-white-95: rgb(255 255 255 / 95%);
+  --alpha-brand-navy-500-40: rgb(53 51 147 / 40%);
+  /* Página Sustentabilidade (Figma: Screen/Sustainability) */
+  --alpha-neutral-white-5: rgb(255 255 255 / 5%);     /* faixas do card "60 m" */
+  --alpha-neutral-white-7: rgb(255 255 255 / 7%);
+  --alpha-neutral-white-9: rgb(255 255 255 / 9%);
+  --alpha-neutral-white-11: rgb(255 255 255 / 11%);
+  --alpha-neutral-white-13: rgb(255 255 255 / 13%);
+  --alpha-neutral-white-15: rgb(255 255 255 / 15%);   /* bolhas */
+  --alpha-neutral-white-50: rgb(255 255 255 / 50%);   /* borda dos selos */
+  --alpha-neutral-white-85: rgb(255 255 255 / 85%);   /* selo claro */
+  --alpha-neutral-white-90: rgb(255 255 255 / 90%);   /* gota do card da Introdução */
+  --alpha-brand-sky-500-60: rgb(47 164 221 / 60%);    /* contorno dos números 01–04 */
+  --alpha-brand-navy-500-30: rgb(53 51 147 / 30%);    /* sombra do card da Introdução */
+  --alpha-brand-navy-900-60: rgb(27 26 74 / 60%);     /* degradê da foto do pilar */
+
+  /* --- Illustration (illustration/* do Figma) — só nos cards ilustrados -- */
+  --illustration-sky-100: #b9e6fa;
+  --illustration-cream-100: #ffe7c2;
+  --illustration-sun-400: #f4b703;
+  --illustration-orange-400: #ffa040;
+  --illustration-orange-600: #e36c16;
+
+  /* --- Effects / Shadow (effect styles do Figma) ------------------------- */
+  /* Shadow/SM e /LG existem no arquivo, mas nenhum componente lido os usa;
+     ficam pendentes (docs/TOKENS-FIGMA.md). Shadow/XL: --drop-shadow-xl. */
+  --shadow-sm: 0 8px 20px 0 rgb(18 15 64 / 35%);    /* #120F40 35% — Logo do header (Tablet/Mobile) */
+  --shadow-md: 0 10px 24px 0 rgb(18 15 64 / 35%);   /* #120F40 35% — Logo do header */
+  --shadow-2xl: 0 24px 30px 0 rgb(0 0 0 / 25%);     /* #000 25% — produtos da Linha Card */
+  --drop-shadow-xl: 0 24px 30px rgb(13 13 51 / 30%);   /* Shadow/XL (#0D0D33 30%) — produtos dos cards da Sustentabilidade */
+
+  /* --- Effects / sombras locais dos componentes ---------------------------
+     Aplicadas direto no componente no Figma (sem effect style). Nome =
+     componente + estado. Cor base: brand/navy-900 (#1B1A4A) salvo indicação. */
+  --shadow-button-primary-hover: 0 12px 28px -4px rgb(53 51 147 / 40%);  /* navy-500 */
+  --shadow-button-light-hover: 0 12px 28px -4px rgb(27 26 74 / 35%);
+  --shadow-circle-cta-hover: 0 16px 40px 0 rgb(27 26 74 / 25%);
+  --shadow-play-button-hover: 0 0 40px 8px rgb(255 255 255 / 45%);        /* brilho branco */
+  --shadow-arrow-button-hover: 0 10px 20px -4px rgb(27 26 74 / 22%);
+  --shadow-category-chip-active: 0 16px 32px 0 rgb(27 26 74 / 25%);
+  --shadow-product-card-hover: 0 28px 48px -8px rgb(27 26 74 / 18%);
+  --shadow-card-ver-todos-hover: 0 28px 48px -8px rgb(53 51 147 / 35%);  /* navy-500 */
+  /* Linha Card hover: sombra na cor da linha (category/<linha>/500, 40%). */
+  --shadow-linha-card-hover-energeticos: 0 32px 64px -12px rgb(47 91 200 / 40%);
+  --shadow-hero-product: 0 40px 60px 0 rgb(27 26 74 / 35%);
+  --shadow-produto-360: 0 30px 50px 0 rgb(13 0 20 / 35%);                 /* #0D0014 */
+  --shadow-focus-ring: 0 0 0 4px rgb(47 164 221 / 25%);                   /* sky-500 — Input Field focus */
+
+  /* Mesmas sombras de produto em sintaxe de filter: drop-shadow() — o produto
+     é PNG/WebP recortado, então a sombra precisa seguir o contorno, e
+     drop-shadow() não aceita spread (os valores do Figma têm spread 0). */
+  --drop-shadow-hero-product: 0 40px 60px rgb(27 26 74 / 35%);            /* Desktop — navy-900 */
+  --drop-shadow-hero-product-tablet: 0 30px 50px rgb(13 13 64 / 35%);     /* #0D0D40 */
+  --drop-shadow-hero-product-mobile: 0 24px 40px rgb(13 13 64 / 35%);     /* #0D0D40 */
+  --drop-shadow-card-produto: 0 20px 24px rgb(0 0 0 / 18%);               /* Product Card — Image/Stage */
+  --drop-shadow-card-produto-hover: 0 32px 30px rgb(0 0 0 / 28%);         /* Product Card, State=Hover */
+
+  /* --- Effects / Background blur (vidro) --------------------------------- */
+  --blur-16: 16px;   /* Play Button default, Callout do 360° */
+  --blur-20: 20px;   /* Accordion Item */
+  --blur-24: 24px;   /* Menu (glass) do header */
+
+  /* --- Motion (descrições dos componentes no Figma) ---------------------- */
+  --motion-button: 250ms ease-out;
+  --motion-circle-cta: 300ms ease;          /* anel tracejado: rotação 12s linear contínua */
+  --motion-product-card: 300ms ease-out;
+  --motion-linha-card: 400ms ease-out;
+  --motion-category-chip: 600ms ease-in-out;
+  --motion-hero-slide: 700ms ease-in-out;   /* autoplay a cada 5s */
+  --motion-chip-360: 400ms ease;            /* dissolve entre variantes do 360° */
+
+  /* --- Typography --------------------------------------------------------- */
+  /* Família: Montserrat (assets/css/fonts.css). Valores abaixo = modo Mobile;
+     os modos Tablet e Desktop sobrescrevem nos media queries logo depois. */
+  --font-family-base: "Montserrat Variable", "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --font-size-display-wordmark: 54px;
+  --font-size-display-xxl: 56px;
+  --font-size-display-xl: 40px;
+  --font-size-display-l: 32px;
+  --font-size-heading-h1: 40px;
+  --font-size-heading-h2: 30px;
+  --font-size-heading-h3: 22px;
+  --font-size-heading-h4: 18px;
+  --font-size-body-large: 16px;
+  --font-size-body-regular: 14px;
+  --font-size-label-caps: 12px;
+  --font-size-label-bold: 14px;
+  --font-size-label-button: 14px;
+  --font-size-label-button-sm: 14px;
+  --font-size-label-small: 12px;
+
+  /* --- Grid (layout guide styles Mobile / Tablet / Desktop) --------------- */
+  --grid-columns: 4;
+  --grid-gutter: 16px;
+  --grid-margin: 20px;
+  --grid-max-width: 1280px;
+
+  /* --- Fora do Figma ------------------------------------------------------
+     Valores do starter que o design system ainda não define. Ver pendências
+     em docs/TOKENS-FIGMA.md antes de usar em componente novo. */
+  --aw-sucesso: #2a6a53;
+  --aw-atencao: #8d6216;
+  --aw-erro: #c0342c;
+  --aw-transicao: 180ms ease;
+  --aw-header-altura: 72px;
+}
+
+/* Typography — modo Tablet (layout guide Tablet: 768 px) */
+@media (min-width: 768px) {
+  :root {
+    --font-size-display-wordmark: 106px;
+    --font-size-display-xxl: 112px;
+    --font-size-display-xl: 64px;
+    --font-size-display-l: 44px;
+    --font-size-heading-h1: 56px;
+    --font-size-heading-h2: 40px;
+    --font-size-heading-h3: 24px;
+    --font-size-heading-h4: 20px;
+    --font-size-body-large: 18px;
+    --font-size-body-regular: 14px;
+    --font-size-label-caps: 12px;
+    --font-size-label-bold: 14px;
+    --font-size-label-button: 16px;
+    --font-size-label-button-sm: 14px;
+    --font-size-label-small: 12px;
+
+    --grid-columns: 8;
+    --grid-gutter: 24px;
+    --grid-margin: 40px;
+  }
+}
+
+/* Typography — modo Desktop. O Figma desenha o Desktop em 1600 px com 1280 px
+   de área útil; o corte em 1280 px é decisão nossa (ver docs/TOKENS-FIGMA.md). */
+@media (min-width: 1280px) {
+  :root {
+    --font-size-display-wordmark: 206px;
+    --font-size-display-xxl: 220px;
+    --font-size-display-xl: 96px;
+    --font-size-display-l: 64px;
+    --font-size-heading-h1: 72px;
+    --font-size-heading-h2: 56px;
+    --font-size-heading-h3: 28px;
+    --font-size-heading-h4: 22px;
+    --font-size-body-large: 20px;
+    --font-size-body-regular: 16px;
+    --font-size-label-caps: 14px;
+    --font-size-label-bold: 14px;
+    --font-size-label-button: 16px;
+    --font-size-label-button-sm: 14px;
+    --font-size-label-small: 14px;
+
+    --grid-columns: 12;
+  }
+}
+
+/* ==========================================================================
+   2. Reset e base
+   ========================================================================== */
+/* Reset dentro de @layer base: assim os utilitários do Tailwind (camada
+   utilities) vencem — sem isso, "button { font: inherit }" e
+   "h1 { line-height }" daqui anulavam text-label-caps, text-heading-h1…
+   O CSS autoral (fora de camada) continua vencendo os dois. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--aw-header-altura);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-surface-default);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-body-regular);
+    line-height: 1.7; /* Body/Regular: LH 170% */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-family: var(--font-family-base);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  p, ul, ol, figure, blockquote {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul, ol {
+    list-style: none;
+  }
+
+  img, svg, video, iframe {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  input, select, textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+}
+
+/* ==========================================================================
+   3. Acessibilidade
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.aw-skip-link {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 999;
+  padding: 10px 16px;
+  background: var(--color-surface-inverse);
+  color: #fff;
+  border-radius: var(--radius-12);
+  transition: top var(--aw-transicao);
+}
+
+.aw-skip-link:focus {
+  top: 8px;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-action-primary);
+  outline-offset: 2px;
+}
+
+/* Honeypot do dispatcher de formulários — invisível, mas não display:none,
+   para que bots que checam visibilidade ainda o preencham. */
+.aw-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   4. Tipografia de conteúdo (saída do editor)
+   ========================================================================== */
+.aw-prose > * + * {
+  margin-top: 1em;
+}
+
+.aw-prose h2 {
+  margin-top: 1.8em;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.aw-prose h3 {
+  margin-top: 1.5em;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.aw-prose ul,
+.aw-prose ol {
+  padding-left: 1.25em;
+  list-style: revert;
+}
+
+.aw-prose li + li {
+  margin-top: 0.4em;
+}
+
+.aw-prose a {
+  color: var(--color-action-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.aw-prose img {
+  border-radius: var(--radius-16);
+}
+
+.aw-prose blockquote {
+  padding-left: 1em;
+  border-left: 3px solid var(--color-action-primary);
+  color: var(--neutral-gray-700);
+  font-style: italic;
+}
+
+.aw-prose-invertido,
+.aw-prose-invertido * {
+  color: #fff;
+}

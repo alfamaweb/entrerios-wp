@@ -1,0 +1,767 @@
+/*
+ * Página Sustentabilidade — Figma: Screen/Sustainability/Desktop (1600),
+ * /Tablet (768) e /Mobile (390). Carregado só nessa página (template
+ * page-sustentabilidade.php, ver aw_slugs_de_css() em inc/assets.php).
+ *
+ * Mobile primeiro; 768 = Tablet e 1280 = Desktop (layout guides do Figma).
+ * Medidas com "Figma" vêm dos três frames (lidos com "Copy as code → CSS"
+ * em 29/10/2026). Só tokens de style.css; nenhum hex solto.
+ *
+ * Cards dos pilares (.sus-visual): todas as medidas internas estão no espaço
+ * 560 × 600 do Figma e escalam com o card via --u (100cqw / 560) — o frame
+ * Mobile é exatamente o Desktop × 0,625.
+ */
+
+.sus {
+  --sus-pad: var(--grid-margin);
+}
+
+@media (min-width: 1280px) {
+  .sus {
+    /* Figma: conteúdo 1280 centralizado (160 de margem em 1600). */
+    --sus-pad: max(var(--grid-margin), calc((100% - var(--grid-max-width)) / 2));
+  }
+}
+
+.sus p,
+.sus h1,
+.sus h2,
+.sus blockquote {
+  margin: 0;
+}
+
+.sus h1,
+.sus h2 {
+  text-wrap: wrap;
+}
+
+/* Blocos de texto empilhados: gap 24 do Figma (Texto). */
+.sus-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  color: var(--color-text-primary);
+}
+
+/* Label/Caps: sky-500 nos pilares, sky-300 no topo e no Compromisso. A caixa
+   vem do texto (o topo do Figma escreve "Sustentabilidade", não em caixa alta). */
+.sus-rotulo {
+  color: var(--color-text-accent);
+  text-transform: none;
+}
+
+.sus-rotulo--claro {
+  color: var(--brand-sky-300);
+}
+
+.sus-rotulo--traco {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;                               /* Figma: Eyebrow gap 16 */
+  color: var(--brand-sky-300);
+}
+
+.sus-rotulo--traco::before {
+  content: "";
+  flex: none;
+  width: 48px;                             /* Figma: Divider 48×2 sky-300 */
+  height: 2px;
+  background: currentColor;
+}
+
+/* ==========================================================================
+   Topo (Figma: Hero — Desktop 1600×820 · Tablet 768×620 · Mobile 390×520)
+   ========================================================================== */
+.sus-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 520px;                       /* Figma Mobile */
+  overflow: hidden;
+  /* Espaço do cabeçalho absoluto: topo 16 + logo 60 + respiro 32. */
+  padding: calc(16px + 60px + 32px) var(--sus-pad) 48px;   /* Figma Mobile: bottom 48 */
+  background: var(--brand-navy-900);
+  color: var(--color-text-inverse);
+}
+
+.sus-hero__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Degradês do Figma (iguais nos três frames): navy-900/92 → navy-700/60 (55 %)
+   → navy-700/5, da esquerda para a direita, e navy-900/50 → 0 (30 %) no alto. */
+.sus-hero::before,
+.sus-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.sus-hero::before {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--brand-navy-900) 92%, transparent) 0%,
+    color-mix(in srgb, var(--brand-navy-700) 60%, transparent) 55%,
+    color-mix(in srgb, var(--brand-navy-700) 5%, transparent) 100%);
+}
+
+.sus-hero::after {
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--brand-navy-900) 50%, transparent) 0%,
+    transparent 30%);
+}
+
+.sus-hero__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;                               /* Figma: Hero Copy gap 24 */
+  max-width: 900px;                        /* Figma: Hero Copy 900 */
+}
+
+.sus-hero__titulo {
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .sus-hero {
+    min-height: 620px;                     /* Figma Tablet */
+    padding-top: calc(24px + 76px + 40px); /* topo 24 + logo 76 + respiro 40 */
+    padding-bottom: 64px;                  /* Figma Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .sus-hero {
+    min-height: 820px;                     /* Figma Desktop */
+    padding-top: 220px;                    /* Nav 116 + topo 28 + respiro */
+    padding-bottom: 112px;                 /* Figma Desktop */
+  }
+}
+
+/* ==========================================================================
+   Introdução (Figma: padding 144/160/120 · gap 112 · Texto 608 + Citação 560)
+   ========================================================================== */
+.sus-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma Mobile/Tablet */
+  padding: 64px var(--sus-pad) 56px;       /* Figma Mobile */
+  background: var(--color-surface-default);
+}
+
+/* Card em degradê navy-500 → sky-500 (135°, 71,43 %), radius 36, padding 48. */
+.sus-intro__citacao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 48px;
+  border-radius: var(--radius-36);
+  background: linear-gradient(135deg, var(--brand-navy-500) 0%, var(--brand-sky-500) 71.43%);
+  box-shadow: 0 30px 60px -10px var(--alpha-brand-navy-500-30);
+  color: var(--color-text-inverse);
+}
+
+.sus-intro__gota {
+  display: block;
+  width: 40px;                             /* Figma: icon/drop 40×48 */
+  height: 48px;
+  color: var(--alpha-neutral-white-90);
+}
+
+.sus-intro__gota svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .sus-intro {
+    padding-block: 88px 72px;              /* Figma Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .sus-intro {
+    flex-direction: row;
+    align-items: center;
+    gap: 112px;                            /* Figma */
+    padding-block: 144px 120px;            /* Figma */
+  }
+
+  .sus-intro__texto {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .sus-intro__citacao {
+    flex: 0 0 560px;                       /* Figma: Citação 560 */
+  }
+}
+
+/* ==========================================================================
+   Pilares (Figma: Pilar 01–04 — padding 64|88/160/88 · gap 112 ·
+   Visual 560×600 + Texto 608; fundo branco nos ímpares, lavanda nos pares)
+   ========================================================================== */
+.sus-pilar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;                               /* Figma Mobile/Tablet */
+  padding: 56px var(--sus-pad);            /* Figma Mobile: 56 / 24 / 56 */
+  background: var(--color-surface-default);
+}
+
+.sus-pilar--primeiro {
+  padding-top: 48px;                       /* Figma Mobile: Pilar 01 começa em 48 */
+}
+
+.sus-pilar--par {
+  background: var(--color-surface-muted);
+}
+
+.sus-pilar__titulo {
+  color: var(--brand-navy-900);
+}
+
+/* Número vazado: contorno 1,5 px sky-500/60 (SVG do Figma), no tamanho do
+   Display/XL de cada modo (glifo de 74 px em 96 px de fonte). */
+.sus-pilar__numero {
+  display: flex;
+  align-items: center;
+  height: calc(var(--font-size-display-xl) * 0.95);   /* Display/XL, LH 95 % */
+  color: var(--alpha-brand-sky-500-60);
+}
+
+.sus-pilar__numero svg {
+  display: block;
+  width: auto;
+  height: calc(var(--font-size-display-xl) * 74 / 96);
+}
+
+/* Do 05 em diante não há SVG: o número sai em texto com contorno. */
+.sus-pilar__numero--texto {
+  font-size: var(--font-size-display-xl);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -2px;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--alpha-brand-sky-500-60);
+}
+
+/* Frase com a barra 4 px (sky-300 → navy-500), gap 24, Heading/H4 navy-500.
+   Não há utilitário text-heading-h4 no tailwind.css compilado. */
+.sus-destaque {
+  display: flex;
+  gap: 24px;
+  font-size: var(--font-size-heading-h4);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--brand-navy-500);
+}
+
+.sus-destaque::before {
+  content: "";
+  flex: none;
+  width: 4px;
+  border-radius: var(--radius-2);
+  background: linear-gradient(180deg, var(--brand-sky-300), var(--brand-navy-500));
+}
+
+@media (min-width: 768px) {
+  .sus-pilar {
+    padding-block: 56px;                   /* Figma Tablet */
+  }
+
+  .sus-pilar--primeiro {
+    padding-block: 64px 56px;              /* Figma Tablet */
+  }
+}
+
+@media (min-width: 1280px) {
+  .sus-pilar {
+    flex-direction: row;
+    align-items: center;
+    gap: 112px;                            /* Figma */
+    padding-block: 88px;                   /* Figma: Pilar 02–04 */
+  }
+
+  .sus-pilar--primeiro {
+    padding-block: 64px 88px;              /* Figma: Pilar 01 */
+  }
+
+  /* Pares: texto à esquerda, card à direita. */
+  .sus-pilar--par {
+    flex-direction: row-reverse;
+  }
+
+  .sus-pilar__texto {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Card visual (560 × 600, radius 40 · Mobile 350 × 375, radius 25)
+   -------------------------------------------------------------------------- */
+.sus-visual {
+  --u: calc(100cqw / 560);                 /* 1 px do Figma, escalado com o card */
+  position: relative;
+  isolation: isolate;
+  flex: none;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 560 / 600;
+  overflow: hidden;
+  container-type: inline-size;
+  border-radius: 25px;                     /* Figma Mobile */
+}
+
+@media (min-width: 768px) {
+  .sus-visual {
+    border-radius: var(--radius-40);       /* Figma Tablet/Desktop */
+  }
+}
+
+/* Selo: círculo 72 com ícone 32, vidro (blur 16), borda white/50. */
+.sus-selo {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: calc(72 * var(--u));
+  height: calc(72 * var(--u));
+  border: 1px solid var(--alpha-neutral-white-50);
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-20);
+  -webkit-backdrop-filter: blur(var(--blur-16));
+  backdrop-filter: blur(var(--blur-16));
+  color: var(--color-text-inverse);
+}
+
+.sus-selo svg {
+  display: block;
+  width: calc(32 * var(--u));
+  height: calc(32 * var(--u));
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sus-selo {
+    background: var(--alpha-neutral-white-40);
+  }
+}
+
+/* Fonte / profundidade (Pilar 01): degradê sky-300 → navy-900. */
+.sus-visual--profundidade {
+  background: linear-gradient(180deg, var(--brand-sky-300) 0%, var(--brand-navy-900) 100%);
+}
+
+.sus-fonte {
+  position: absolute;
+  inset: 0;
+}
+
+/* Camadas 1–5: faixas 600×70 levemente inclinadas, white 5 → 13 %. */
+.sus-fonte__camada {
+  position: absolute;
+  left: calc(-21.83 * var(--u));
+  width: calc(600 * var(--u));
+  height: calc(70 * var(--u));
+  transform: rotate(1.5deg);
+}
+
+.sus-fonte__camada:nth-child(1) { top: calc(160 * var(--u)); background: var(--alpha-neutral-white-5); }
+.sus-fonte__camada:nth-child(2) { top: calc(230.29 * var(--u)); left: calc(-20 * var(--u)); background: var(--alpha-neutral-white-7); transform: rotate(-1.5deg); }
+.sus-fonte__camada:nth-child(3) { top: calc(332 * var(--u)); background: var(--alpha-neutral-white-9); }
+.sus-fonte__camada:nth-child(4) { top: calc(402.29 * var(--u)); left: calc(-20 * var(--u)); background: var(--alpha-neutral-white-11); transform: rotate(-1.5deg); }
+.sus-fonte__camada:nth-child(5) { top: calc(504 * var(--u)); background: var(--alpha-neutral-white-13); }
+
+/* Bolhas (Dot / Shape/Circle): white/15, borda 1 px white/60. */
+.sus-fonte__bolha {
+  position: absolute;
+  border: 1px solid var(--alpha-neutral-white-60);
+  border-radius: var(--radius-full);
+  background: var(--alpha-neutral-white-15);
+}
+
+.sus-fonte__bolha:nth-child(6)  { left: calc(380 * var(--u)); top: calc(120 * var(--u)); width: calc(22 * var(--u)); height: calc(22 * var(--u)); }
+.sus-fonte__bolha:nth-child(7)  { left: calc(440 * var(--u)); top: calc(200 * var(--u)); width: calc(12 * var(--u)); height: calc(12 * var(--u)); }
+.sus-fonte__bolha:nth-child(8)  { left: calc(330 * var(--u)); top: calc(260 * var(--u)); width: calc(16 * var(--u)); height: calc(16 * var(--u)); }
+.sus-fonte__bolha:nth-child(9)  { left: calc(470 * var(--u)); top: calc(320 * var(--u)); width: calc(26 * var(--u)); height: calc(26 * var(--u)); }
+.sus-fonte__bolha:nth-child(10) { left: calc(400 * var(--u)); top: calc(380 * var(--u)); width: calc(10 * var(--u)); height: calc(10 * var(--u)); }
+
+/* Fio 3×420 (white/20 → white) terminando na gota 64×78. */
+.sus-fonte__fio {
+  position: absolute;
+  left: calc(90 * var(--u));
+  top: calc(110 * var(--u));
+  width: calc(3 * var(--u));
+  height: calc(420 * var(--u));
+  background: linear-gradient(180deg, var(--alpha-neutral-white-20) 0%, var(--neutral-white) 100%);
+}
+
+.sus-fonte__gota {
+  position: absolute;
+  left: calc(60 * var(--u));
+  top: calc(500 * var(--u));
+  width: calc(64 * var(--u));
+  height: calc(78 * var(--u));
+  color: var(--neutral-white);
+}
+
+.sus-fonte__gota svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* "60 m": Display/XL (64 Tablet · 96 Desktop); no Mobile o Figma usa Display/L. */
+.sus-fonte__valor {
+  position: absolute;
+  z-index: 1;
+  left: calc(130 * var(--u));
+  top: calc(420 * var(--u));
+  font-size: var(--font-size-display-l);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-text-inverse);
+}
+
+@media (min-width: 768px) {
+  .sus-fonte__valor {
+    font-size: var(--font-size-display-xl);
+    line-height: 0.95;
+    letter-spacing: -2px;
+  }
+}
+
+/* Foto (Pilar 02): imagem + navy-900 0 → 60 % na metade de baixo. */
+.sus-visual--foto {
+  background: var(--brand-navy-900);
+}
+
+.sus-visual__foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sus-visual--foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, transparent 50%, var(--alpha-brand-navy-900-60) 100%);
+  pointer-events: none;
+}
+
+.sus-visual--foto .sus-selo {
+  left: calc(32 * var(--u));
+  bottom: calc(32 * var(--u));
+}
+
+/* Produtos (Pilares 03 e 04): fundo, círculo 420 e produtos com Shadow/XL. */
+.sus-visual--azul {
+  background: linear-gradient(135deg, var(--brand-lavender-50) 0%, var(--illustration-sky-100) 71.43%);
+}
+
+.sus-visual--laranja {
+  background: linear-gradient(135deg, var(--illustration-cream-100) 0%, var(--illustration-sun-400) 71.43%);
+}
+
+.sus-visual__circulo {
+  position: absolute;
+  left: calc(70 * var(--u));
+  top: calc(110 * var(--u));
+  width: calc(420 * var(--u));
+  height: calc(420 * var(--u));
+  border-radius: var(--radius-full);
+}
+
+.sus-visual--azul .sus-visual__circulo {
+  background: linear-gradient(135deg, var(--brand-sky-300) 0%, var(--brand-navy-500) 71.43%);
+  opacity: 0.9;
+}
+
+.sus-visual--laranja .sus-visual__circulo {
+  background: linear-gradient(135deg, var(--illustration-orange-400) 0%, var(--illustration-orange-600) 71.43%);
+  opacity: 0.85;
+}
+
+/* Ordem dos produtos = de trás para a frente (como as camadas do Figma). */
+.sus-visual__produto {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 calc(24 * var(--u)) calc(30 * var(--u)) rgb(13 13 51 / 30%));   /* Shadow/XL = --drop-shadow-xl, escalado */
+}
+
+/* 4 produtos — Figma Pilar 03: garrafão, garrafa 500 ml, lata e copo. */
+.sus-visual[data-qtd="4"] .sus-visual__produto:nth-of-type(1) { left: calc(20 * var(--u)); top: calc(103.96 * var(--u)); width: calc(230 * var(--u)); height: calc(430 * var(--u)); transform: rotate(-4deg); }
+.sus-visual[data-qtd="4"] .sus-visual__produto:nth-of-type(2) { left: calc(250 * var(--u)); top: calc(110 * var(--u)); width: calc(130 * var(--u)); height: calc(400 * var(--u)); }
+.sus-visual[data-qtd="4"] .sus-visual__produto:nth-of-type(3) { left: calc(329.69 * var(--u)); top: calc(250 * var(--u)); width: calc(110 * var(--u)); height: calc(290 * var(--u)); transform: rotate(6deg); }
+.sus-visual[data-qtd="4"] .sus-visual__produto:nth-of-type(4) { left: calc(400 * var(--u)); top: calc(390 * var(--u)); width: calc(140 * var(--u)); height: calc(180 * var(--u)); }
+
+/* 3 produtos — Figma Pilar 04: garrafa à esquerda, copo no meio, garrafa à direita. */
+.sus-visual[data-qtd="3"] .sus-visual__produto:nth-of-type(1) { left: calc(70 * var(--u)); top: calc(74.32 * var(--u)); width: calc(150 * var(--u)); height: calc(470 * var(--u)); transform: rotate(-6deg); }
+.sus-visual[data-qtd="3"] .sus-visual__produto:nth-of-type(2) { left: calc(182.21 * var(--u)); top: calc(220 * var(--u)); width: calc(220 * var(--u)); height: calc(340 * var(--u)); transform: rotate(3deg); }
+.sus-visual[data-qtd="3"] .sus-visual__produto:nth-of-type(3) { left: calc(300.87 * var(--u)); top: calc(80 * var(--u)); width: calc(150 * var(--u)); height: calc(470 * var(--u)); transform: rotate(8deg); }
+
+/* 1 ou 2 produtos — adaptação (sem frame no Figma): centralizados no círculo. */
+.sus-visual[data-qtd="1"] .sus-visual__produto { left: calc(165 * var(--u)); top: calc(85 * var(--u)); width: calc(230 * var(--u)); height: calc(430 * var(--u)); }
+.sus-visual[data-qtd="2"] .sus-visual__produto:nth-of-type(1) { left: calc(110 * var(--u)); top: calc(80 * var(--u)); width: calc(160 * var(--u)); height: calc(460 * var(--u)); transform: rotate(-4deg); }
+.sus-visual[data-qtd="2"] .sus-visual__produto:nth-of-type(2) { left: calc(290 * var(--u)); top: calc(80 * var(--u)); width: calc(160 * var(--u)); height: calc(460 * var(--u)); transform: rotate(4deg); }
+
+/* Selo claro no canto superior direito (azul) ou vidro no superior esquerdo (laranja). */
+.sus-visual--azul .sus-selo {
+  right: calc(32 * var(--u));
+  top: calc(32 * var(--u));
+  background: var(--alpha-neutral-white-85);
+  color: var(--brand-navy-500);
+}
+
+.sus-visual--laranja .sus-selo {
+  left: calc(32 * var(--u));
+  top: calc(32 * var(--u));
+}
+
+/* ==========================================================================
+   Compromisso (Figma: padding 144/160 · gap 120 · Título 620 + Texto 540)
+   ========================================================================== */
+.sus-compromisso {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;                               /* Figma Mobile/Tablet */
+  padding: 64px var(--sus-pad);            /* Figma Mobile */
+  overflow: hidden;
+  background: var(--brand-navy-900);
+  color: var(--color-text-inverse);
+}
+
+.sus-compromisso__foto {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Degradê 126,87°: navy-900/97 → navy-500/88 (71,43 %) por cima da foto. */
+.sus-compromisso::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(126.87deg,
+    color-mix(in srgb, var(--brand-navy-900) 97%, transparent) 0%,
+    color-mix(in srgb, var(--brand-navy-500) 88%, transparent) 71.43%);
+  pointer-events: none;
+}
+
+.sus-compromisso__titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.sus-compromisso__texto {
+  padding-top: 40px;                       /* Figma: Texto padding-top 40 */
+  color: var(--color-text-inverse);
+}
+
+/* Vidro: white/8, borda white/20, blur 20, radius 24, padding 32/24 (Mobile). */
+.sus-compromisso__destaque {
+  align-self: stretch;
+  padding: 32px 24px;
+  border: 1px solid var(--alpha-neutral-white-20);
+  border-radius: var(--radius-24);
+  background: var(--alpha-neutral-white-8);
+  -webkit-backdrop-filter: blur(var(--blur-20));
+  backdrop-filter: blur(var(--blur-20));
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .sus-compromisso__destaque {
+    background: var(--alpha-neutral-white-16);
+  }
+}
+
+@media (min-width: 768px) {
+  .sus-compromisso {
+    padding-block: 88px;                   /* Figma Tablet */
+  }
+
+  .sus-compromisso__destaque {
+    padding: 32px;                         /* Figma Tablet/Desktop */
+  }
+}
+
+@media (min-width: 1280px) {
+  .sus-compromisso {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 120px;                            /* Figma */
+    padding-block: 144px;                  /* Figma */
+  }
+
+  .sus-compromisso__titulo {
+    flex: 0 0 620px;                       /* Figma: Título 620 */
+  }
+
+  .sus-compromisso__texto {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+
+/* ==========================================================================
+   Assinatura (Figma: padding 32/200/48 · gap 32 · gota 44×54 ·
+   componente "Frase (digitação)": padding 96/0, uma linha por verso)
+   ========================================================================== */
+.sus-assinatura {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 0 var(--sus-pad);               /* Figma Mobile/Tablet: 0 / 24|40 */
+  background: var(--color-surface-default);
+  text-align: center;
+}
+
+.sus-assinatura__gota {
+  display: block;
+  width: 44px;
+  height: 54px;
+}
+
+.sus-assinatura__gota svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Mobile: 22 px, 900, LH 95 % (estilo local do frame); Tablet/Desktop:
+   Display/L (44 · 64). Degradê navy-500 → sky-500 no texto. */
+.sus-digitacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-block: 96px;                     /* Figma: Frase padding 96/0 */
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 0.95;
+}
+
+.sus-digitacao__linha {
+  position: relative;
+  display: block;
+  max-width: 100%;
+}
+
+.sus-digitacao__texto {
+  display: inline-block;
+  padding-block: 0.04em;                   /* respiro para o recorte do degradê */
+  background: linear-gradient(90deg, var(--brand-navy-500) 0%, var(--brand-sky-500) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Cursor sky-500 (3×18 Mobile · 3×36 Tablet · 4×52 Desktop), só com JS. */
+.sus-digitacao__linha::after {
+  content: "";
+  position: absolute;
+  top: 0.08em;
+  left: 100%;
+  width: 3px;
+  height: 0.82em;
+  margin-left: 2px;
+  border-radius: var(--radius-2);
+  background: var(--brand-sky-500);
+  opacity: 0;
+}
+
+@media (min-width: 768px) {
+  .sus-digitacao {
+    font-size: var(--font-size-display-l);
+  }
+}
+
+@media (min-width: 1280px) {
+  .sus-assinatura {
+    padding: 32px var(--sus-pad) 48px;     /* Figma Desktop: 32 / 200 / 48 */
+  }
+
+  .sus-digitacao__linha::after {
+    width: 4px;
+  }
+}
+
+/* Estados do JS (assets/js/sustentabilidade.js). Sem JS: frase inteira. */
+.sus-digitacao.is-pronta .sus-digitacao__texto {
+  clip-path: inset(0 100% 0 0);
+}
+
+.sus-digitacao.is-pronta .sus-digitacao__linha.is-digitada .sus-digitacao__texto {
+  clip-path: none;
+}
+
+/* Linear, ~55 ms por caractere (descrição do componente no Figma). */
+.sus-digitacao.is-pronta .sus-digitacao__linha.is-digitando .sus-digitacao__texto {
+  animation: sus-digitar calc(var(--sus-letras) * 55ms) steps(var(--sus-letras), end) forwards;
+}
+
+.sus-digitacao.is-pronta .sus-digitacao__linha.is-digitando::after {
+  opacity: 1;
+  animation: sus-cursor-anda calc(var(--sus-letras) * 55ms) steps(var(--sus-letras), end) forwards;
+}
+
+.sus-digitacao.is-pronta .sus-digitacao__linha.is-fim::after {
+  opacity: 1;
+  animation: sus-cursor-pisca 1s steps(1, end) infinite;
+}
+
+@keyframes sus-digitar {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes sus-cursor-anda {
+  from { left: 0; }
+  to { left: 100%; }
+}
+
+@keyframes sus-cursor-pisca {
+  50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   Movimento reduzido: sem digitação (o JS também não roda).
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .sus-digitacao.is-pronta .sus-digitacao__texto {
+    clip-path: none;
+    animation: none;
+  }
+
+  .sus-digitacao__linha::after {
+    display: none;
+  }
+}
