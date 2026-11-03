@@ -6,10 +6,12 @@
  * Grade de cards (2 por linha no Desktop), um por linha de produto: gradiente
  * da linha (média → forte), nome da linha, nomes dos produtos, fotos em leque
  * e o nome da linha vazado ao fundo (SVG exportado do Figma em
- * assets/img/linha-palavra-<slug>.svg). O card inteiro é o link.
+ * assets/img/linha-palavra-<slug>.svg). O card inteiro é o link e leva à
+ * página Produtos já filtrada pela linha (ver aw_linha_card_destino()).
  *
  * Campo (grupo "Home — Seções", aba Linhas): linhas_cards — repeater com
- * linha, link e até 3 produtos (produto + tamanho da foto). Vazio esconde.
+ * linha, link opcional e até 3 produtos (produto + tamanho da foto). Vazio
+ * esconde.
  *
  * @package AlfamaWeb
  */
@@ -21,7 +23,13 @@ $aw_cards = array();
 foreach ((array) aw_field('linhas_cards', get_the_ID(), array()) as $aw_card) {
 	$aw_termo = !empty($aw_card['linha']) ? get_term((int) $aw_card['linha'], 'linha') : null;
 
-	if (!$aw_termo instanceof WP_Term || empty($aw_card['link']['url'])) {
+	if (!$aw_termo instanceof WP_Term) {
+		continue;
+	}
+
+	$aw_destino = aw_linha_card_destino($aw_termo, $aw_card['link'] ?? array());
+
+	if ('' === $aw_destino['url']) {
 		continue;
 	}
 
@@ -38,7 +46,7 @@ foreach ((array) aw_field('linhas_cards', get_the_ID(), array()) as $aw_card) {
 		}
 	}
 
-	$aw_cards[] = array('termo' => $aw_termo, 'link' => $aw_card['link'], 'produtos' => array_slice($aw_produtos, 0, 3));
+	$aw_cards[] = array('termo' => $aw_termo, 'link' => $aw_destino, 'produtos' => array_slice($aw_produtos, 0, 3));
 }
 
 if (!$aw_cards) {

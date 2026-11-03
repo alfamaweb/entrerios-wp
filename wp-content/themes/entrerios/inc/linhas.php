@@ -138,3 +138,42 @@ function aw_validar_contraste_linha($valido, $valor)
 
 	return $valido;
 }
+
+/**
+ * Destino de um card de linha (Home → "Linhas de bebidas").
+ *
+ * Padrão: a página Produtos já filtrada pela linha clicada
+ * (/produtos/?categoria[]=<slug>), com a aba da linha ativa. O campo "link"
+ * do card só vale quando aponta para OUTRO lugar; vazio ou apontando para a
+ * própria página Produtos, vira o filtro. Sem página Produtos publicada, cai
+ * no link do campo.
+ *
+ * @param WP_Term     $termo Termo da taxonomia linha.
+ * @param array|mixed $link  Valor do campo ACF link (array url/title/target).
+ * @return array{url:string,target:string} url vazia = card sem destino.
+ */
+function aw_linha_card_destino(WP_Term $termo, $link)
+{
+	$link   = is_array($link) ? $link : array();
+	$url    = (string) ($link['url'] ?? '');
+	$target = (string) ($link['target'] ?? '');
+
+	$filtrada = function_exists('aw_produtos_url') ? aw_produtos_url(array('categoria' => $termo->slug)) : '';
+
+	if (!$filtrada) {
+		return array('url' => $url, 'target' => $target);
+	}
+
+	// Compara só o caminho: ignora domínio, http/https, query e barra final.
+	$caminho   = function ($u) {
+		return untrailingslashit((string) wp_parse_url((string) $u, PHP_URL_PATH));
+	};
+	$produtos  = $caminho(get_permalink(aw_produtos_pagina_id()));
+	$informada = $caminho($url);
+
+	if ('' === $url || $informada === $produtos) {
+		return array('url' => $filtrada, 'target' => '');
+	}
+
+	return array('url' => $url, 'target' => $target);
+}
